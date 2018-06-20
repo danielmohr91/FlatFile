@@ -1,0 +1,82 @@
+﻿
+6-8-18 Code Review Comments
+
+	Paraphased
+		“This is a thousand times better. I can tell you thought this out well, because even before I started asking questions
+		you started explaining it. You understand this. You used an IDictionary appropriately, since order is important, but not 
+		an IList since you’re normally querying by key vs. value, and not IEnumerable or IQueryable because order is important. 
+		It’s private because you wanted to manage appending entries yourself, given the calculations and dependencies that go 
+		along with it. That’s perfect. You used a generic for the model, so that’s decoupled nicely. If the entity we’re parsing 
+		changes, do you need to change your FixedLayoutParser Class?” 
+		“No”. 
+		“If business needs change, do you need to change your class?” 
+		“Nope”. 
+		“This method here for your expression handling never needs to change. Not ever. This is great.”
+
+		Then reviewed how to support chained expression methods from an existing method or extension method.
+		e.g. LayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength);
+
+
+ 6-8-18
+      Added IFlatFileLayoutDescriptor interface and documentation.
+      Moved documentation to interface (vs. implementation). Only implementation specific comments remain.
+      Refactored unit test naming and added new class for Type Converter Tests
+
+ 6-11-18
+      Thought about support for non-string types and type converters
+
+      To do the above, need to have a working or mocked parser. Started adding a dummy flat file parser for now.
+      Added new method to IFlatFileLayoutDescriptor interface to get ordered fields. Could return collection of
+      all fields, and order in parser, OR order in LayoutDescriptor. Chose to order in LayoutDescriptor, since
+      sorting depends on the implementation of fields (currently Dictionary<int, FixedFieldSetting>).
+
+ 6-12-18
+      Resumed on DummyFixedWidthFileParser. Use this in unit test for the type converter, and test converting id
+      from string to int. Can either use reflection in the dummy class, or hardcode just for the primitive type.
+      probably want to hardcode if type is PrimitiveTypes, else not implemented exception. 
+
+ 6-13-18
+      Implemented basic ParseFile method in FixedWidthFileParser
+      Created unit tests
+          - Created test model for strings and primitive types
+          - Generated fixed width test file (StringTest.dat)
+          - Overrode equals method and equality operators
+          - Successfully implemented and tested parsing into string models
+  
+6-13-18 - Code Review Comments
+ 
+ 1. Simplify error handling. 
+     - What's in place is good if handling each exception differently (e.g. retrying on IO failure, 
+       vs. something different for FileNotFound). Simply bubbling up a different error message for each one
+       is not a good reason. Also, because inner exception isn't set, this actually reduces the information 
+       sent up. Could either add custom exceptions, or remove all try  / catches. The purpose of this exercise
+       is practicing OOP principles and SOLID practices, so going to skip the exception handling for now.
+		- Done (Removed)
+ 2. Use a generic as the return type in IFixedWidthFileParser
+     - In 'IFixedWidthFileParser', change 'IDictionary<int, TEntity>' to a generic return type.
+		- Done
+ 3. If re-throwing an exception, set the inner exception.
+     - Likely removing all error handling for now (per #1), so this may be a non-issue
+		- Done (removed error handling for now)
+ 4. ParseFile should return a generic (similar to #2).
+		- Done, returned TFile
+ 5. I implemented one or more interfaces. Use these interfaces as the types now instead of concrete types
+		- Done
+ 6. Repeat above for all complex types (e.g. IList instead of list)
+     - While I'm at it, I want to think through data structures more. e.g. ICollection vs. IDictionary for
+       the entities being returned from ParseFile
+	 - Update List to IList, Dictionary to IDictionary, etc...
+	 - ******************** Resume Here ******************** - Think through if data structures are a good fit.
+
+6-14-18
+     - Removed all Try / Catches.
+     - Documented a few pre-conditions that should be checked for instead.
+     - Updated FixedWidthFileParser and the interface to use a generic for the return type of ParseFile
+     - Removed 'Peek' from ParseFile implementation
+     - Started updating unit tests from Dictionary to Collection for return type from ParseFile
+
+6-19-18
+	- Documentation
+	- Updated to depend on interfaces, not implementations. (Updated concrete types to interfaces where possible in FixedWidthFileParser, LayoutDescriptor, and unit tests)
+		- e.g. LayoutDescriptor field in FixedWidthFileParser, is now IFlatFileLayoutDescriptor
+		- Changed types from FixedFieldSetting to IFixedFieldSetting (except where instantiating)
