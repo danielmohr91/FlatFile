@@ -59,8 +59,19 @@
      - While I'm at it, I want to think through data structures more. e.g. ICollection vs. IDictionary for
        the entities being returned from ParseFile
 	 - Update List to IList, Dictionary to IDictionary, etc...
-	 - ******************** Resume Here ******************** - Level set on data structures. Think through the types used, and if each one is a good fit. Why or why not? 
-	 
+	 - Level set on data structures. Think through the types used, and if each one is a good fit. Why or why not? 
+		- IList is used once in GetOrderedFields
+			- GetOrderedFields is invoked once in GetModelFromLine.
+				- Nowhere is Add / Remove needed. This should be a collection instead. IEnumerable wouldn't honor the
+				  custom order. ICollection honors the custom order, IList also does, but we don't need the extras. 
+				- In GetOrderedFields, could call Enumerable.ToList() or cast to ICollection<T>. ToList creates a  
+				  cached copy, so chose the cast instead. 
+					- Switched to ToList, the cast generated an InvalidCastException. Can't cast a
+					  WhereSelectEnumerableIterator to ICollection<IFixedFieldSetting>
+		- No more lists are used anywhere in solution. 
+
+	 ******************** Resume Here ********************
+
 6-14-18
      - Removed all Try / Catches.
      - Documented a few pre-conditions that should be checked for instead.
@@ -73,3 +84,8 @@
 	- Updated to depend on interfaces, not implementations. (Updated concrete types to interfaces where possible in FixedWidthFileParser, LayoutDescriptor, and unit tests)
 		- e.g. LayoutDescriptor field in FixedWidthFileParser, is now IFlatFileLayoutDescriptor
 		- Changed types from FixedFieldSetting to IFixedFieldSetting (except where instantiating). Maybe ninject down the road? 
+
+6-26-18
+	- Thought through data structures in solution. 
+	- Only one list is used, changed this to a collection in GetOrderedFields, since we only care about the order.
+	  No list operations (Add / Remove, etc...) are required. 

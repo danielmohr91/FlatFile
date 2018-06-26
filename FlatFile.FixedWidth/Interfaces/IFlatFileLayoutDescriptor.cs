@@ -30,7 +30,7 @@ namespace FlatFile.FixedWidth.Interfaces
         /// </summary>
         /// <param name="key">Index of column</param>
         /// <returns>Field, if found. Else, throws exception</returns>
-        IList<IFixedFieldSetting> GetOrderedFields();
+        ICollection<IFixedFieldSetting> GetOrderedFields();
 
         /// <summary>
         ///     Appends field into next position. Order is important. 
