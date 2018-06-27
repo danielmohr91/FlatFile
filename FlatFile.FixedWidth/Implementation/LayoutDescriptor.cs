@@ -13,7 +13,6 @@ namespace FlatFile.FixedWidth.Implementation
     ///     Code review comments:
     ///     - Follows open / closed principle. If model changes, nothing in here changes since generic was used.
     ///     - If ascii encoded file changes to unicode file, nothing in here changes, etc...
-    ///     TODO: continue with parsing
     /// </summary>
     /// <typeparam name="TTarget">Type of target model</typeparam>
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
