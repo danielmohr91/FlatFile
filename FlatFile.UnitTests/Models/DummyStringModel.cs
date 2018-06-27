@@ -18,10 +18,20 @@
 
         public override bool Equals(object obj)
         {
+            // Pattern matching
             var other = obj as DummyStringModel;
 
+            // This compiles in VS 2015 / C#6, but does not work as expected
+            // if (other == null) { return false; }
+
+            // This breaks in VS 2015 / C#6 compiler
+            // https://www.danielcrabtree.com/blog/152/c-sharp-7-is-operator-patterns-you-wont-need-as-as-often
             if (other is null)
+            {
+                // other is null, is NOT equivalent to other == null
+                // uses Object.Equals(other, null);
                 return false;
+            }
 
             if (Id != other.Id ||
                 Field1 != other.Field1 ||

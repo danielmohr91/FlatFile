@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -40,34 +39,11 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthParser
             Assert.AreEqual(expected, actual);
         }
 
-
         [TestMethod]
         public void Should_Read250Rows_When_InputFileHas250Rows()
         {
             var allRows = ParseTestFile();
             Assert.AreEqual(allRows.Count, 250);
-        }
-
-        [TestMethod]
-        public void Should_PopulateFiveColumns_When_LayoutDescriptorDefinesFiveFields()
-        {
-            // Make sure first five columns have values, and that nothing more and nothing less is being set. 
-            foreach (var record in parsedRows)
-            {
-                Assert.IsTrue(
-                    string.IsNullOrEmpty(record.Field1) &&
-                    string.IsNullOrEmpty(record.Field2) &&
-                    string.IsNullOrEmpty(record.Field3) &&
-                    string.IsNullOrEmpty(record.Field4) &&
-                    string.IsNullOrEmpty(record.Field5) &&
-                    record.Field6 == null &&
-                    record.Field7 == null &&
-                    record.Field8 == null &&
-                    record.Field9 == null &&
-                    record.Field10 == null &&
-                    record.Field11 == null &&
-                    record.Field12 == null);
-            }
         }
 
         private ICollection<DummyStringModel> GetExpectedRows()

@@ -89,3 +89,6 @@
 	- Thought through data structures in solution. 
 	- Only one list is used, changed this to a collection in GetOrderedFields, since we only care about the order.
 	  No list operations (Add / Remove, etc...) are required. 
+
+6-27-18
+	- Cleaned up unit tests

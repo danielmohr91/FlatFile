@@ -20,7 +20,7 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
         }
 
         [TestMethod]
-        public void Should_ConvertBoolToString_When_TypeConverterDefined()
+        public void Should_ConvertStringToBool_When_TypeConverterDefined()
         {
             var parser = new DummyFixedWidthFileParser<PrimitiveTypes>(settings);
             parser.ParseFile();
