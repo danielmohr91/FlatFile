@@ -70,8 +70,6 @@
 					  WhereSelectEnumerableIterator to ICollection<IFixedFieldSetting>
 		- No more lists are used anywhere in solution. 
 
-	 ******************** Resume Here ********************
-
 6-14-18
      - Removed all Try / Catches.
      - Documented a few pre-conditions that should be checked for instead.
@@ -92,3 +90,15 @@
 
 6-27-18
 	- Cleaned up unit tests
+	- Started thinking through type converter api
+		- Would like built in converters for primitive types, and custom converter exposed for mapping to complex objects
+		- On IFlatFileLayoutDescriptor, could add "AsBool" to be used after AppendField. 
+			- e.g.  IFlatFileLayoutDescriptor<TTarget> AsBool<TProperty>();
+			- Nothing tells me that this is for the previously appended field though. Probably want to add the
+			  converter in AppendField extension method.
+			- If option is exposed, do we pass an enum for which basic type we try converting to, and also accept an 
+			  expression for a custom converter? 
+		- Thinking .WithTypeConverter is a better option and more readable. Perhaps an api like the following
+			- .AppendField(x => x.id, fieldLength).WithTypeConverter<StringConverter>()
+			- signature: IFlatFileLayoutDescriptor<TTarget> WithTypeConverter<TTypeConverter>();
+	- Polyfilled C# 6 safe equals method in DummyStringModel. Unit tests pass, can now build in C# 6 / VS 2015

@@ -31,6 +31,7 @@ namespace FlatFile.FixedWidth.Implementation
         /// </summary>
         public IFixedFieldSetting GetField(int key) => fields[key];
 
+
         /// <inheritdoc />
         public ICollection<IFixedFieldSetting> GetOrderedFields()
         {
@@ -59,6 +60,18 @@ namespace FlatFile.FixedWidth.Implementation
 
             Add(fieldLength, propertyInfo);
             return this;
+        }
+
+        // Maybe pass type converter expression in with lambda expression? 
+        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, LambdaExpression typeConverter)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Maybe pass in a ITypeConverter object? 
+        public IFlatFileLayoutDescriptor<TTarget> WithTypeConverter<TTypeConverter>()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

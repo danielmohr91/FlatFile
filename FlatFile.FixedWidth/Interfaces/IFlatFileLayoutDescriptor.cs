@@ -41,5 +41,10 @@ namespace FlatFile.FixedWidth.Interfaces
         /// <param name="fieldLength">Length of the field in characters</param>
         /// <returns></returns>
         IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength);
+
+
+        //IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, LambdaExpression typeConverter);
+        IFlatFileLayoutDescriptor<TTarget> WithTypeConverter<TTypeConverter>(); // maybe pass in a type converter? 
+
     }
 }
