@@ -30,7 +30,7 @@ namespace FlatFile.FixedWidth.Interfaces
         /// </summary>
         /// <param name="key">Index of column</param>
         /// <returns>Field, if found. Else, throws exception</returns>
-        IList<IFixedFieldSetting> GetOrderedFields();
+        ICollection<IFixedFieldSetting> GetOrderedFields();
 
         /// <summary>
         ///     Appends field into next position. Order is important. 
@@ -41,5 +41,10 @@ namespace FlatFile.FixedWidth.Interfaces
         /// <param name="fieldLength">Length of the field in characters</param>
         /// <returns></returns>
         IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength);
+
+
+        //IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, LambdaExpression typeConverter);
+        IFlatFileLayoutDescriptor<TTarget> WithTypeConverter<TTypeConverter>(); // maybe pass in a type converter? 
+
     }
 }

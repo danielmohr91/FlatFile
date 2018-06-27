@@ -59,8 +59,17 @@
      - While I'm at it, I want to think through data structures more. e.g. ICollection vs. IDictionary for
        the entities being returned from ParseFile
 	 - Update List to IList, Dictionary to IDictionary, etc...
-	 - ******************** Resume Here ******************** - Level set on data structures. Think through the types used, and if each one is a good fit. Why or why not? 
-	 
+	 - Level set on data structures. Think through the types used, and if each one is a good fit. Why or why not? 
+		- IList is used once in GetOrderedFields
+			- GetOrderedFields is invoked once in GetModelFromLine.
+				- Nowhere is Add / Remove needed. This should be a collection instead. IEnumerable wouldn't honor the
+				  custom order. ICollection honors the custom order, IList also does, but we don't need the extras. 
+				- In GetOrderedFields, could call Enumerable.ToList() or cast to ICollection<T>. ToList creates a  
+				  cached copy, so chose the cast instead. 
+					- Switched to ToList, the cast generated an InvalidCastException. Can't cast a
+					  WhereSelectEnumerableIterator to ICollection<IFixedFieldSetting>
+		- No more lists are used anywhere in solution. 
+
 6-14-18
      - Removed all Try / Catches.
      - Documented a few pre-conditions that should be checked for instead.
@@ -73,3 +82,23 @@
 	- Updated to depend on interfaces, not implementations. (Updated concrete types to interfaces where possible in FixedWidthFileParser, LayoutDescriptor, and unit tests)
 		- e.g. LayoutDescriptor field in FixedWidthFileParser, is now IFlatFileLayoutDescriptor
 		- Changed types from FixedFieldSetting to IFixedFieldSetting (except where instantiating). Maybe ninject down the road? 
+
+6-26-18
+	- Thought through data structures in solution. 
+	- Only one list is used, changed this to a collection in GetOrderedFields, since we only care about the order.
+	  No list operations (Add / Remove, etc...) are required. 
+
+6-27-18
+	- Cleaned up unit tests
+	- Started thinking through type converter api
+		- Would like built in converters for primitive types, and custom converter exposed for mapping to complex objects
+		- On IFlatFileLayoutDescriptor, could add "AsBool" to be used after AppendField. 
+			- e.g.  IFlatFileLayoutDescriptor<TTarget> AsBool<TProperty>();
+			- Nothing tells me that this is for the previously appended field though. Probably want to add the
+			  converter in AppendField extension method.
+			- If option is exposed, do we pass an enum for which basic type we try converting to, and also accept an 
+			  expression for a custom converter? 
+		- Thinking .WithTypeConverter is a better option and more readable. Perhaps an api like the following
+			- .AppendField(x => x.id, fieldLength).WithTypeConverter<StringConverter>()
+			- signature: IFlatFileLayoutDescriptor<TTarget> WithTypeConverter<TTypeConverter>();
+	- Polyfilled C# 6 safe equals method in DummyStringModel. Unit tests pass, can now build in C# 6 / VS 2015

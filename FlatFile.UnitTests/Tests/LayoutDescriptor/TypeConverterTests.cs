@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using FlatFile.FixedWidth.Implementation;
 using FlatFile.FixedWidth.Interfaces;
 using FlatFileParserUnitTests.Infrastructure.Mocks;
@@ -20,7 +21,7 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
         }
 
         [TestMethod]
-        public void Should_ConvertBoolToString_When_TypeConverterDefined()
+        public void Should_ConvertStringToBool_When_TypeConverterDefined()
         {
             var parser = new DummyFixedWidthFileParser<PrimitiveTypes>(settings);
             parser.ParseFile();
@@ -31,7 +32,8 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
         private IFlatFileLayoutDescriptor<PrimitiveTypes> GetTestLayoutDescriptorForPrimitiveTypes()
         {
             return new LayoutDescriptor<PrimitiveTypes>()
-                .AppendField(x => x.id, fieldLength)
+                 //.AppendField(x => x.id, fieldLength, y => bool.TryParse(y))
+                .AppendField(x => x.id, fieldLength).WithTypeConverter<StringConverter>() // .WithTypeConverter<BoolConverter>()
                 .AppendField(x => x.boolTest, fieldLength)
                 .AppendField(x => x.charTest, fieldLength)
                 .AppendField(x => x.doubleTest, fieldLength)

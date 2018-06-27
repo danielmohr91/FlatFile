@@ -13,7 +13,6 @@ namespace FlatFile.FixedWidth.Implementation
     ///     Code review comments:
     ///     - Follows open / closed principle. If model changes, nothing in here changes since generic was used.
     ///     - If ascii encoded file changes to unicode file, nothing in here changes, etc...
-    ///     TODO: continue with parsing
     /// </summary>
     /// <typeparam name="TTarget">Type of target model</typeparam>
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
@@ -32,9 +31,19 @@ namespace FlatFile.FixedWidth.Implementation
         /// </summary>
         public IFixedFieldSetting GetField(int key) => fields[key];
 
+
         /// <inheritdoc />
-        public IList<IFixedFieldSetting> GetOrderedFields()
+        public ICollection<IFixedFieldSetting> GetOrderedFields()
         {
+            // @Lee - Is there a best practice for ToList vs. casting to a collection? 
+
+            //      - ToList creates a copy (https://msdn.microsoft.com/en-us/library/bb342261(v=vs.110).aspx)
+            //      - The ToList<TSource>(IEnumerable<TSource>) method forces immediate query evaluation and returns a List<T> that contains the query results. You can append this method to your query in order to obtain a cached copy of the query results.
+
+            //      - Casting to ICollection (instead of calling Enumerable.ToList()) so no cached copy is created.
+            // NOPE - Unable to cast object of type 'WhereSelectEnumerableIterator`2[System.Collections.Generic.KeyValuePair`2[System.Int32,FlatFile.FixedWidth.Interfaces.IFixedFieldSetting],FlatFile.FixedWidth.Interfaces.IFixedFieldSetting]' to type 
+            // This cast generated an invalid cast exception, details above. Using ToList instead. 
+
             return fields
                 .OrderBy(x => x.Key)
                 .Select(x => x.Value)
@@ -51,6 +60,18 @@ namespace FlatFile.FixedWidth.Implementation
 
             Add(fieldLength, propertyInfo);
             return this;
+        }
+
+        // Maybe pass type converter expression in with lambda expression? 
+        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, LambdaExpression typeConverter)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Maybe pass in a ITypeConverter object? 
+        public IFlatFileLayoutDescriptor<TTarget> WithTypeConverter<TTypeConverter>()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

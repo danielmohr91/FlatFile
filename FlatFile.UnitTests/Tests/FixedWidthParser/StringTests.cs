@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -13,31 +12,38 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthParser
     [TestClass]
     public class StringTests
     {
-        private ICollection<DummyStringModel> expectedRows;
-        private ICollection<DummyStringModel> parsedRows;
+        private readonly ICollection<DummyStringModel> expectedRows;
         private readonly int fieldWidth = 15;
+        private readonly ICollection<DummyStringModel> parsedRows;
 
         public StringTests()
         {
             expectedRows = GetExpectedRows();
-        parsedRows = ParseTestFile();
-        }
-
-        [TestMethod]
-        public void Should_ParseFirstRowMatchingExpected_When_ParseFileIsCalled()
-        {
-            DummyStringModel expected, actual;
-            expected = expectedRows.First(); 
-            actual = parsedRows.First(); 
-
-            // This is reference equals by default. Equals method is overriden in DummyStringModel to implement value equals vs. reference equals
-            Assert.AreEqual(expected, actual);
+            parsedRows = ParseTestFile();
         }
 
         [TestMethod]
         public void Should_ParseAllFieldsMatchingExpected_When_ParseFileIsCalled()
         {
             CollectionAssert.AreEqual((ICollection) expectedRows, (ICollection) parsedRows);
+        }
+
+        [TestMethod]
+        public void Should_ParseFirstRowMatchingExpected_When_ParseFileIsCalled()
+        {
+            DummyStringModel expected, actual;
+            expected = expectedRows.First();
+            actual = parsedRows.First();
+
+            // This is reference equals by default. Equals method is overriden in DummyStringModel to implement value equals vs. reference equals
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Should_Read250Rows_When_InputFileHas250Rows()
+        {
+            var allRows = ParseTestFile();
+            Assert.AreEqual(allRows.Count, 250);
         }
 
         private ICollection<DummyStringModel> GetExpectedRows()
@@ -52,26 +58,11 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthParser
                     Field1 = $"Row{rowNumber}Field1".PadRight(fieldWidth),
                     Field2 = $"Row{rowNumber}Field2".PadRight(fieldWidth),
                     Field3 = $"Row{rowNumber}Field3".PadRight(fieldWidth),
-                    Field4 = $"Row{rowNumber}Field4".PadRight(fieldWidth),
+                    Field4 = $"Row{rowNumber}Field4".PadRight(fieldWidth)
                 });
             }
+
             return generatedRows;
-        }
-
-        [TestMethod]
-        public void Should_SetFiveColumns_When_LayoutDescriptorDefinesFiveFields()
-        {
-            // Make sure first five columns are non-null, and that nothing more and nothing less is being set. 
-
-            throw new NotImplementedException("TODO: Write this test.");
-        }
-
-
-        [TestMethod]
-        public void Should_Read250Rows_When_InputFileHas250Rows()
-        {
-            var allRows = ParseTestFile();
-            Assert.AreEqual(allRows.Count, 250);
         }
 
         private ICollection<DummyStringModel> ParseTestFile()
