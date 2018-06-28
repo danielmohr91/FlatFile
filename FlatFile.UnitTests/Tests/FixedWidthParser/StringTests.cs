@@ -77,7 +77,7 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthParser
             var directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             var path = $"{directory}\\InputFiles\\StringTest.dat"; // file properties should be "Content" and "Copy If Newer" (or similar)
 
-            var parser = new FixedWidthFileParser<DummyStringModel, Collection<DummyStringModel>>(layout, path);
+            var parser = new FixedWidthFileParser<DummyStringModel>(layout, path);
             return parser.ParseFile();
         }
     }

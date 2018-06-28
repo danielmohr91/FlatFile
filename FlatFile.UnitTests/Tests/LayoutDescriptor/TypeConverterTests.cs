@@ -31,13 +31,14 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
 
         private IFlatFileLayoutDescriptor<PrimitiveTypes> GetTestLayoutDescriptorForPrimitiveTypes()
         {
+            throw new Exception("Implement convention based parser here");
             return new LayoutDescriptor<PrimitiveTypes>()
                  //.AppendField(x => x.id, fieldLength, y => bool.TryParse(y))
-                .AppendField(x => x.id, fieldLength).WithTypeConverter<StringConverter>() // .WithTypeConverter<BoolConverter>()
+                .AppendField(x => x.id, fieldLength)
                 .AppendField(x => x.boolTest, fieldLength)
                 .AppendField(x => x.charTest, fieldLength)
                 .AppendField(x => x.doubleTest, fieldLength)
                 .AppendField(x => x.stringTest, fieldLength);
         }
     }
-}
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                   

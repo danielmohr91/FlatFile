@@ -19,6 +19,7 @@ namespace FlatFile.FixedWidth.Implementation
     {
         private readonly IDictionary<int, IFixedFieldSetting> fields;
         private int currentPosition;
+        private ICollection<IFixedFieldSetting> orderedFields;
 
         public LayoutDescriptor()
         {
@@ -44,10 +45,15 @@ namespace FlatFile.FixedWidth.Implementation
             // NOPE - Unable to cast object of type 'WhereSelectEnumerableIterator`2[System.Collections.Generic.KeyValuePair`2[System.Int32,FlatFile.FixedWidth.Interfaces.IFixedFieldSetting],FlatFile.FixedWidth.Interfaces.IFixedFieldSetting]' to type 
             // This cast generated an invalid cast exception, details above. Using ToList instead. 
 
-            return fields
-                .OrderBy(x => x.Key)
-                .Select(x => x.Value)
-                .ToList();
+            if (orderedFields == null)
+            {
+                orderedFields = fields
+                    .OrderBy(x => x.Key)
+                    .Select(x => x.Value)
+                    .ToList();
+            }
+
+            return orderedFields;
         }
 
         /// <summary>
@@ -60,18 +66,6 @@ namespace FlatFile.FixedWidth.Implementation
 
             Add(fieldLength, propertyInfo);
             return this;
-        }
-
-        // Maybe pass type converter expression in with lambda expression? 
-        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, LambdaExpression typeConverter)
-        {
-            throw new NotImplementedException();
-        }
-
-        // Maybe pass in a ITypeConverter object? 
-        public IFlatFileLayoutDescriptor<TTarget> WithTypeConverter<TTypeConverter>()
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -98,6 +92,8 @@ namespace FlatFile.FixedWidth.Implementation
             };
 
             fields[currentPosition] = setting;
+
+            orderedFields = null; // Ordered fields are now dirty, clear cache
         }
 
 

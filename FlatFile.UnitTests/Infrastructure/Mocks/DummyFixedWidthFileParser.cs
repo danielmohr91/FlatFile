@@ -6,7 +6,7 @@ using FlatFileParserUnitTests.Models;
 
 namespace FlatFileParserUnitTests.Infrastructure.Mocks
 {
-    public class DummyFixedWidthFileParser<TEntity> : IFixedWidthFileParser<TEntity, ICollection<TEntity>> where TEntity : new()
+    public class DummyFixedWidthFileParser<TEntity> : IFixedWidthFileParser<TEntity> where TEntity : new()
     {
         private IFlatFileLayoutDescriptor<TEntity> layout;
 

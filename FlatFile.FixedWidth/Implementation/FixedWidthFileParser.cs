@@ -6,23 +6,22 @@ using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation
 {
-    public class FixedWidthFileParser<TEntity, TFile> :
-        IFixedWidthFileParser<TEntity, TFile> 
-        where TEntity : new() 
-        where TFile : ICollection<TEntity>, new()
+    public class FixedWidthFileParser<T> :
+        IFixedWidthFileParser<T> 
+        where T : new() 
     {
         private readonly string filePath;
-        private readonly IFlatFileLayoutDescriptor<TEntity> layout;
+        private readonly IFlatFileLayoutDescriptor<T> layout;
 
-        public FixedWidthFileParser(IFlatFileLayoutDescriptor<TEntity> layout, string filePath)
+        public FixedWidthFileParser(IFlatFileLayoutDescriptor<T> layout, string filePath)
         {
             this.layout = layout;
             this.filePath = filePath;
         }
 
-        public TFile ParseFile()
+        public ICollection<T> ParseFile()
         {
-            var rows = new TFile();
+            var rows = new List<T>();
             using (var reader = new StreamReader(filePath))
             {
                 string row;
@@ -41,16 +40,16 @@ namespace FlatFile.FixedWidth.Implementation
         /// <exception cref="T:Exception">Property name is null, not unique, or not found in TEntity.</exception>
         /// <param name="row"></param>
         /// <returns></returns>
-        private TEntity GetModelFromLine(string row)
+        private T GetModelFromLine(string row)
         {
-            var model = new TEntity();
+            var model = new T();
             foreach (var field in layout.GetOrderedFields())
             {
                 // This could throw ambigous match exception if inheritance is used on the model incorrectly (e.g. new 
                 // keyword missing, and hiding a parent property)
                 // This could throw argument null exception if Field or PropertyInfo or Name are null
                 // Should check for these conditions eventually. 
-                var modelProperty = typeof(TEntity).GetProperty(field.PropertyInfo.Name);
+                var modelProperty = typeof(T).GetProperty(field.PropertyInfo.Name);
 
                 if (modelProperty != null)
                 {
