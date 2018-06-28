@@ -1,6 +1,6 @@
 ﻿namespace FlatFileParserUnitTests.Models
 {
-    internal class DummyStringModel
+    public class DummyStringModel
     {
         public string Id { get; set; } // TODO: Make this an int, and support field.TypeConverter
         public string Field1 { get; set; }
