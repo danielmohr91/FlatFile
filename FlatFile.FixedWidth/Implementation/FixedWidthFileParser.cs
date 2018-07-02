@@ -1,8 +1,12 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using FlatFile.FixedWidth.Interfaces;
+using FlatFileParserUnitTests.TypeConverters;
 
 namespace FlatFile.FixedWidth.Implementation
 {
@@ -53,7 +57,9 @@ namespace FlatFile.FixedWidth.Implementation
 
                 if (modelProperty != null)
                 {
-                    modelProperty.SetValue(model, row.Substring(field.StartPosition, field.Length));
+                    modelProperty.SetValue(
+                        model,
+                        GetConvertedValue(row.Substring(field.StartPosition, field.Length), modelProperty));
                 }
                 else
                 {
@@ -65,6 +71,24 @@ namespace FlatFile.FixedWidth.Implementation
             }
             
             return model;
+        }
+
+        private object GetConvertedValue(string stringValue, PropertyInfo propertyInfo)
+        {
+            if (propertyInfo.PropertyType == typeof(string))
+            {
+                return stringValue;
+            }
+
+            // TODO: Allow TypeConverter classes to overwrite default Parse method below. Hardcoding example for bool below for now.
+            if (propertyInfo.PropertyType == typeof(bool))
+            {
+                var converter = new BooleanTypeConverter();
+                stringValue = converter.GetConvertedString(stringValue);
+            }
+
+            var parseMethod = propertyInfo.PropertyType.GetMethod("Parse", new Type[] {typeof(string)});
+            return parseMethod.Invoke(null, new object[] { stringValue.Trim() });
         }
     }
 }

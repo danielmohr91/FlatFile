@@ -125,5 +125,12 @@
 				- Remember, DateTime is NOT a primitive type :)
 			- As a rule of thumb, favor CONVENTION over CONFIGURATION.
 
-6-28-18
-	- Refactored unit tests. Shared patterns and parsing for string tests and primitive type tests
+6-28-81
+	- Refactored unit tests. 
+	- Removed virtual method calls from constructor (ParserTestBase)
+	- Shared patterns and parsing for string tests and primitive type tests
+
+7-2-18
+	- Implemented default TypeConverter for primitive types w/ reflection and built in Parse method.
+	- Implemented boolean specific type converter to account for 0 and 1, and uppercase True / False strings. 
+	- Implemented unit tests for boolean type converter and number of rows matching input file

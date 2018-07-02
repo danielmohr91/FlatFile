@@ -64,7 +64,7 @@
             return true;
         }
 
-
+    
         public static bool operator ==(DummyStringModel x, DummyStringModel y)
         {
             return x.Equals(y);
