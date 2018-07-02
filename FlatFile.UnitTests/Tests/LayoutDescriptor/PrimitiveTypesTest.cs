@@ -64,15 +64,15 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
                 },
                 new PrimitiveTypes
                 {
-                    id = 3,
+                    id = 2,
                     charTest = 'c',
                     stringTest = "string3",
-                    boolTest = false, // '1' in test file
+                    boolTest = true, // '1' in test file
                     doubleTest = 123.45678910 // testing decimal to double
                 },
                 new PrimitiveTypes
                 {
-                    id = 4,
+                    id = 3,
                     charTest = '.',
                     stringTest = "ABCDEFG",
                     boolTest = true, // 'TRUE' in test file (testing caps)

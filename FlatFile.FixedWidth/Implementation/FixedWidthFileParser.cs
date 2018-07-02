@@ -73,11 +73,18 @@ namespace FlatFile.FixedWidth.Implementation
             return model;
         }
 
+        /// <summary>
+        /// Gets converted value. Strings are right trimmed. Primitive types are converted if possible using defaults.
+        /// </summary>
+        /// <param name="stringValue">String value to convert</param>
+        /// <param name="propertyInfo">Property info of target field in model</param>
+        /// <returns>Populated model</returns>
         private object GetConvertedValue(string stringValue, PropertyInfo propertyInfo)
         {
             if (propertyInfo.PropertyType == typeof(string))
             {
-                return stringValue;
+                // TODO: Trim behavior here should be configurable. Trimming trailing whitespace by default for the time being. 
+                return stringValue.TrimEnd();
             }
 
             // TODO: Allow TypeConverter classes to overwrite default Parse method below. Hardcoding example for bool below for now.

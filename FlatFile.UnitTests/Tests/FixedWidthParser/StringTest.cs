@@ -19,13 +19,14 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthParser
             for (var i = 0; i < 250; i++)
             {
                 var rowNumber = i + 1;
+               
                 generatedRows.Add(new DummyStringModel
                 {
                     Id = rowNumber.ToString().PadLeft(FieldWidth),
-                    Field1 = $"Row{rowNumber}Field1".PadRight(FieldWidth),
-                    Field2 = $"Row{rowNumber}Field2".PadRight(FieldWidth),
-                    Field3 = $"Row{rowNumber}Field3".PadRight(FieldWidth),
-                    Field4 = $"Row{rowNumber}Field4".PadRight(FieldWidth)
+                    Field1 = $"Row{rowNumber}Field1",
+                    Field2 = $"Row{rowNumber}Field2",
+                    Field3 = $"Row{rowNumber}Field3",
+                    Field4 = $"Row{rowNumber}Field4"
                 });
             }
 

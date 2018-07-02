@@ -1,4 +1,6 @@
-﻿namespace FlatFileParserUnitTests.Models
+﻿using System.Collections.Generic;
+
+namespace FlatFileParserUnitTests.Models
 {
     public class DummyStringModel
     {
@@ -64,7 +66,25 @@
             return true;
         }
 
-    
+        public override int GetHashCode()
+        {
+            var hashCode = -1292043955;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field1);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field2);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field3);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field4);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field5);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field6);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field7);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field8);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field9);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field10);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field11);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field12);
+            return hashCode;
+        }
+
         public static bool operator ==(DummyStringModel x, DummyStringModel y)
         {
             return x.Equals(y);

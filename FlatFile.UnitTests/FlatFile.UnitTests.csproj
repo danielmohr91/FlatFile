@@ -61,8 +61,6 @@
     <Compile Include="Models\FootballScore.cs" />
     <Compile Include="Models\DummyStringPairModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeConverters\BooleanTypeConverter.cs" />
-    <Compile Include="TypeConverters\Interfaces\IPrimitiveTypeConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="InputFiles\football.dat">
