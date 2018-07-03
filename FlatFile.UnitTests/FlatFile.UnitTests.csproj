@@ -51,10 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\Mocks\DummyFixedWidthFileParser.cs" />
-    <Compile Include="Models\PrimitiveTypes.cs" />
+    <Compile Include="Models\DateTimeModel.cs" />
+    <Compile Include="Models\PrimitiveTypesModel.cs" />
     <Compile Include="Models\DummyStringModel.cs" />
     <Compile Include="Tests\FixedWidthParser\StringTest.cs" />
     <Compile Include="Tests\LayoutDescriptor\ParserTestBase.cs" />
+    <Compile Include="Tests\TypeConverter\DateTimeConverterTests.cs" />
     <Compile Include="Tests\LayoutDescriptor\PrimitiveTypesTest.cs" />
     <Compile Include="Tests\LayoutDescriptor\LayoutDescriptorExpressionTests.cs" />
     <Compile Include="Infrastructure\FixedLayout\FixedFootballLayout.cs" />

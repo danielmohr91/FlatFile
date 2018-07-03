@@ -119,7 +119,6 @@
 *		- LEE - should this be a public property instead of a method? 
 	4. Remove tentative WithLayoutDescriptor extension method in FlatFileLayoutDescriptor. 
 		- Implement type converter by convention for primitive types, then go from there w/ the api. 
-			- ********* RESUME HERE ********* 
 			- Implement convention based type converter for primitive types. Use built in parse or tryparse methods. 
 			  Use type in existing PropertyInfo, don't make user pass in the type a second time. 
 				- Remember, DateTime is NOT a primitive type :)
@@ -137,3 +136,7 @@
 
 7-3-18
 	- Changed ParseFile to right trim string fields. This should eventually be configurable. 
+	- Added GetHashCode to both test models. Used R# default for now. 
+
+	- Started thinking through a generic type converter
+	- 			- ********* RESUME HERE ********* 

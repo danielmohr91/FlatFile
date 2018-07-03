@@ -2,7 +2,7 @@
 
 namespace FlatFileParserUnitTests.Models
 {
-    public class PrimitiveTypes
+    public class PrimitiveTypesModel
     {
         public int id { get; set; }
         public bool boolTest { get; set; }
@@ -13,7 +13,7 @@ namespace FlatFileParserUnitTests.Models
 
         public override bool Equals(object obj)
         {
-            return obj is PrimitiveTypes types &&
+            return obj is PrimitiveTypesModel types &&
                    id == types.id &&
                    boolTest == types.boolTest &&
                    stringTest == types.stringTest &&
@@ -21,7 +21,7 @@ namespace FlatFileParserUnitTests.Models
                    charTest == types.charTest;
         }
 
-        // Numeric value used to insert and identify PrimitiveTypes object in a hash-based collection such as the Dictionary<TKey, TValue> class, 
+        // Numeric value used to insert and identify PrimitiveTypesModel object in a hash-based collection such as the Dictionary<TKey, TValue> class, 
         // the Hashtable class, or a type derived from the DictionaryBase class. The GetHashCode method provides this hash code for algorithms 
         // that need quick checks of object equality.
 

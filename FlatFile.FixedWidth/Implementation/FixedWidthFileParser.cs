@@ -1,26 +1,25 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Reflection;
+using FlatFile.FixedWidth.Implementation.TypeConverters;
 using FlatFile.FixedWidth.Interfaces;
-using FlatFileParserUnitTests.TypeConverters;
 
 namespace FlatFile.FixedWidth.Implementation
 {
     public class FixedWidthFileParser<T> :
-        IFixedWidthFileParser<T> 
-        where T : new() 
+        IFixedWidthFileParser<T>
+        where T : new()
     {
         private readonly string filePath;
         private readonly IFlatFileLayoutDescriptor<T> layout;
+        private readonly IGenericTypeConverter converter; 
 
         public FixedWidthFileParser(IFlatFileLayoutDescriptor<T> layout, string filePath)
         {
             this.layout = layout;
             this.filePath = filePath;
+            converter = new GenericTypeConverter();
         }
 
         public ICollection<T> ParseFile()
@@ -37,6 +36,8 @@ namespace FlatFile.FixedWidth.Implementation
 
             return rows;
         }
+
+        
 
         /// <summary>
         ///     For each field in layout, the field is extracted from row and added to model (TEntity)
@@ -59,7 +60,7 @@ namespace FlatFile.FixedWidth.Implementation
                 {
                     modelProperty.SetValue(
                         model,
-                        GetConvertedValue(row.Substring(field.StartPosition, field.Length), modelProperty));
+                        converter.GetConvertedValue(row.Substring(field.StartPosition, field.Length), modelProperty));
                 }
                 else
                 {
@@ -69,33 +70,8 @@ namespace FlatFile.FixedWidth.Implementation
                     throw new Exception($"Model property with name {field.PropertyInfo.Name} was not found.");
                 }
             }
-            
+
             return model;
-        }
-
-        /// <summary>
-        /// Gets converted value. Strings are right trimmed. Primitive types are converted if possible using defaults.
-        /// </summary>
-        /// <param name="stringValue">String value to convert</param>
-        /// <param name="propertyInfo">Property info of target field in model</param>
-        /// <returns>Populated model</returns>
-        private object GetConvertedValue(string stringValue, PropertyInfo propertyInfo)
-        {
-            if (propertyInfo.PropertyType == typeof(string))
-            {
-                // TODO: Trim behavior here should be configurable. Trimming trailing whitespace by default for the time being. 
-                return stringValue.TrimEnd();
-            }
-
-            // TODO: Allow TypeConverter classes to overwrite default Parse method below. Hardcoding example for bool below for now.
-            if (propertyInfo.PropertyType == typeof(bool))
-            {
-                var converter = new BooleanTypeConverter();
-                stringValue = converter.GetConvertedString(stringValue);
-            }
-
-            var parseMethod = propertyInfo.PropertyType.GetMethod("Parse", new Type[] {typeof(string)});
-            return parseMethod.Invoke(null, new object[] { stringValue.Trim() });
         }
     }
 }

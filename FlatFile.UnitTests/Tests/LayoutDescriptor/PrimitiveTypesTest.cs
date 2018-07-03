@@ -10,7 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
 {
     [TestClass]
-    public class PrimitiveTypesTest : ParserTestBase<PrimitiveTypes>
+    public class PrimitiveTypesTest : ParserTestBase<PrimitiveTypesModel>
     {
         private readonly int defaultFieldLength = 10;
 
@@ -42,11 +42,11 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
             Assert.AreEqual(ParsedRows.Count, 4);
         }
 
-        protected override ICollection<PrimitiveTypes> GetExpectedRows()
+        protected override ICollection<PrimitiveTypesModel> GetExpectedRows()
         {
-            return new Collection<PrimitiveTypes>
+            return new Collection<PrimitiveTypesModel>
             {
-                new PrimitiveTypes
+                new PrimitiveTypesModel
                 {
                     id = 0,
                     charTest = 'a',
@@ -54,7 +54,7 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
                     boolTest = true,
                     doubleTest = 42
                 },
-                new PrimitiveTypes
+                new PrimitiveTypesModel
                 {
                     id = 1,
                     charTest = 'b',
@@ -62,7 +62,7 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
                     boolTest = false,
                     doubleTest = 36 // testing int to double
                 },
-                new PrimitiveTypes
+                new PrimitiveTypesModel
                 {
                     id = 2,
                     charTest = 'c',
@@ -70,7 +70,7 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
                     boolTest = true, // '1' in test file
                     doubleTest = 123.45678910 // testing decimal to double
                 },
-                new PrimitiveTypes
+                new PrimitiveTypesModel
                 {
                     id = 3,
                     charTest = '.',
@@ -87,9 +87,9 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
             return $"{directory}\\InputFiles\\PrimitiveTypesTest.dat"; // file properties should be "Content" and "Copy If Newer" (or similar)
         }
 
-        protected override IFlatFileLayoutDescriptor<PrimitiveTypes> GetLayout()
+        protected override IFlatFileLayoutDescriptor<PrimitiveTypesModel> GetLayout()
         {
-            return new LayoutDescriptor<PrimitiveTypes>()
+            return new LayoutDescriptor<PrimitiveTypesModel>()
                 .AppendField(x => x.id, defaultFieldLength)
                 .AppendField(x => x.charTest, defaultFieldLength)
                 .AppendField(x => x.stringTest, defaultFieldLength)

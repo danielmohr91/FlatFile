@@ -1,7 +1,7 @@
-﻿using FlatFileParserUnitTests.TypeConverters.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using FlatFileParserUnitTests.TypeConverters.Interfaces;
 
-namespace FlatFileParserUnitTests.TypeConverters
+namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
     internal class BooleanTypeConverter : IPrimitiveTypeConverter
     {
