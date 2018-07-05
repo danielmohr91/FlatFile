@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
@@ -35,7 +36,20 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
                 return stringValue.Trim();
             }
 
-            return parseMethod.Invoke(null, new object[] { stringValue.Trim() });
+            try
+            {
+                return parseMethod.Invoke(null, new object[] {stringValue.Trim()});
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null)
+                {
+                    // The inner exception is preferred (e.g. System.FormatException) over general reflection exception (TargetInvocationException)
+                    throw e.InnerException;
+                }
+
+                throw;
+            }
         }
     }
 }

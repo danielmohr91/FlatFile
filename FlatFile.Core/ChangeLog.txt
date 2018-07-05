@@ -137,6 +137,14 @@
 7-3-18
 	- Changed ParseFile to right trim string fields. This should eventually be configurable. 
 	- Added GetHashCode to both test models. Used R# default for now. 
-
 	- Started thinking through a generic type converter
-	- 			- ********* RESUME HERE ********* 
+		- Added unit test for DateTime. Works with generic Parse method. 
+		- Need to think through locale (MM/DD/YYYY vs. DD/MM/YYYY etc...)
+		- Need to add additional tests for four digit years, and other formats
+
+7-5-18
+	- Added unit tests for DateTime Converter. 
+		- Tested Dates, DateTimes, two vs. four digit years, w/ and w/o milliseconds, and for FormatException on invalid month.
+
+
+		- ********* RESUME HERE ********* 
