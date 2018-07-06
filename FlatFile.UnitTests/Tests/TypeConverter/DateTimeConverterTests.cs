@@ -4,7 +4,7 @@ using FlatFile.FixedWidth.Interfaces;
 using FlatFileParserUnitTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
+namespace FlatFileParserUnitTests.Tests.TypeConverter
 {
     [TestClass]
     public class DateTimeTest

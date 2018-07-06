@@ -44,7 +44,8 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
             {
                 if (e.InnerException != null)
                 {
-                    // The inner exception is preferred (e.g. System.FormatException) over general reflection exception (TargetInvocationException)
+                    // The inner exception is preferred (e.g. System.FormatException) 
+                    // over the wrapped reflection exception (TargetInvocationException)
                     throw e.InnerException;
                 }
 

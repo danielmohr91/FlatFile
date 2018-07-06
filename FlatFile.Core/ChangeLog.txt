@@ -146,5 +146,8 @@
 	- Added unit tests for DateTime Converter. 
 		- Tested Dates, DateTimes, two vs. four digit years, w/ and w/o milliseconds, and for FormatException on invalid month.
 
+7-6-18	
+	- Started planning out interface for allowing custom type converters
+	- Started a TypeConverter for a test enum (Days of week). Following documentation on MSND for type converters: https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
 
 		- ********* RESUME HERE ********* 
