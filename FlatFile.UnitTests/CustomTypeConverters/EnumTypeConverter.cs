@@ -51,7 +51,7 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
             supportedValues = (ICollection) conversions.Keys;
         }
 
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+ public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             if (sourceType == typeof(string))
             {

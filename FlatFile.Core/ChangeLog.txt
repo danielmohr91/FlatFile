@@ -150,4 +150,7 @@
 	- Started planning out interface for allowing custom type converters
 	- Started a TypeConverter for a test enum (Days of week). Following documentation on MSND for type converters: https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
 
+7-9-18
+	- Tested conversions to Day enum from single character codes, abbreviated days, full days, and bad input
+
 		- ********* RESUME HERE ********* 
