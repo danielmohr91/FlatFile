@@ -15,7 +15,7 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
         private readonly int defaultFieldLength = 10;
 
         [TestMethod]
-        public void Should_ConvertStringToBool_When_TypeConverterDefined()
+        public void Should_ConvertStringToBool_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows

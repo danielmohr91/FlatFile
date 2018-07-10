@@ -153,4 +153,15 @@
 7-9-18
 	- Tested conversions to Day enum from single character codes, abbreviated days, full days, and bad input
 
+7-10-18
+	- Added unit tests for custom type converter
+		- Compared collection of parsed rows from new test file to expected. 
+		- Gave consideration to the following:			
+			- string to enum check
+			- primitive type and string regression check within the same model
+
+7-11-18
+	- TODO - Tie up custom type converter in GetModelFromLine
+
+
 		- ********* RESUME HERE ********* 

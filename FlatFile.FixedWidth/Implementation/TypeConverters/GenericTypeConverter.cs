@@ -4,7 +4,7 @@ using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    // TODO: Make this a factory that chooses an ITypeConverter subclass for the conversion
+    // TODO: Make this a factory that chooses an ITypeConverter subclass for the conversion?
     public class GenericTypeConverter : IGenericTypeConverter
     {
         /// <summary>

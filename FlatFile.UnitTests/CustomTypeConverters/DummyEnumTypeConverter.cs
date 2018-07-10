@@ -18,12 +18,12 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
     }
 
     // Documentation: https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
-    public class EnumTypeConverter : TypeConverter
+    public class DummyEnumTypeConverter : TypeConverter
     {
         private readonly IDictionary<string, Day> conversions;
         private readonly ICollection supportedValues;
 
-        public EnumTypeConverter()
+        public DummyEnumTypeConverter()
         {
             conversions = new Dictionary<string, Day>
             {
@@ -51,7 +51,7 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
             supportedValues = (ICollection) conversions.Keys;
         }
 
- public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             if (sourceType == typeof(string))
             {
