@@ -13,13 +13,13 @@ namespace FlatFile.FixedWidth.Implementation
     {
         private readonly string filePath;
         private readonly IFlatFileLayoutDescriptor<T> layout;
-        private readonly IGenericTypeConverter converter; 
+        private readonly ITypeConverter defaultConverter; 
 
         public FixedWidthFileParser(IFlatFileLayoutDescriptor<T> layout, string filePath)
         {
             this.layout = layout;
             this.filePath = filePath;
-            converter = new GenericTypeConverter();
+            defaultConverter = new PrimitiveTypeConverter();
         }
 
         public ICollection<T> ParseFile()
@@ -58,9 +58,15 @@ namespace FlatFile.FixedWidth.Implementation
 
                 if (modelProperty != null)
                 {
+                    var stringToConvert = row.Substring(field.StartPosition, field.Length);
+                    
+                    var convertedValue = field.TypeConverter == null 
+                        ? defaultConverter.ConvertFromString(stringToConvert, modelProperty)
+                        : field.TypeConverter.ConvertFromString(stringToConvert, modelProperty);
+
                     modelProperty.SetValue(
                         model,
-                        converter.GetConvertedValue(row.Substring(field.StartPosition, field.Length), modelProperty));
+                        convertedValue);
                 }
                 else
                 {

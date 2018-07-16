@@ -160,8 +160,11 @@
 			- string to enum check
 			- primitive type and string regression check within the same model
 
-7-11-18
-	- TODO - Tie up custom type converter in GetModelFromLine
+7-16-18
+	- Added field.TypeConverter and tied up with AppendField
+	- Added conditional in FixedWidthFileParser to choose the default or custom type converter
+	- Tied up loose ends, unit tests for converting string to enum w/ custom type convert all pass. 
 
+	TODO: tidy up and refactor above feature
 
 		- ********* RESUME HERE ********* 

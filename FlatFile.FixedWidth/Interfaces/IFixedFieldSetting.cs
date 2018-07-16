@@ -23,5 +23,10 @@ namespace FlatFile.FixedWidth.Interfaces
         /// Property Info for target field
         /// </summary>
         PropertyInfo PropertyInfo { get; set; }
+
+        /// <summary>
+        /// Custom Type Converter (overrides default converter)
+        /// </summary>
+        ITypeConverter TypeConverter { get; set; }
     }
 }

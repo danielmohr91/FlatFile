@@ -68,6 +68,20 @@ namespace FlatFile.FixedWidth.Implementation
             return this;
         }
 
+        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter typeConverter)
+        {
+            var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
+
+            Add(fieldLength, propertyInfo, typeConverter);
+            return this;
+        }
+
+        private void Add(int length, PropertyInfo property, ITypeConverter typeConverter)
+        {
+            Add(length, property);
+            fields[currentPosition].TypeConverter = typeConverter;
+        }
+
         /// <summary>
         ///     Adds Property Info into next available position. Positions are managed internally, and Length is calculated base on
         ///     last position and last field length.

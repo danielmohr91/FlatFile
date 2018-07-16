@@ -10,5 +10,7 @@ namespace FlatFile.FixedWidth.Models
         public int StartPosition { get; set; }
 
         public PropertyInfo PropertyInfo { get; set; }
+
+        public ITypeConverter TypeConverter { get; set; }
     }
 }

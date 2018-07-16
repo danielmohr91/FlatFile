@@ -9,18 +9,18 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
     [TestClass]
     public class DateTimeTest
     {
-        private readonly IGenericTypeConverter converter;
+        private readonly ITypeConverter converter;
 
         public DateTimeTest()
         {
-            converter = new GenericTypeConverter();
+            converter = new FlatFile.FixedWidth.Implementation.TypeConverters.PrimitiveTypeConverter();
         }
 
         [TestMethod]
         public void Should_ConvertStringDateToDateTime_When_DefaultTypeConverterIsUsed()
         {
             var model = new DateTimeModel();
-            var date = converter.GetConvertedValue("1/25/01", model.GetType().GetProperty("DateTime1"));
+            var date = converter.ConvertFromString("1/25/01", model.GetType().GetProperty("DateTime1"));
             Assert.AreEqual((DateTime) date, new DateTime(2001, 1, 25));
         }
 
@@ -28,7 +28,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         public void Should_ConvertShortStringDateTimeToDateTime_When_DefaultTypeConverterIsUsed()
         {
             var model = new DateTimeModel();
-            var date = converter.GetConvertedValue("1/25/01 14:30:00", model.GetType().GetProperty("DateTime1"));
+            var date = converter.ConvertFromString("1/25/01 14:30:00", model.GetType().GetProperty("DateTime1"));
             Assert.AreEqual((DateTime) date, new DateTime(2001, 1, 25, 14, 30, 0));
         }
 
@@ -36,7 +36,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         public void Should_ConvertLongStringDateTimeToDateTime_When_DefaultTypeConverterIsUsed()
         {
             var model = new DateTimeModel();
-            var date = converter.GetConvertedValue("01-25-1991 14:30:15.123", model.GetType().GetProperty("DateTime1"));
+            var date = converter.ConvertFromString("01-25-1991 14:30:15.123", model.GetType().GetProperty("DateTime1"));
             Assert.AreEqual((DateTime)date, new DateTime(1991, 1, 25, 14, 30, 15, 123));
         }
         
@@ -45,7 +45,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         public void Should_ThrowFormatException_When_InvalidMonthIsParsed()
         {
             var model = new DateTimeModel();
-            var date = converter.GetConvertedValue("13-25-1991 14:30:15.123", model.GetType().GetProperty("DateTime1"));
+            var date = converter.ConvertFromString("13-25-1991 14:30:15.123", model.GetType().GetProperty("DateTime1"));
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Reflection;
+using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFileParserUnitTests.CustomTypeConverters
 {
@@ -18,7 +20,7 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
     }
 
     // Documentation: https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
-    public class DummyEnumTypeConverter : TypeConverter
+    public class DummyEnumTypeConverter : TypeConverter, ITypeConverter
     {
         private readonly IDictionary<string, Day> conversions;
         private readonly ICollection supportedValues;
@@ -84,7 +86,7 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
 
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            // return a TypeConverter.StandardValuesCollection containing the standard values for the property type.
+            // return a PrimitiveTypeConverter.StandardValuesCollection containing the standard values for the property type.
             // The standard values for a property must be of the same type as the property itself
             return new StandardValuesCollection(supportedValues);
         }
@@ -97,6 +99,12 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
         public override bool IsValid(ITypeDescriptorContext context, object value)
         {
             return base.IsValid(context, value);
+        }
+
+        // ITypeConverter uses PropertyInfo. .NET library does not. Wrapping .NET call for now.
+        public object ConvertFromString(string stringValue, PropertyInfo propertyInfo)
+        {
+            return ConvertFromString(stringValue.Trim());
         }
     }
 }

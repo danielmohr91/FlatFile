@@ -40,9 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\TypeConverters\GenericTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\PrimitiveTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\BooleanTypeConverter.cs" />
-    <Compile Include="Interfaces\IGenericTypeConverter.cs" />
+    <Compile Include="Interfaces\ITypeConverter.cs" />
     <Compile Include="Interfaces\IFixedFieldSetting.cs" />
     <Compile Include="Interfaces\IFixedWidthFileParser.cs" />
     <Compile Include="Interfaces\IFlatFileLayoutDescriptor.cs" />
