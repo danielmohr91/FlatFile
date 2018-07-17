@@ -18,9 +18,9 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
                 .Trim()
                 .ToLower();
 
-            string value; 
-            return conversions.TryGetValue(unparsedString, out value) 
-                ? value 
+            string value;
+            return conversions.TryGetValue(unparsedString, out value)
+                ? value
                 : unparsedString;
         }
 

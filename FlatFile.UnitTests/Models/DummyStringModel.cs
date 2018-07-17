@@ -20,11 +20,10 @@ namespace FlatFileParserUnitTests.Models
 
         public override bool Equals(object obj)
         {
-
             // C# 7 Pattern matching
             // This breaks in VS 2015 / C#6 compiler
             // https://www.danielcrabtree.com/blog/152/c-sharp-7-is-operator-patterns-you-wont-need-as-as-often
-            
+
             // Option 1
             //var model = obj as DummyStringModel;
             //if (model is null)
@@ -42,7 +41,7 @@ namespace FlatFileParserUnitTests.Models
 
             // C# 6 polyfill
             var model = (DummyStringModel) obj;
-            if ( object.Equals(model, null))
+            if (Equals(model, null))
             {
                 return false;
             }

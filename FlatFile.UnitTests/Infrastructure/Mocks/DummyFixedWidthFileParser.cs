@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using FlatFile.FixedWidth.Implementation;
 using FlatFile.FixedWidth.Interfaces;
-using FlatFileParserUnitTests.Models;
 
 namespace FlatFileParserUnitTests.Infrastructure.Mocks
 {
@@ -18,7 +15,6 @@ namespace FlatFileParserUnitTests.Infrastructure.Mocks
         // Lee - would 'GetParsedFile' be a better method name? 
         public ICollection<TEntity> ParseFile()
         {
-            
             return null;
         }
     }

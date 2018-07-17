@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using FlatFile.FixedWidth.Implementation;
 using FlatFile.FixedWidth.Interfaces;
 using FlatFileParserUnitTests.Models;
@@ -13,13 +12,31 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthParser
     [TestClass]
     public class StringTest : ParserTestBase<DummyStringModel>
     {
+        [TestMethod]
+        public void Should_ParseAllFieldsMatchingExpected_When_ParseFileIsCalled()
+        {
+            AssertAllRowsMatchExpected();
+        }
+
+        [TestMethod]
+        public void Should_ParseFirstRowMatchingExpected_When_ParseFileIsCalled()
+        {
+            AssertFirstRowMatchesExpected();
+        }
+
+        [TestMethod]
+        public void Should_Read250Rows_When_InputFileHas250Rows()
+        {
+            Assert.AreEqual(ParsedRows.Count, 250);
+        }
+
         protected override ICollection<DummyStringModel> GetExpectedRows()
         {
             ICollection<DummyStringModel> generatedRows = new Collection<DummyStringModel>();
             for (var i = 0; i < 250; i++)
             {
                 var rowNumber = i + 1;
-               
+
                 generatedRows.Add(new DummyStringModel
                 {
                     Id = rowNumber.ToString().PadLeft(FieldWidth),
@@ -31,24 +48,6 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthParser
             }
 
             return generatedRows;
-        }
-
-        [TestMethod]
-        public void Should_Read250Rows_When_InputFileHas250Rows()
-        {
-            Assert.AreEqual(ParsedRows.Count, 250);
-        }
-
-        [TestMethod]
-        public void Should_ParseFirstRowMatchingExpected_When_ParseFileIsCalled()
-        {
-            AssertFirstRowMatchesExpected();
-        }
-
-        [TestMethod]
-        public void Should_ParseAllFieldsMatchingExpected_When_ParseFileIsCalled()
-        {
-            AssertAllRowsMatchExpected();
         }
 
         protected override string GetFilePath()

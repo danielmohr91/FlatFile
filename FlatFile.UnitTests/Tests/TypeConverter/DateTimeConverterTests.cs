@@ -13,15 +13,15 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
 
         public DateTimeTest()
         {
-            converter = new FlatFile.FixedWidth.Implementation.TypeConverters.PrimitiveTypeConverter();
+            converter = new PrimitiveTypeConverter();
         }
 
         [TestMethod]
-        public void Should_ConvertStringDateToDateTime_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertLongStringDateTimeToDateTime_When_DefaultTypeConverterIsUsed()
         {
             var model = new DateTimeModel();
-            var date = converter.ConvertFromString("1/25/01", model.GetType().GetProperty("DateTime1"));
-            Assert.AreEqual((DateTime) date, new DateTime(2001, 1, 25));
+            var date = converter.ConvertFromString("01-25-1991 14:30:15.123", model.GetType().GetProperty("DateTime1"));
+            Assert.AreEqual((DateTime) date, new DateTime(1991, 1, 25, 14, 30, 15, 123));
         }
 
         [TestMethod]
@@ -33,13 +33,13 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ConvertLongStringDateTimeToDateTime_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertStringDateToDateTime_When_DefaultTypeConverterIsUsed()
         {
             var model = new DateTimeModel();
-            var date = converter.ConvertFromString("01-25-1991 14:30:15.123", model.GetType().GetProperty("DateTime1"));
-            Assert.AreEqual((DateTime)date, new DateTime(1991, 1, 25, 14, 30, 15, 123));
+            var date = converter.ConvertFromString("1/25/01", model.GetType().GetProperty("DateTime1"));
+            Assert.AreEqual((DateTime) date, new DateTime(2001, 1, 25));
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(FormatException), "String was not recognized as a valid DateTime")]
         public void Should_ThrowFormatException_When_InvalidMonthIsParsed()
