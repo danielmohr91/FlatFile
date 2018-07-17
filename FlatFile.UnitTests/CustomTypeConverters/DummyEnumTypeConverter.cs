@@ -5,20 +5,10 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 using FlatFile.FixedWidth.Interfaces;
+using FlatFileParserUnitTests.Enum;
 
 namespace FlatFileParserUnitTests.CustomTypeConverters
 {
-    public enum Day
-    {
-        Sun,
-        Mon,
-        Tues,
-        Wed,
-        Thu,
-        Fri,
-        Sat
-    }
-
     // Documentation: https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
     public class DummyEnumTypeConverter : TypeConverter, ITypeConverter
     {
@@ -61,17 +51,7 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-
-            return base.CanConvertFrom(context, sourceType);
-        }
-
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
-        {
-            return base.CanConvertTo(context, destinationType);
+            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
@@ -84,12 +64,6 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
             return base.ConvertFrom(context, culture, value);
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
-        {
-            return base.ConvertTo(context, culture, value, destinationType);
-        }
-
-
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
             // return a PrimitiveTypeConverter.StandardValuesCollection containing the standard values for the property type.
@@ -100,11 +74,6 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
         public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
         {
             return true;
-        }
-
-        public override bool IsValid(ITypeDescriptorContext context, object value)
-        {
-            return base.IsValid(context, value);
         }
     }
 }

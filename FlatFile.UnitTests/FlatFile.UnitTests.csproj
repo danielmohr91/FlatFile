@@ -50,6 +50,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\Day.cs" />
     <Compile Include="CustomTypeConverters\DummyEnumTypeConverter.cs" />
     <Compile Include="Infrastructure\Mocks\DummyFixedWidthFileParser.cs" />
     <Compile Include="Models\DateTimeModel.cs" />

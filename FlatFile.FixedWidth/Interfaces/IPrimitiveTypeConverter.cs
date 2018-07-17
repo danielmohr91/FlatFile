@@ -1,4 +1,4 @@
-﻿namespace FlatFileParserUnitTests.TypeConverters.Interfaces
+﻿namespace FlatFile.FixedWidth.Interfaces
 {
     public interface IPrimitiveTypeConverter
     {

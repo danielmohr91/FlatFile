@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using FlatFile.FixedWidth.Implementation.TypeConverters;
 using FlatFile.FixedWidth.Interfaces;
 
@@ -11,9 +10,9 @@ namespace FlatFile.FixedWidth.Implementation
         IFixedWidthFileParser<T>
         where T : new()
     {
+        private readonly ITypeConverter defaultConverter;
         private readonly string filePath;
         private readonly IFlatFileLayoutDescriptor<T> layout;
-        private readonly ITypeConverter defaultConverter; 
 
         public FixedWidthFileParser(IFlatFileLayoutDescriptor<T> layout, string filePath)
         {
@@ -37,7 +36,6 @@ namespace FlatFile.FixedWidth.Implementation
             return rows;
         }
 
-        
 
         /// <summary>
         ///     For each field in layout, the field is extracted from row and added to model (TEntity)
@@ -59,8 +57,8 @@ namespace FlatFile.FixedWidth.Implementation
                 if (modelProperty != null)
                 {
                     var stringToConvert = row.Substring(field.StartPosition, field.Length);
-                    
-                    var convertedValue = field.TypeConverter == null 
+
+                    var convertedValue = field.TypeConverter == null
                         ? defaultConverter.ConvertFromString(stringToConvert, modelProperty)
                         : field.TypeConverter.ConvertFromString(stringToConvert, modelProperty);
 

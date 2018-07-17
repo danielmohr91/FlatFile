@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FlatFileParserUnitTests.TypeConverters.Interfaces;
+using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {

@@ -5,6 +5,7 @@ using System.Linq;
 using FlatFile.FixedWidth.Implementation;
 using FlatFile.FixedWidth.Interfaces;
 using FlatFileParserUnitTests.CustomTypeConverters;
+using FlatFileParserUnitTests.Enum;
 using FlatFileParserUnitTests.Models;
 using FlatFileParserUnitTests.Tests.LayoutDescriptor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

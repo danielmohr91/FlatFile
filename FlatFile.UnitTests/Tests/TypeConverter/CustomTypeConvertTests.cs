@@ -1,4 +1,5 @@
 ﻿using FlatFileParserUnitTests.CustomTypeConverters;
+using FlatFileParserUnitTests.Enum;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatFileParserUnitTests.Tests.TypeConverter

@@ -9,21 +9,20 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
     {
         /// <summary>
         ///     Gets converted value. Strings are right trimmed. Types with built in Parse method (e.g. primitive types, and some
-        ///     others)
-        ///     are converted if possible using defaults.
+        ///     others) are converted if possible by convention.
         /// </summary>
         /// <param name="stringValue">String value to convert</param>
         /// <param name="propertyInfo">Property info of target field in model</param>
         /// <returns>Populated model</returns>
         public object ConvertFromString(string stringValue, PropertyInfo propertyInfo)
         {
+
             if (propertyInfo.PropertyType == typeof(string))
             {
                 // TODO: Trim behavior here should be configurable. Trimming trailing whitespace by default for the time being. 
                 return stringValue.TrimEnd();
             }
 
-            // TODO: Allow PrimitiveTypeConverter classes to overwrite default Parse method below. Hardcoding example for bool below for now.
             if (propertyInfo.PropertyType == typeof(bool))
             {
                 var converter = new BooleanTypeConverter();
@@ -36,7 +35,7 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
             {
                 // User should implement a custom type converter instead of relying on this primitive type converter.
                 // Perhaps throw not implemented exception here instead. 
-                return stringValue.Trim(); 
+                return stringValue.Trim();
             }
 
             try

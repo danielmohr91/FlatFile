@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FlatFileParserUnitTests.CustomTypeConverters;
+using FlatFileParserUnitTests.Enum;
 
 namespace FlatFileParserUnitTests.Models
 {
