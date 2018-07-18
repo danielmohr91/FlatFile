@@ -19,6 +19,7 @@ namespace FlatFile.FixedWidth.Implementation
     {
         private readonly IDictionary<int, IFixedFieldSetting> fields;
         private int currentPosition;
+        private ICollection<IFixedFieldSetting> orderedFields;
 
         public LayoutDescriptor()
         {
@@ -44,10 +45,15 @@ namespace FlatFile.FixedWidth.Implementation
             // NOPE - Unable to cast object of type 'WhereSelectEnumerableIterator`2[System.Collections.Generic.KeyValuePair`2[System.Int32,FlatFile.FixedWidth.Interfaces.IFixedFieldSetting],FlatFile.FixedWidth.Interfaces.IFixedFieldSetting]' to type 
             // This cast generated an invalid cast exception, details above. Using ToList instead. 
 
-            return fields
-                .OrderBy(x => x.Key)
-                .Select(x => x.Value)
-                .ToList();
+            if (orderedFields == null)
+            {
+                orderedFields = fields
+                    .OrderBy(x => x.Key)
+                    .Select(x => x.Value)
+                    .ToList();
+            }
+
+            return orderedFields;
         }
 
         /// <summary>
@@ -62,16 +68,18 @@ namespace FlatFile.FixedWidth.Implementation
             return this;
         }
 
-        // Maybe pass type converter expression in with lambda expression? 
-        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, LambdaExpression typeConverter)
+        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter typeConverter)
         {
-            throw new NotImplementedException();
+            var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
+
+            Add(fieldLength, propertyInfo, typeConverter);
+            return this;
         }
 
-        // Maybe pass in a ITypeConverter object? 
-        public IFlatFileLayoutDescriptor<TTarget> WithTypeConverter<TTypeConverter>()
+        private void Add(int length, PropertyInfo property, ITypeConverter typeConverter)
         {
-            throw new NotImplementedException();
+            Add(length, property);
+            fields[currentPosition].TypeConverter = typeConverter;
         }
 
         /// <summary>
@@ -98,6 +106,8 @@ namespace FlatFile.FixedWidth.Implementation
             };
 
             fields[currentPosition] = setting;
+
+            orderedFields = null; // Ordered fields are now dirty, clear cache
         }
 
 

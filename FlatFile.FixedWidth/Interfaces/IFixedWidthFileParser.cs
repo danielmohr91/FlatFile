@@ -2,8 +2,8 @@
 
 namespace FlatFile.FixedWidth.Interfaces
 {
-    public interface IFixedWidthFileParser<TEntity, TFile>
+    public interface IFixedWidthFileParser<T>
     {
-        TFile ParseFile();
+        ICollection<T> ParseFile();
     }
 }

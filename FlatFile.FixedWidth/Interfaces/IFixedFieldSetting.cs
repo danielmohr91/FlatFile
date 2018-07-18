@@ -1,27 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
 namespace FlatFile.FixedWidth.Interfaces
 {
     public interface IFixedFieldSetting
     {
         /// <summary>
-        /// Length of the field
+        ///     Length of the field
         /// </summary>
         int Length { get; set; }
 
         /// <summary>
-        /// Zero based start position from the left
+        ///     Zero based start position from the left
         /// </summary>
         int StartPosition { get; set; }
 
         /// <summary>
-        /// Property Info for target field
+        ///     Property Info for target field
         /// </summary>
         PropertyInfo PropertyInfo { get; set; }
+
+        /// <summary>
+        ///     Custom Type Converter (overrides default converter)
+        /// </summary>
+        ITypeConverter TypeConverter { get; set; }
     }
 }

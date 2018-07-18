@@ -1,8 +1,10 @@
-﻿namespace FlatFileParserUnitTests.Models
+﻿using System.Collections.Generic;
+
+namespace FlatFileParserUnitTests.Models
 {
-    internal class DummyStringModel
+    public class DummyStringModel
     {
-        public string Id { get; set; } // TODO: Make this an int, and support field.TypeConverter
+        public string Id { get; set; } // TODO: Make this an int, and support field.PrimitiveTypeConverter
         public string Field1 { get; set; }
         public string Field2 { get; set; }
         public string Field3 { get; set; }
@@ -18,11 +20,10 @@
 
         public override bool Equals(object obj)
         {
-
             // C# 7 Pattern matching
             // This breaks in VS 2015 / C#6 compiler
             // https://www.danielcrabtree.com/blog/152/c-sharp-7-is-operator-patterns-you-wont-need-as-as-often
-            
+
             // Option 1
             //var model = obj as DummyStringModel;
             //if (model is null)
@@ -40,7 +41,7 @@
 
             // C# 6 polyfill
             var model = (DummyStringModel) obj;
-            if ( object.Equals(model, null))
+            if (Equals(model, null))
             {
                 return false;
             }
@@ -64,6 +65,24 @@
             return true;
         }
 
+        public override int GetHashCode()
+        {
+            var hashCode = -1292043955;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field1);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field2);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field3);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field4);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field5);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field6);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field7);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field8);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field9);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field10);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field11);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Field12);
+            return hashCode;
+        }
 
         public static bool operator ==(DummyStringModel x, DummyStringModel y)
         {

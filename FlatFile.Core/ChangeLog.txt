@@ -102,3 +102,72 @@
 			- .AppendField(x => x.id, fieldLength).WithTypeConverter<StringConverter>()
 			- signature: IFlatFileLayoutDescriptor<TTarget> WithTypeConverter<TTypeConverter>();
 	- Polyfilled C# 6 safe equals method in DummyStringModel. Unit tests pass, can now build in C# 6 / VS 2015
+
+
+6-27-18 - Code Review Comments
+	1. Leave ParseFile's return type as ICollection. Don't switch to IEnumerable, since we use the "Add" method internally. 
+		- Remove class level generic TFile
+		- Just return an ICollection (already in place) of type TEntity in ParseFile
+			- e.g. Interface for ParseFile is simply ICollection<T> ParseFile. Not TFile (that allows ICollection to be any type via a second generic)
+		- DONE
+	2. ParseFile implementation is good. 
+		- +1 on reading line by line via the stream. ReadLine from stream preferable over ReadAllLines, so whole file isn't in memory
+	3. Cache OrderedFields either in LayoutDescriptor, or in a variable above the loop in GetModelFromLine
+		- DONE
+			- Thought best to cache in LayoutDescriptor, in so cached for any others calls to get ordered fields going forward. 
+			- Saved as class level field. Marked this dirty in the Add method, so recalculated after field is appended
+*		- LEE - should this be a public property instead of a method? 
+	4. Remove tentative WithLayoutDescriptor extension method in FlatFileLayoutDescriptor. 
+		- Implement type converter by convention for primitive types, then go from there w/ the api. 
+			- Implement convention based type converter for primitive types. Use built in parse or tryparse methods. 
+			  Use type in existing PropertyInfo, don't make user pass in the type a second time. 
+				- Remember, DateTime is NOT a primitive type :)
+			- As a rule of thumb, favor CONVENTION over CONFIGURATION.
+
+6-28-81
+	- Refactored unit tests. 
+	- Removed virtual method calls from constructor (ParserTestBase)
+	- Shared patterns and parsing for string tests and primitive type tests
+
+7-2-18
+	- Implemented default TypeConverter for primitive types w/ reflection and built in Parse method.
+	- Implemented boolean specific type converter to account for 0 and 1, and uppercase True / False strings. 
+	- Implemented unit tests for boolean type converter and number of rows matching input file
+
+7-3-18
+	- Changed ParseFile to right trim string fields. This should eventually be configurable. 
+	- Added GetHashCode to both test models. Used R# default for now. 
+	- Started thinking through a generic type converter
+		- Added unit test for DateTime. Works with generic Parse method. 
+		- Need to think through locale (MM/DD/YYYY vs. DD/MM/YYYY etc...)
+		- Need to add additional tests for four digit years, and other formats
+
+7-5-18
+	- Added unit tests for DateTime Converter. 
+		- Tested Dates, DateTimes, two vs. four digit years, w/ and w/o milliseconds, and for FormatException on invalid month.
+
+7-6-18	
+	- Started planning out interface for allowing custom type converters
+	- Started a TypeConverter for a test enum (Days of week). Following documentation on MSND for type converters: https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
+
+7-9-18
+	- Tested conversions to Day enum from single character codes, abbreviated days, full days, and bad input
+
+7-10-18
+	- Added unit tests for custom type converter
+		- Compared collection of parsed rows from new test file to expected. 
+		- Gave consideration to the following:			
+			- string to enum check
+			- primitive type and string regression check within the same model
+
+7-16-18
+	- Added field.TypeConverter and tied up with AppendField
+	- Added conditional in FixedWidthFileParser to choose the default or custom type converter
+	- Tied up loose ends, unit tests for converting string to enum w/ custom type convert all pass. 
+	- TODO: Perhaps change the boolean type converter from IPrimitiveTypeConverter to ITypeConverter. 
+		- All that is needed is the dictionary from 1, 0 and bad casing on "true" and "false", to "true" and "false". 
+		- The rest is shared with the generic type converter. No changes recommended. 
+
+	TODO: tidy up and refactor above feature
+
+		- ********* RESUME HERE ********* 
