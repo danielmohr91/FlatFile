@@ -5,6 +5,7 @@ using FlatFile.FixedWidth.Interfaces;
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
     // TODO: Make this a factory that chooses an ITypeConverter subclass for the conversion?
+    // NO - custom type converters will be added to field.TypeConverter 
     public class PrimitiveTypeConverter : ITypeConverter
     {
         /// <summary>
@@ -29,6 +30,11 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
                 stringValue = converter.GetConvertedString(stringValue);
             }
 
+            return InvokeParse(stringValue, propertyInfo);
+        }
+
+        private object InvokeParse(string stringValue, PropertyInfo propertyInfo)
+        {
             var parseMethod = propertyInfo.PropertyType.GetMethod("Parse", new[] {typeof(string)});
 
             if (parseMethod == null)

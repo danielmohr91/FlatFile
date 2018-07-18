@@ -164,6 +164,9 @@
 	- Added field.TypeConverter and tied up with AppendField
 	- Added conditional in FixedWidthFileParser to choose the default or custom type converter
 	- Tied up loose ends, unit tests for converting string to enum w/ custom type convert all pass. 
+	- TODO: Perhaps change the boolean type converter from IPrimitiveTypeConverter to ITypeConverter. 
+		- All that is needed is the dictionary from 1, 0 and bad casing on "true" and "false", to "true" and "false". 
+		- The rest is shared with the generic type converter. No changes recommended. 
 
 	TODO: tidy up and refactor above feature
 
