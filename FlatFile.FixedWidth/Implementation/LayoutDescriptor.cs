@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using FlatFile.FixedWidth.Implementation.TypeConverters;
 using FlatFile.FixedWidth.Interfaces;
 using FlatFile.FixedWidth.Models;
 
@@ -20,10 +21,12 @@ namespace FlatFile.FixedWidth.Implementation
         private readonly IDictionary<int, IFixedFieldSetting> fields;
         private int currentPosition;
         private ICollection<IFixedFieldSetting> orderedFields;
+        private readonly IDictionary<Type, object> TypeConverters;
 
         public LayoutDescriptor()
         {
             fields = new Dictionary<int, IFixedFieldSetting>();
+            TypeConverters = GetTypeConverters();
         }
 
         /// <summary>
@@ -32,6 +35,20 @@ namespace FlatFile.FixedWidth.Implementation
         /// </summary>
         public IFixedFieldSetting GetField(int key) => fields[key];
 
+        private IDictionary<Type, object> GetTypeConverters()
+        {
+            return new Dictionary<Type, object>
+            {
+                {
+                    typeof(int),
+                    new IntTypeConverter()
+                },
+                {
+                    typeof(bool),
+                    new BooleanTypeConverter()
+                }
+            };
+        }
 
         /// <inheritdoc />
         public ICollection<IFixedFieldSetting> GetOrderedFields()
@@ -64,8 +81,13 @@ namespace FlatFile.FixedWidth.Implementation
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
 
-            Add(fieldLength, propertyInfo);
-            return this;
+           if(propertyInfo != null && TypeConverters.TryGetValue(propertyInfo.PropertyType, out var converter))
+            {
+                Add(fieldLength, propertyInfo, converter);
+                return this;
+            }
+
+           throw new ArgumentException($"No default type converter defined for object type: {propertyInfo?.PropertyType}. Please explicitely define a TypeConverter.");
         }
 
         public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter typeConverter)

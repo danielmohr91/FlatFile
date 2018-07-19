@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using FlatFile.FixedWidth.Implementation.TypeConverters;
 using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation
@@ -10,15 +9,18 @@ namespace FlatFile.FixedWidth.Implementation
         IFixedWidthFileParser<T>
         where T : new()
     {
-        private readonly ITypeConverter defaultConverter;
         private readonly string filePath;
         private readonly IFlatFileLayoutDescriptor<T> layout;
+
 
         public FixedWidthFileParser(IFlatFileLayoutDescriptor<T> layout, string filePath)
         {
             this.layout = layout;
             this.filePath = filePath;
-            defaultConverter = new PrimitiveTypeConverter();
+
+
+            // NO - set typeconverter based on type here (dictionary)
+            //defaultConverter = new PrimitiveTypeConverter();
         }
 
         public ICollection<T> ParseFile()

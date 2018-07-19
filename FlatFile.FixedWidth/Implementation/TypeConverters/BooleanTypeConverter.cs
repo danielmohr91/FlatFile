@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using FlatFile.FixedWidth.Interfaces;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    internal class BooleanTypeConverter : IPrimitiveTypeConverter
+    internal class BooleanTypeConverter : TypeConverter
     {
         private readonly Dictionary<string, string> conversions;
 
@@ -12,7 +13,19 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
             conversions = GetConversions();
         }
 
-        public string GetConvertedString(string unparsedString)
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        {
+            var sanitizedString = GetSanitizedString(value.ToString());
+
+            if (conversions.TryGetValue(sanitizedString, out var normalizedBoolString))
+            {
+                return bool.Parse(normalizedBoolString);
+            }
+
+            return base.ConvertFrom(context, culture, sanitizedString);
+        }
+
+        public string GetSanitizedString(string unparsedString)
         {
             unparsedString = unparsedString
                 .Trim()
@@ -29,7 +42,9 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
             return new Dictionary<string, string>
             {
                 {"1", "true"},
-                {"0", "false"}
+                {"0", "false"},
+                {"true", "true"},
+                {"false", "false"}
             };
         }
     }

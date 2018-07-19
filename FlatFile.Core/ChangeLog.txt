@@ -171,3 +171,20 @@
 	TODO: tidy up and refactor above feature
 
 		- ********* RESUME HERE ********* 
+
+7/18/18
+CODE REVIEW COMMENTS
+	- The if condition for booleans is a violation of the open closed principle.
+		- Make BooleanTypeConverter a fully fledged type converter (like DummyEnumTypeConverter) that extends TypeConverter
+	- Follow this same pattern for the other primitive types (and possible others, like DateTime)
+	- Don't use by default in Parse method, but add the appropriate TypeConverter in AppendField using a known dictionary of converters above.
+		- It's OK to have lots of small classes, it's good when you're using composition. What's bad is lots of small classes that traverse down and down a call stack to a shared method that handles 81 different things
+		- Building with small classes is good. 
+
+TODO's
+	- Change PrimitiveTypeConverter (formerlly GenericTypeConverter) to a TypeConverter for each supported type, extending TypeConverter, and perhaps implementing my ITypeConverter interface. ITypeConverter interface might no longer be necessary. 
+	- Use a Dictionary of known types, and in AppendField add a type converter from this dictionary (if available) if none is passed in
+	- Dictionary should be <Type, Object>, where the object is the newed up type converter. They can be shared instances. No need to use reflection to new up type converter for each field (would be the case if using Dictionary<Type, Type>)
+
+7/19/18
+	- Quote of the day: "Once the requirements do change though it’s quite likely that they will change in a similar way again later on"

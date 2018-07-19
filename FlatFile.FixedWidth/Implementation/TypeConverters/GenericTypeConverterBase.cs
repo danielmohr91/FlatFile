@@ -4,9 +4,7 @@ using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    // TODO: Make this a factory that chooses an ITypeConverter subclass for the conversion?
-    // NO - custom type converters will be added to field.TypeConverter 
-    public class PrimitiveTypeConverter : ITypeConverter
+    public abstract class GenericTypeConverterBase : ITypeConverter
     {
         /// <summary>
         ///     Gets converted value. Strings are right trimmed. Types with built in Parse method (e.g. primitive types, and some
@@ -17,6 +15,7 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
         /// <returns>Populated model</returns>
         public object ConvertFromString(string stringValue, PropertyInfo propertyInfo)
         {
+            throw new NotImplementedException("Remove this class");
 
             if (propertyInfo.PropertyType == typeof(string))
             {
@@ -24,10 +23,11 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
                 return stringValue.TrimEnd();
             }
 
+            // Violation of open / closed principle
             if (propertyInfo.PropertyType == typeof(bool))
             {
                 var converter = new BooleanTypeConverter();
-                stringValue = converter.GetConvertedString(stringValue);
+               // stringValue = converter.GetConvertedString(stringValue);
             }
 
             return InvokeParse(stringValue, propertyInfo);

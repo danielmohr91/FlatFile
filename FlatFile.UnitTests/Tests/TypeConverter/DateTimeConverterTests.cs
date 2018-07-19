@@ -13,7 +13,8 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
 
         public DateTimeTest()
         {
-            converter = new PrimitiveTypeConverter();
+            throw new NotImplementedException("Implement DateTimeConverter");
+//            converter = new GenericTypeConverterBase();
         }
 
         [TestMethod]
