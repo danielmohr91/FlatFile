@@ -1,4 +1,5 @@
 ﻿using System;
+using FlatFile.FixedWidth.Implementation.TypeConverters;
 using FlatFile.FixedWidth.Interfaces;
 using FlatFileParserUnitTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,8 +13,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
 
         public DateTimeTest()
         {
-            throw new NotImplementedException("Implement DateTimeConverter");
-//            converter = new GenericTypeConverterBase();
+            converter = new DateTimeTypeConverter();
         }
 
         [TestMethod]

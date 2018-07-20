@@ -5,7 +5,7 @@ using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    internal class BooleanTypeConverter : TypeConverter, ITypeConverter
+    public class BooleanTypeConverter : TypeConverter, ITypeConverter
     {
         private readonly Dictionary<string, string> conversions;
 

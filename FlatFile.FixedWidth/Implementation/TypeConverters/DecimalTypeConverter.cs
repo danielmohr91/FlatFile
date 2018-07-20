@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    internal class DecimalTypeConverter : NumericTypeConverterBase
+    public class DecimalTypeConverter : NumericTypeConverterBase
     {
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {

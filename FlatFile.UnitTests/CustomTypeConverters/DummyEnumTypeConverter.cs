@@ -50,7 +50,7 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value.GetType() == typeof(string) && conversions.TryGetValue(value.ToString().ToUpper(), out var day))
+            if (value.GetType() == typeof(string) && conversions.TryGetValue(value.ToString().Trim().ToUpper(), out var day))
             {
                 return day;
             }

@@ -39,7 +39,7 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthParser
 
                 generatedRows.Add(new DummyStringModel
                 {
-                    Id = rowNumber.ToString().PadLeft(FieldWidth),
+                    Id = rowNumber.ToString(),
                     Field1 = $"Row{rowNumber}Field1",
                     Field2 = $"Row{rowNumber}Field2",
                     Field3 = $"Row{rowNumber}Field3",

@@ -7,6 +7,13 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
     public class StringTypeConverter : TypeConverter, ITypeConverter
     {
+        private readonly bool trim;
+
+        public StringTypeConverter(bool trim = true)
+        {
+            this.trim = trim;
+        }
+
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
@@ -16,7 +23,7 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
         {
             if (value.GetType() == typeof(string))
             {
-                return value.ToString();
+                return trim ? value.ToString().Trim() : value.ToString();
             }
 
             return base.ConvertFrom(context, culture, value);

@@ -5,7 +5,7 @@ using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    internal class ByteTypeConverter : TypeConverter, ITypeConverter
+    public class ByteTypeConverter : TypeConverter, ITypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {

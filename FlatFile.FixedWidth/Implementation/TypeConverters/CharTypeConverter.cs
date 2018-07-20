@@ -5,7 +5,7 @@ using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    internal class CharTypeConverter : TypeConverter, ITypeConverter
+    public class CharTypeConverter : TypeConverter, ITypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
