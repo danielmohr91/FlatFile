@@ -19,14 +19,14 @@ namespace FlatFile.FixedWidth.Implementation
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
     {
         private readonly IDictionary<int, IFixedFieldSetting> fields;
+        private readonly IDictionary<Type, ITypeConverter> typeConverters;
         private int currentPosition;
         private ICollection<IFixedFieldSetting> orderedFields;
-        private readonly IDictionary<Type, object> TypeConverters;
 
         public LayoutDescriptor()
         {
             fields = new Dictionary<int, IFixedFieldSetting>();
-            TypeConverters = GetTypeConverters();
+            typeConverters = GetTypeConverters();
         }
 
         /// <summary>
@@ -34,21 +34,6 @@ namespace FlatFile.FixedWidth.Implementation
         ///     Note that this could throw key not found exception. Perhaps wrap this...
         /// </summary>
         public IFixedFieldSetting GetField(int key) => fields[key];
-
-        private IDictionary<Type, object> GetTypeConverters()
-        {
-            return new Dictionary<Type, object>
-            {
-                {
-                    typeof(int),
-                    new IntTypeConverter()
-                },
-                {
-                    typeof(bool),
-                    new BooleanTypeConverter()
-                }
-            };
-        }
 
         /// <inheritdoc />
         public ICollection<IFixedFieldSetting> GetOrderedFields()
@@ -81,13 +66,13 @@ namespace FlatFile.FixedWidth.Implementation
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
 
-           if(propertyInfo != null && TypeConverters.TryGetValue(propertyInfo.PropertyType, out var converter))
+            if (propertyInfo != null && typeConverters.TryGetValue(propertyInfo.PropertyType, out var converter))
             {
                 Add(fieldLength, propertyInfo, converter);
                 return this;
             }
 
-           throw new ArgumentException($"No default type converter defined for object type: {propertyInfo?.PropertyType}. Please explicitely define a TypeConverter.");
+            throw new ArgumentException($"No default type converter defined for object type: {propertyInfo?.PropertyType}. Please explicitly define a TypeConverter.");
         }
 
         public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter typeConverter)
@@ -147,6 +132,69 @@ namespace FlatFile.FixedWidth.Implementation
             }
 
             return null;
+        }
+
+        private IDictionary<Type, ITypeConverter> GetTypeConverters()
+        {
+            return new Dictionary<Type, ITypeConverter>
+            {
+                {
+                    typeof(bool),
+                    new BooleanTypeConverter()
+                },
+                {
+                    typeof(byte),
+                    new ByteTypeConverter()
+                },
+                {
+                    typeof(sbyte),
+                    new SByteTypeConverter()
+                },
+                {
+                    typeof(char),
+                    new CharTypeConverter()
+                },
+                {
+                    typeof(decimal),
+                    new DecimalTypeConverter()
+                },
+                {
+                    typeof(double),
+                    new DoubleTypeConverter()
+                },
+                {
+                    typeof(float),
+                    new FloatTypeConverter()
+                },
+                {
+                    typeof(int),
+                    new IntTypeConverter()
+                },
+                {
+                    typeof(uint),
+                    new UIntTypeConverter()
+                },
+                {
+                    typeof(long),
+                    new LongTypeConverter()
+                },
+                {
+                    typeof(ulong),
+                    new ULongTypeConverter()
+                },
+                {
+                    typeof(short),
+                    new ShortTypeConverter()
+                },
+                {
+                    typeof(ushort),
+                    new UShortTypeConverter()
+                },
+                {
+                    typeof(string),
+                    new StringTypeConverter()
+                }
+            };
         }
     }
 }

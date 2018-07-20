@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    internal class BooleanTypeConverter : TypeConverter
+    internal class BooleanTypeConverter : TypeConverter, ITypeConverter
     {
         private readonly Dictionary<string, string> conversions;
 

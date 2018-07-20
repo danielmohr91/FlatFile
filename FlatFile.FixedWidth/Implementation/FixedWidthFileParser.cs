@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation
@@ -12,15 +13,16 @@ namespace FlatFile.FixedWidth.Implementation
         private readonly string filePath;
         private readonly IFlatFileLayoutDescriptor<T> layout;
 
-
         public FixedWidthFileParser(IFlatFileLayoutDescriptor<T> layout, string filePath)
         {
             this.layout = layout;
             this.filePath = filePath;
 
-
-            // NO - set typeconverter based on type here (dictionary)
-            //defaultConverter = new PrimitiveTypeConverter();
+            if (layout.GetOrderedFields()
+                .Any(x => x.TypeConverter == null))
+            {
+                throw new ArgumentException("Missing TypeConverter for one or more fields", nameof(layout));
+            }
         }
 
         public ICollection<T> ParseFile()
@@ -60,9 +62,7 @@ namespace FlatFile.FixedWidth.Implementation
                 {
                     var stringToConvert = row.Substring(field.StartPosition, field.Length);
 
-                    var convertedValue = field.TypeConverter == null
-                        ? defaultConverter.ConvertFromString(stringToConvert, modelProperty)
-                        : field.TypeConverter.ConvertFromString(stringToConvert, modelProperty);
+                    var convertedValue = field.TypeConverter.ConvertFromString(stringToConvert); //, modelProperty);
 
                     modelProperty.SetValue(
                         model,

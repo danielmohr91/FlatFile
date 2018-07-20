@@ -43,12 +43,6 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
             supportedValues = (ICollection) conversions.Keys;
         }
 
-        // ITypeConverter uses PropertyInfo. .NET library does not. Wrapping .NET call for now.
-        public object ConvertFromString(string stringValue, PropertyInfo propertyInfo)
-        {
-            return ConvertFromString(stringValue.Trim());
-        }
-
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
@@ -62,6 +56,12 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
             }
 
             return base.ConvertFrom(context, culture, value);
+        }
+
+        // ITypeConverter uses PropertyInfo. .NET library does not. Wrapping .NET call for now.
+        public object ConvertFromString(string stringValue, PropertyInfo propertyInfo)
+        {
+            return ConvertFromString(stringValue.Trim());
         }
 
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
