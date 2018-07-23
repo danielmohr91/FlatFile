@@ -188,3 +188,12 @@ TODO's
 
 7/19/18
 	- Quote of the day: "Once the requirements do change though it’s quite likely that they will change in a similar way again later on"
+		- Implement with this in mind.
+	- Added type converters for each primitive type. Removed if condition for bools, and the generic converter (that uses reflection to call "Parse").
+	- Tied parsing and unit tests for the above
+
+7/23/18
+	- Filled in unit tests for remaining primitive types.
+	- Need to think through if the new test methods checking type add much value - just checking if the model property is of expected type.
+	
+	- TODO: Add to GetExpectedRows() and input file to seed test values for the new primitive types.
