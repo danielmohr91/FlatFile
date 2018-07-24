@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -178,34 +179,71 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 new PrimitiveTypesModel
                 {
                     id = 0,
-                    charTest = 'a',
-                    stringTest = "string1",
                     boolTest = true,
-                    doubleTest = 42
+                    byteTest = byte.MaxValue,
+                    charTest = char.MaxValue,
+                    decimalTest = decimal.MaxValue,
+                    doubleTest = double.MaxValue,
+                    floatTest = float.MaxValue,
+                    intTest = int.MaxValue,
+                    longTest = long.MaxValue,
+                    sbyteTest = sbyte.MaxValue,
+                    shortTest = short.MaxValue,
+                    stringTest = "Test String 1",
+                    uintTest = uint.MaxValue,
+                    ulongTest = ulong.MaxValue,
+                    ushortTest = ushort.MaxValue
                 },
-                new PrimitiveTypesModel
-                {
+                new PrimitiveTypesModel {
                     id = 1,
-                    charTest = 'b',
-                    stringTest = "string2",
-                    boolTest = false,
-                    doubleTest = 36 // testing int to double
+                    boolTest = false, // // 'FALSE' in test file (testing caps)
+                    byteTest = byte.MinValue,
+                    charTest = char.MinValue,
+                    decimalTest = decimal.MinValue,
+                    doubleTest = double.MinValue,
+                    floatTest = float.MinValue,
+                    intTest = int.MinValue,
+                    longTest = long.MinValue,
+                    sbyteTest = sbyte.MinValue,
+                    shortTest = short.MinValue,
+                    stringTest = "Test String 2",
+                    uintTest = uint.MinValue,
+                    ulongTest = ulong.MinValue,
+                    ushortTest = ushort.MinValue
                 },
-                new PrimitiveTypesModel
-                {
+                new PrimitiveTypesModel {
                     id = 2,
-                    charTest = 'c',
-                    stringTest = "string3",
-                    boolTest = true, // '1' in test file
-                    doubleTest = 123.45678910 // testing decimal to double
+                    boolTest = false, // 0 in test file
+                    byteTest = 0xf,
+                    charTest = 'f',
+                    decimalTest = (decimal) 42.42424242,
+                    doubleTest =  42.42424242,
+                    floatTest = (float) 42.42424242,
+                    intTest = 42,
+                    longTest = (long)42.42424242,
+                    sbyteTest = 0xf,
+                    shortTest = (short)42.42424242,
+                    stringTest = "!@#$%^&*()",
+                    uintTest = 42,
+                    ulongTest = 42,
+                    ushortTest = 42
                 },
-                new PrimitiveTypesModel
-                {
+                new PrimitiveTypesModel {
                     id = 3,
-                    charTest = '.',
-                    stringTest = "ABCDEFG",
-                    boolTest = true, // 'TRUE' in test file (testing caps)
-                    doubleTest = 100000 // '100,000' in test file (testing commas
+                    boolTest = true, // 1 in test file
+                    byteTest = 0x0,
+                    charTest = '!',
+                    decimalTest = 0,
+                    doubleTest =  0,
+                    floatTest = 0,
+                    intTest = 0,
+                    longTest = 0,
+                    sbyteTest = 0x0,
+                    shortTest = 0,
+                    stringTest = string.Empty,
+                    uintTest = 0,
+                    ulongTest = 0,
+                    ushortTest = 0
                 }
             };
         }

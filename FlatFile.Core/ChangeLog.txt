@@ -196,4 +196,9 @@ TODO's
 	- Filled in unit tests for remaining primitive types.
 	- Need to think through if the new test methods checking type add much value - just checking if the model property is of expected type.
 	
+7/24/18
+	- Added boundary conditions to list of expected values. 
+		- Next, either duplicate in a test file or (preferred), write a simple class to write LayoutDescriptors to a file
+
+	- Tie up test w/ GetExpectedRows
 	- TODO: Add to GetExpectedRows() and input file to seed test values for the new primitive types.
