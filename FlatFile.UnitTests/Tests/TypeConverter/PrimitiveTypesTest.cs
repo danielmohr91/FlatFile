@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -13,8 +12,15 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
 {
     [TestClass]
     public class PrimitiveTypesTest : ParserTestBase<PrimitiveTypesModel>
+
     {
         private readonly int defaultFieldLength = 10;
+
+        [TestMethod]
+        public void GenerateTestFile()
+        {
+            WriteTestFile(GetExpectedRows(), GetLayout());
+        }
 
         [TestMethod]
         public void Should_ConvertStringToBool_When_DefaultTypeConverterIsUsed()
@@ -194,7 +200,8 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     ulongTest = ulong.MaxValue,
                     ushortTest = ushort.MaxValue
                 },
-                new PrimitiveTypesModel {
+                new PrimitiveTypesModel
+                {
                     id = 1,
                     boolTest = false, // // 'FALSE' in test file (testing caps)
                     byteTest = byte.MinValue,
@@ -211,30 +218,32 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     ulongTest = ulong.MinValue,
                     ushortTest = ushort.MinValue
                 },
-                new PrimitiveTypesModel {
+                new PrimitiveTypesModel
+                {
                     id = 2,
                     boolTest = false, // 0 in test file
                     byteTest = 0xf,
                     charTest = 'f',
                     decimalTest = (decimal) 42.42424242,
-                    doubleTest =  42.42424242,
+                    doubleTest = 42.42424242,
                     floatTest = (float) 42.42424242,
                     intTest = 42,
-                    longTest = (long)42.42424242,
+                    longTest = (long) 42.42424242,
                     sbyteTest = 0xf,
-                    shortTest = (short)42.42424242,
+                    shortTest = (short) 42.42424242,
                     stringTest = "!@#$%^&*()",
                     uintTest = 42,
                     ulongTest = 42,
                     ushortTest = 42
                 },
-                new PrimitiveTypesModel {
+                new PrimitiveTypesModel
+                {
                     id = 3,
                     boolTest = true, // 1 in test file
                     byteTest = 0x0,
                     charTest = '!',
                     decimalTest = 0,
-                    doubleTest =  0,
+                    doubleTest = 0,
                     floatTest = 0,
                     intTest = 0,
                     longTest = 0,
@@ -262,6 +271,18 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 .AppendField(x => x.stringTest, defaultFieldLength)
                 .AppendField(x => x.boolTest, defaultFieldLength)
                 .AppendField(x => x.doubleTest, 15);
+        }
+
+        private string GetOutputFilePath()
+        {
+            var directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            return $"{directory}\\OutputFiles\\PrimitiveTypesOutputTest.dat";
+        }
+
+        private void WriteTestFile(ICollection<PrimitiveTypesModel> rows, IFlatFileLayoutDescriptor<PrimitiveTypesModel> layout)
+        {
+            var writer = new FixedWidthFileWriter<PrimitiveTypesModel>(layout, GetOutputFilePath());
+            writer.WriteFile(rows);
         }
     }
 }

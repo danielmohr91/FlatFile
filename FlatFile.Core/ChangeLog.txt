@@ -200,5 +200,9 @@ TODO's
 	- Added boundary conditions to list of expected values. 
 		- Next, either duplicate in a test file or (preferred), write a simple class to write LayoutDescriptors to a file
 
+7/25/18
+	- Started automating writing a test file given a collection of expected rows and layout descriptor.
+		- See FixedWidthFileWriter.cs
+
 	- Tie up test w/ GetExpectedRows
 	- TODO: Add to GetExpectedRows() and input file to seed test values for the new primitive types.

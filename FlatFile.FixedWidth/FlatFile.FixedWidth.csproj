@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implementation\FixedWidthFileWriter.cs" />
     <Compile Include="Implementation\TypeConverters\CharTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\SByteTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\DateTimeTypeConverter.cs" />
