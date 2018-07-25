@@ -206,3 +206,42 @@ TODO's
 
 	- Tie up test w/ GetExpectedRows
 	- TODO: Add to GetExpectedRows() and input file to seed test values for the new primitive types.
+
+
+
+7/25/18
+CODE REVIEW COMMENTS
+	- depend on abstractions, not concrete implementations. When we extend the .net TypeConverter is this a violation? 
+	- Remove true true, false / false from the dictionary. if not found, then we just have the tolower value.
+	- Probably don't make the TypeConverters extend TypeConverter. Perhaps leverage the TypeConverter code, but don't extend it
+	- Not thinking through the api's / interfaces fully... very quick to jump on "there's already a typeconverter so no need to think through the api"
+		- think through the api, that should drive the implementation
+		- Keep ITypeConverter interface, think through only what I need (e.g. ConvertFromString), and only use that. 
+			- only need ConvertFromString method
+			- overcomplicating things to extend the .net typeconverter. keep it simple. think through the api.
+				- don't just look what's available and use it. Design the api, and go from there. 
+			- Sbyte, etc... can be skipped. If the file actually has individual bytes, the user should probably be deciding how to convert them. 
+				- only worry about the primary ones, datetime, decimal, int, etc... 
+				- only use double. for decimal, float, etc... just use decimaltypeconverter and cast to decimal
+				- do the easy, straighforward ones. Leave the rest up to the enduser. 
+	- e.g. 
+		Before: 
+			StringTypeConverter : TypeConverter, ITypeConverter
+		After: 
+			StringTypeConverter : ITypeConverter
+	- LayoutDescriptor
+		- shouldn't have knowledge of all the type converters. This should be an abstraction
+		- violation of single responsibility principle, and open / closed principle
+			- if a new type converter was created, LayoutDescriptor would have to change with current implementation
+			- only depend on abstractions in LayoutDescriptor
+
+simplify type TypeConverters
+	- think through which ones I want to handle, get rid of all the rest
+		- awkward to convert string to sybte, etc... skip
+		- provided end user ability to configure this themself (ITypeConverter and AppendField method that accepts one)
+Think hard about the api / interface for the TypeConverters, make sure it's what I want it to be... e.g. return object in ConvertFromString? What about a Generic Type instead on the ITypeConverter class? 
+
+Don't worry about deadlines
+
+
+

@@ -43,9 +43,7 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
             return new Dictionary<string, string>
             {
                 {"1", "true"},
-                {"0", "false"},
-                {"true", "true"},
-                {"false", "false"}
+                {"0", "false"}
             };
         }
     }
