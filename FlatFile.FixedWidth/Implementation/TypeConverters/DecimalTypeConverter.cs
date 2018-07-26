@@ -1,18 +1,12 @@
-﻿using System.ComponentModel;
-using System.Globalization;
+﻿using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class DecimalTypeConverter : NumericTypeConverterBase
+    public class DecimalTypeConverter : ITypeConverter<decimal>
     {
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public decimal ConvertFromString(string stringValue)
         {
-            if (value.GetType() == typeof(string))
-            {
-                return decimal.Parse(value.ToString().Trim());
-            }
-
-            return base.ConvertFrom(context, culture, value);
+            return decimal.Parse(stringValue.Trim());
         }
     }
 }

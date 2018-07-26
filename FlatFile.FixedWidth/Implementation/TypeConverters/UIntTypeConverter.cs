@@ -1,18 +1,12 @@
-﻿using System.ComponentModel;
-using System.Globalization;
+﻿using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class UIntTypeConverter : NumericTypeConverterBase
+    public class UIntTypeConverter : ITypeConverter<uint>
     {
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public uint ConvertFromString(string stringValue)
         {
-            if (value.GetType() == typeof(string))
-            {
-                return uint.Parse(value.ToString().Trim());
-            }
-
-            return base.ConvertFrom(context, culture, value);
+            return uint.Parse(stringValue.Trim());
         }
     }
 }

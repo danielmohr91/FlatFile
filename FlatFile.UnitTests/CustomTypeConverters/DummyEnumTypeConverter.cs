@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Reflection;
 using FlatFile.FixedWidth.Interfaces;
 using FlatFileParserUnitTests.Enum;
 
 namespace FlatFileParserUnitTests.CustomTypeConverters
 {
     // Documentation: https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
-    public class DummyEnumTypeConverter : TypeConverter, ITypeConverter
+    public class DummyEnumTypeConverter : ITypeConverter<Day>
     {
         private readonly IDictionary<string, Day> conversions;
-        private readonly ICollection supportedValues;
 
         public DummyEnumTypeConverter()
         {
@@ -40,40 +35,16 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
                 {"SAT", Day.Sat},
                 {"SATURDAY", Day.Sat}
             };
-            supportedValues = (ICollection) conversions.Keys;
         }
 
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        public Day ConvertFromString(string stringValue)
         {
-            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
-        }
-
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            if (value.GetType() == typeof(string) && conversions.TryGetValue(value.ToString().Trim().ToUpper(), out var day))
+            if (conversions.TryGetValue(stringValue.Trim().ToUpper(), out var day))
             {
                 return day;
             }
 
-            return base.ConvertFrom(context, culture, value);
-        }
-
-        // ITypeConverter uses PropertyInfo. .NET library does not. Wrapping .NET call for now.
-        public object ConvertFromString(string stringValue, PropertyInfo propertyInfo)
-        {
-            return ConvertFromString(stringValue.Trim());
-        }
-
-        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
-        {
-            // return a PrimitiveTypeConverter.StandardValuesCollection containing the standard values for the property type.
-            // The standard values for a property must be of the same type as the property itself
-            return new StandardValuesCollection(supportedValues);
-        }
-
-        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
-        {
-            return true;
+            throw new ArgumentException("Input must be a day of the week (full name or abbreviated), case insensitive.", nameof(stringValue));
         }
     }
 }

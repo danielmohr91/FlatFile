@@ -42,15 +42,12 @@
   <ItemGroup>
     <Compile Include="Implementation\FixedWidthFileWriter.cs" />
     <Compile Include="Implementation\TypeConverters\CharTypeConverter.cs" />
-    <Compile Include="Implementation\TypeConverters\SByteTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\DateTimeTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\BooleanTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\DecimalTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\FloatTypeConverter.cs" />
-    <Compile Include="Implementation\TypeConverters\NumericTypeConverterBase.cs" />
     <Compile Include="Implementation\TypeConverters\DoubleTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\LongTypeConverter.cs" />
-    <Compile Include="Implementation\TypeConverters\ByteTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\UShortTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\StringTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\IntTypeConverter.cs" />

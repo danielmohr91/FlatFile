@@ -1,18 +1,12 @@
-﻿using System.ComponentModel;
-using System.Globalization;
+﻿using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class ShortTypeConverter : NumericTypeConverterBase
+    public class ShortTypeConverter : ITypeConverter<short>
     {
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public short ConvertFromString(string stringValue)
         {
-            if (value.GetType() == typeof(string))
-            {
-                return short.Parse(value.ToString().Trim());
-            }
-
-            return base.ConvertFrom(context, culture, value);
+            return short.Parse(stringValue.Trim());
         }
     }
 }

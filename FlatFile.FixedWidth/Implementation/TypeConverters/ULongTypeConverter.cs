@@ -1,18 +1,12 @@
-﻿using System.ComponentModel;
-using System.Globalization;
+﻿using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class ULongTypeConverter : NumericTypeConverterBase
+    public class ULongTypeConverter : ITypeConverter<ulong>
     {
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public ulong ConvertFromString(string stringValue)
         {
-            if (value.GetType() == typeof(string))
-            {
-                return ulong.Parse(value.ToString().Trim());
-            }
-
-            return base.ConvertFrom(context, culture, value);
+            return ulong.Parse(stringValue.Trim());
         }
     }
 }

@@ -245,3 +245,7 @@ Don't worry about deadlines
 
 
 
+7/26/18
+	- Removed uncommon primitive types.
+	- No longer extending .net TypeConverter. Kept it simple, and only implemented pre-existing ITypeConverter. 
+		- Changes in progress, perhaps using a generic for return type of ITypeConverter. If too messy, will make it an object. 

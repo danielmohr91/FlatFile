@@ -9,7 +9,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
     [TestClass]
     public class DateTimeTest
     {
-        private readonly ITypeConverter converter;
+        private readonly ITypeConverter<DateTime> converter;
 
         public DateTimeTest()
         {

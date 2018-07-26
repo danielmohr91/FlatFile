@@ -1,8 +1,7 @@
 ﻿namespace FlatFile.FixedWidth.Interfaces
 {
-    public interface ITypeConverter
+    public interface ITypeConverter<T>
     {
-        object ConvertFromString(string stringValue);
-        //object ConvertFromString(string stringValue, PropertyInfo propertyInfo);
+        T ConvertFromString(string stringValue);
     }
 }

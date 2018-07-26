@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
 using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class BooleanTypeConverter : TypeConverter, ITypeConverter
+    public class BooleanTypeConverter : ITypeConverter<bool>
     {
         private readonly Dictionary<string, string> conversions;
 
@@ -14,28 +13,14 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
             conversions = GetConversions();
         }
 
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public bool ConvertFromString(string stringValue)
         {
-            var sanitizedString = GetSanitizedString(value.ToString());
-
-            if (conversions.TryGetValue(sanitizedString, out var normalizedBoolString))
+            if (conversions.TryGetValue(GetSanitizedString(stringValue), out var normalizedBoolString))
             {
                 return bool.Parse(normalizedBoolString);
             }
 
-            return base.ConvertFrom(context, culture, sanitizedString);
-        }
-
-        public string GetSanitizedString(string unparsedString)
-        {
-            unparsedString = unparsedString
-                .Trim()
-                .ToLower();
-
-            string value;
-            return conversions.TryGetValue(unparsedString, out value)
-                ? value
-                : unparsedString;
+            throw new ArgumentException("Input must be true / false, or 1 / 0.", nameof(stringValue));
         }
 
         private Dictionary<string, string> GetConversions()
@@ -45,6 +30,17 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
                 {"1", "true"},
                 {"0", "false"}
             };
+        }
+
+        private string GetSanitizedString(string unparsedString)
+        {
+            unparsedString = unparsedString
+                .Trim()
+                .ToLower();
+
+            return conversions.TryGetValue(unparsedString, out var value)
+                ? value
+                : unparsedString;
         }
     }
 }
