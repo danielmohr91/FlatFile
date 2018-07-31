@@ -2,7 +2,7 @@
 
 namespace FlatFile.FixedWidth.Interfaces
 {
-    public interface IFixedFieldSetting<T>
+    public interface IFixedFieldSetting
     {
         /// <summary>
         ///     Length of the field
@@ -22,6 +22,7 @@ namespace FlatFile.FixedWidth.Interfaces
         /// <summary>
         ///     Custom Type Converter (overrides default converter)
         /// </summary>
-        ITypeConverter<T> TypeConverter { get; set; }
+        ITypeConverterBase TypeConverter { get; set; }
+        // Base isn't good here, because need to depend on ConvertFromString with return type T
     }
 }

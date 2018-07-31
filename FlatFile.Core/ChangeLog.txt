@@ -249,3 +249,13 @@ Don't worry about deadlines
 	- Removed uncommon primitive types.
 	- No longer extending .net TypeConverter. Kept it simple, and only implemented pre-existing ITypeConverter. 
 		- Changes in progress, perhaps using a generic for return type of ITypeConverter. If too messy, will make it an object. 
+
+7/31/18
+	- Removed extra entry from dictionary
+	- ITypeConverter only defines "ConvertFromString"
+		- Should ITypeConverter return a generic, or an object? 
+		- Can't mix generics in a collection, so would need to introduce a new base interface and use this instead.
+			- At that point, how much benefit is there to using a generic? 
+			- Played around with some differnet options. Used <object> as the type, too messy. 
+				- using the empty base interface works well for keeping all the other interfaces and method signatures clean, but when using "ConvertFromString" it becomes problematic
+				- If it was an abstract class, might be easier than a base interface

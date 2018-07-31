@@ -19,7 +19,7 @@ namespace FlatFile.FixedWidth.Implementation
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
     {
         private readonly IDictionary<int, IFixedFieldSetting> fields;
-        private readonly IDictionary<Type, ITypeConverter> typeConverters;
+        private readonly IDictionary<Type, ITypeConverterBase> typeConverters;
         private int currentPosition;
         private ICollection<IFixedFieldSetting> orderedFields;
 
@@ -75,7 +75,7 @@ namespace FlatFile.FixedWidth.Implementation
             throw new ArgumentException($"No default type converter defined for object type: {propertyInfo?.PropertyType}. Please explicitly define a TypeConverter.");
         }
 
-        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter typeConverter)
+        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverterBase typeConverter)
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
 
@@ -83,7 +83,7 @@ namespace FlatFile.FixedWidth.Implementation
             return this;
         }
 
-        private void Add(int length, PropertyInfo property, ITypeConverter typeConverter)
+        private void Add(int length, PropertyInfo property, ITypeConverterBase typeConverter)
         {
             Add(length, property);
             fields[currentPosition].TypeConverter = typeConverter;
@@ -134,21 +134,18 @@ namespace FlatFile.FixedWidth.Implementation
             return null;
         }
 
-        private IDictionary<Type, ITypeConverter> GetTypeConverters()
+        private IDictionary<Type, ITypeConverterBase> GetTypeConverters()
         {
-            return new Dictionary<Type, ITypeConverter>
+            ITypeConverter<bool> boolConverter = new BooleanTypeConverter();
+
+            // Should ITypeConverter take a generic? Makes use cases like this cumbersome.
+            // https://stackoverflow.com/questions/353126/c-sharp-multiple-generic-types-in-one-list
+
+            return new Dictionary<Type, ITypeConverterBase>
             {
                 {
                     typeof(bool),
-                    new BooleanTypeConverter()
-                },
-                {
-                    typeof(byte),
-                    new ByteTypeConverter()
-                },
-                {
-                    typeof(sbyte),
-                    new SByteTypeConverter()
+                    boolConverter
                 },
                 {
                     typeof(char),
