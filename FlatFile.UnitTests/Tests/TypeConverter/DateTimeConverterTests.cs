@@ -21,7 +21,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         {
             var model = new DateTimeModel();
             var date = converter.ConvertFromString("01-25-1991 14:30:15.123");
-            Assert.AreEqual((DateTime) date, new DateTime(1991, 1, 25, 14, 30, 15, 123));
+            Assert.AreEqual(date, new DateTime(1991, 1, 25, 14, 30, 15, 123));
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         {
             var model = new DateTimeModel();
             var date = converter.ConvertFromString("1/25/01 14:30:00");
-            Assert.AreEqual((DateTime) date, new DateTime(2001, 1, 25, 14, 30, 0));
+            Assert.AreEqual(date, new DateTime(2001, 1, 25, 14, 30, 0));
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         {
             var model = new DateTimeModel();
             var date = converter.ConvertFromString("1/25/01");
-            Assert.AreEqual((DateTime) date, new DateTime(2001, 1, 25));
+            Assert.AreEqual(date, new DateTime(2001, 1, 25));
         }
 
         [TestMethod]

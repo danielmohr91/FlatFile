@@ -268,3 +268,4 @@ Don't worry about deadlines
 			- Also, while it compiles, it would fail at runtime.
 				- {"Unable to cast object of type 'FlatFile.FixedWidth.Implementation.TypeConverters.IntTypeConverter' to type 'FlatFile.FixedWidth.Interfaces.ITypeConverter`1[System.Object]'."}
 	- The main place we use the type converter, we already know the expected return type (through field.PropertyInfo.PropertyType). Not a huge advantage, and makes things messy. 
+		- besides, modelProperty.SetValue expects and object for the converted value. Anything more specific is unnecessary.
