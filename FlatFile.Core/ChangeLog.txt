@@ -267,3 +267,4 @@ Don't worry about deadlines
 			- Could cast to ITypeConverter<object> or ITypeConverter<dynamic>, but that feels so wrong
 			- Also, while it compiles, it would fail at runtime.
 				- {"Unable to cast object of type 'FlatFile.FixedWidth.Implementation.TypeConverters.IntTypeConverter' to type 'FlatFile.FixedWidth.Interfaces.ITypeConverter`1[System.Object]'."}
+	- The main place we use the type converter, we already know the expected return type (through field.PropertyInfo.PropertyType). Not a huge advantage, and makes things messy. 
