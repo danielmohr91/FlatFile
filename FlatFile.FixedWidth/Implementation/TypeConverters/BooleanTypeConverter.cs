@@ -4,7 +4,7 @@ using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class BooleanTypeConverter : ITypeConverter<bool>
+    public class BooleanTypeConverter : ITypeConverter<object>
     {
         private readonly Dictionary<string, string> conversions;
 
@@ -13,14 +13,19 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
             conversions = GetConversions();
         }
 
-        public bool ConvertFromString(string stringValue)
+        public object ConvertFromString(string stringValue)
         {
-            if (conversions.TryGetValue(GetSanitizedString(stringValue), out var normalizedBoolString))
+            try
             {
-                return bool.Parse(normalizedBoolString);
-            }
+                var sanitizedString = GetSanitizedString(stringValue);
+                conversions.TryGetValue(sanitizedString, out var convertedString);
 
-            throw new ArgumentException("Input must be true / false, or 1 / 0.", nameof(stringValue));
+                return bool.Parse(convertedString ?? sanitizedString);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Input must be true / false, or 1 / 0.", nameof(stringValue), e);
+            }
         }
 
         private Dictionary<string, string> GetConversions()
@@ -38,9 +43,12 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
                 .Trim()
                 .ToLower();
 
-            return conversions.TryGetValue(unparsedString, out var value)
+
+            var sanitizedString = conversions.TryGetValue(unparsedString, out var value)
                 ? value
                 : unparsedString;
+
+            return sanitizedString;
         }
     }
 }

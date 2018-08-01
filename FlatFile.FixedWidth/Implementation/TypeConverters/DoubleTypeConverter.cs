@@ -2,9 +2,9 @@
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class DoubleTypeConverter : ITypeConverter<double>
+    public class DoubleTypeConverter : ITypeConverter<object>
     {
-        public double ConvertFromString(string stringValue)
+        public object ConvertFromString(string stringValue)
         {
             return double.Parse(stringValue.Trim());
         }

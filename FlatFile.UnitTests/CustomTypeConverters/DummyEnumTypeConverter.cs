@@ -6,7 +6,7 @@ using FlatFileParserUnitTests.Enum;
 namespace FlatFileParserUnitTests.CustomTypeConverters
 {
     // Documentation: https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
-    public class DummyEnumTypeConverter : ITypeConverter<Day>
+    public class DummyEnumTypeConverter : ITypeConverter<object>
     {
         private readonly IDictionary<string, Day> conversions;
 
@@ -37,7 +37,7 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
             };
         }
 
-        public Day ConvertFromString(string stringValue)
+        public object ConvertFromString(string stringValue)
         {
             if (conversions.TryGetValue(stringValue.Trim().ToUpper(), out var day))
             {

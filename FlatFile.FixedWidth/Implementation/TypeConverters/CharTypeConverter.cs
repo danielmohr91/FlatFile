@@ -2,9 +2,9 @@
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class CharTypeConverter : ITypeConverter<char>
+    public class CharTypeConverter : ITypeConverter<object>
     {
-        public char ConvertFromString(string stringValue)
+        public object ConvertFromString(string stringValue)
         {
             return char.Parse(stringValue.Trim());
         }
