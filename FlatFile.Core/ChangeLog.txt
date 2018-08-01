@@ -256,6 +256,14 @@ Don't worry about deadlines
 		- Should ITypeConverter return a generic, or an object? 
 		- Can't mix generics in a collection, so would need to introduce a new base interface and use this instead.
 			- At that point, how much benefit is there to using a generic? 
-			- Played around with some differnet options. Used <object> as the type, too messy. 
+			- Played around with some different options. Used <object> as the type, too messy. 
 				- using the empty base interface works well for keeping all the other interfaces and method signatures clean, but when using "ConvertFromString" it becomes problematic
 				- If it was an abstract class, might be easier than a base interface
+
+8/1/18
+	- Thought through implications of using a generic for ITypeConverter
+		- Could make things compile pretty cleanly with a base interface without the generic.
+			- Gets messy with having a collection of mixed types. 
+			- Could cast to ITypeConverter<object> or ITypeConverter<dynamic>, but that feels so wrong
+			- Also, while it compiles, it would fail at runtime.
+				- {"Unable to cast object of type 'FlatFile.FixedWidth.Implementation.TypeConverters.IntTypeConverter' to type 'FlatFile.FixedWidth.Interfaces.ITypeConverter`1[System.Object]'."}

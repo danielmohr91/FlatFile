@@ -7,7 +7,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
     [TestClass]
     public class CustomTypeConvertTests
     {
-        private readonly System.ComponentModel.TypeConverter converter;
+        private readonly FlatFile.FixedWidth.Interfaces.ITypeConverter<Day> converter;
 
         public CustomTypeConvertTests()
         {
