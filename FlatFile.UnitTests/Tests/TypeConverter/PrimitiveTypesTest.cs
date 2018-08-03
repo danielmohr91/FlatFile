@@ -32,16 +32,6 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 typeof(bool));
         }
 
-        [TestMethod]
-        public void Should_ConvertStringToByte_When_DefaultTypeConverterIsUsed()
-        {
-            CollectionAssert.AllItemsAreInstancesOfType(
-                ParsedRows
-                    .Select(x => x.byteTest)
-                    .ToList(),
-                typeof(byte));
-        }
-
 
         [TestMethod]
         public void Should_ConvertStringToChar_When_DefaultTypeConverterIsUsed()
@@ -102,16 +92,6 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     .Select(x => x.longTest)
                     .ToList(),
                 typeof(long));
-        }
-
-        [TestMethod]
-        public void Should_ConvertStringToSByte_When_DefaultTypeConverterIsUsed()
-        {
-            CollectionAssert.AllItemsAreInstancesOfType(
-                ParsedRows
-                    .Select(x => x.sbyteTest)
-                    .ToList(),
-                typeof(sbyte));
         }
 
         [TestMethod]
@@ -186,14 +166,12 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 {
                     id = 0,
                     boolTest = true,
-                    byteTest = byte.MaxValue,
                     charTest = char.MaxValue,
                     decimalTest = decimal.MaxValue,
                     doubleTest = double.MaxValue,
                     floatTest = float.MaxValue,
                     intTest = int.MaxValue,
                     longTest = long.MaxValue,
-                    sbyteTest = sbyte.MaxValue,
                     shortTest = short.MaxValue,
                     stringTest = "Test String 1",
                     uintTest = uint.MaxValue,
@@ -204,14 +182,12 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 {
                     id = 1,
                     boolTest = false, // // 'FALSE' in test file (testing caps)
-                    byteTest = byte.MinValue,
                     charTest = char.MinValue,
                     decimalTest = decimal.MinValue,
                     doubleTest = double.MinValue,
                     floatTest = float.MinValue,
                     intTest = int.MinValue,
                     longTest = long.MinValue,
-                    sbyteTest = sbyte.MinValue,
                     shortTest = short.MinValue,
                     stringTest = "Test String 2",
                     uintTest = uint.MinValue,
@@ -222,14 +198,12 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 {
                     id = 2,
                     boolTest = false, // 0 in test file
-                    byteTest = 0xf,
                     charTest = 'f',
                     decimalTest = (decimal) 42.42424242,
                     doubleTest = 42.42424242,
                     floatTest = (float) 42.42424242,
                     intTest = 42,
                     longTest = (long) 42.42424242,
-                    sbyteTest = 0xf,
                     shortTest = (short) 42.42424242,
                     stringTest = "!@#$%^&*()",
                     uintTest = 42,
@@ -240,14 +214,12 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 {
                     id = 3,
                     boolTest = true, // 1 in test file
-                    byteTest = 0x0,
                     charTest = '!',
                     decimalTest = 0,
                     doubleTest = 0,
                     floatTest = 0,
                     intTest = 0,
                     longTest = 0,
-                    sbyteTest = 0x0,
                     shortTest = 0,
                     stringTest = string.Empty,
                     uintTest = 0,

@@ -33,7 +33,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.NotSupportedException), "Cannot convert from System.String")]
+        [ExpectedException(typeof(System.ArgumentException))]
         public void Should_NotConvertStringToEnum_When_ValidInvalidStringIsUsed()
         {
             converter.ConvertFromString("garbage");
