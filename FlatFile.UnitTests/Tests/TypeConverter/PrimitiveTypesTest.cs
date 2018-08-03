@@ -15,10 +15,13 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
 
     {
         private readonly int defaultFieldLength = 10;
+        protected int stringFieldLength = 10;
 
         [TestMethod]
         public void GenerateTestFile()
         {
+            // See test file here: 
+            // c:\projects\flatfile\FlatFile.UnitTests\bin\Debug\OutputFiles\PrimitiveTypesOutputTest.dat
             WriteTestFile(GetExpectedRows(), GetLayout());
         }
 
@@ -31,18 +34,6 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     .ToList(),
                 typeof(bool));
         }
-
-
-        [TestMethod]
-        public void Should_ConvertStringToChar_When_DefaultTypeConverterIsUsed()
-        {
-            CollectionAssert.AllItemsAreInstancesOfType(
-                ParsedRows
-                    .Select(x => x.charTest)
-                    .ToList(),
-                typeof(char));
-        }
-
 
         [TestMethod]
         public void Should_ConvertStringToDecimal_When_DefaultTypeConverterIsUsed()
@@ -166,14 +157,13 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 {
                     id = 0,
                     boolTest = true,
-                    charTest = char.MaxValue,
                     decimalTest = decimal.MaxValue,
                     doubleTest = double.MaxValue,
                     floatTest = float.MaxValue,
                     intTest = int.MaxValue,
                     longTest = long.MaxValue,
                     shortTest = short.MaxValue,
-                    stringTest = "Test String 1",
+                    stringTest = "Test 1",
                     uintTest = uint.MaxValue,
                     ulongTest = ulong.MaxValue,
                     ushortTest = ushort.MaxValue
@@ -182,14 +172,13 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 {
                     id = 1,
                     boolTest = false, // // 'FALSE' in test file (testing caps)
-                    charTest = char.MinValue,
                     decimalTest = decimal.MinValue,
                     doubleTest = double.MinValue,
                     floatTest = float.MinValue,
                     intTest = int.MinValue,
                     longTest = long.MinValue,
                     shortTest = short.MinValue,
-                    stringTest = "Test String 2",
+                    stringTest = "Test 2",
                     uintTest = uint.MinValue,
                     ulongTest = ulong.MinValue,
                     ushortTest = ushort.MinValue
@@ -198,14 +187,13 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 {
                     id = 2,
                     boolTest = false, // 0 in test file
-                    charTest = 'f',
                     decimalTest = (decimal) 42.42424242,
                     doubleTest = 42.42424242,
                     floatTest = (float) 42.42424242,
                     intTest = 42,
                     longTest = (long) 42.42424242,
                     shortTest = (short) 42.42424242,
-                    stringTest = "!@#$%^&*()",
+                    stringTest = "l33t $42",
                     uintTest = 42,
                     ulongTest = 42,
                     ushortTest = 42
@@ -214,7 +202,6 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 {
                     id = 3,
                     boolTest = true, // 1 in test file
-                    charTest = '!',
                     decimalTest = 0,
                     doubleTest = 0,
                     floatTest = 0,
@@ -239,8 +226,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         {
             return new LayoutDescriptor<PrimitiveTypesModel>()
                 .AppendField(x => x.id, defaultFieldLength)
-                .AppendField(x => x.charTest, defaultFieldLength)
-                .AppendField(x => x.stringTest, defaultFieldLength)
+                .AppendField(x => x.stringTest, stringFieldLength)
                 .AppendField(x => x.boolTest, defaultFieldLength)
                 .AppendField(x => x.doubleTest, 15);
         }

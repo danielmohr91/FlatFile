@@ -5,7 +5,6 @@ namespace FlatFileParserUnitTests.Models
     public class PrimitiveTypesModel
     {
         public bool boolTest { get; set; }
-        public char charTest { get; set; }
         public decimal decimalTest { get; set; }
         public double doubleTest { get; set; }
         public float floatTest { get; set; }
@@ -23,7 +22,6 @@ namespace FlatFileParserUnitTests.Models
             var model = obj as PrimitiveTypesModel;
             return model != null &&
                    boolTest == model.boolTest &&
-                   charTest == model.charTest &&
                    decimalTest == model.decimalTest &&
                    doubleTest == model.doubleTest &&
                    floatTest == model.floatTest &&
@@ -40,7 +38,6 @@ namespace FlatFileParserUnitTests.Models
         {
             var hashCode = -422371933;
             hashCode = hashCode * -1521134295 + boolTest.GetHashCode();
-            hashCode = hashCode * -1521134295 + charTest.GetHashCode();
             hashCode = hashCode * -1521134295 + decimalTest.GetHashCode();
             hashCode = hashCode * -1521134295 + doubleTest.GetHashCode();
             hashCode = hashCode * -1521134295 + floatTest.GetHashCode();

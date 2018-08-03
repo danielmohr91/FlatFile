@@ -148,10 +148,6 @@ namespace FlatFile.FixedWidth.Implementation
                     boolConverter
                 },
                 {
-                    typeof(char),
-                    new CharTypeConverter()
-                },
-                {
                     typeof(decimal),
                     new DecimalTypeConverter()
                 },
