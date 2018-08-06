@@ -29,7 +29,7 @@ namespace FlatFile.FixedWidth.Implementation
 
         public void WriteFile(ICollection<T> rows)
         {
-            // TODO: Perhaps add check if file already has contents? We're just appending, no biggie. 
+            // Warning: This will overwrite previous file contents
             using (var writer = new StreamWriter(filePath))
             {
                 foreach (var row in rows)
@@ -53,6 +53,15 @@ namespace FlatFile.FixedWidth.Implementation
                 if (modelProperty != null)
                 {
                     var modelValue = modelProperty.GetValue(row).ToString();
+
+                    // Fail on truncation. Exception preferable to incorrect data.
+                    // e.g. 1.234567890E+100 would truncate to 1.234 @ 5 char field length. 
+                    // TODO: Accept a type converter here for writes
+                    if (field.Length < modelValue.Length)
+                    {
+                        throw new Exception($"Field is too short for value. Field length of {field.Length} " +
+                                            $"is less than required length of {modelValue.Length} for value {modelValue}");
+                    }
 
                     var valueForFile = modelValue
                         .Substring(0, Math.Min(field.Length, modelValue.Length))

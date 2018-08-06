@@ -14,8 +14,11 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
     public class PrimitiveTypesTest : ParserTestBase<PrimitiveTypesModel>
 
     {
-        private readonly int defaultFieldLength = 10;
-        protected int stringFieldLength = 10;
+        //private readonly int defaultFieldLength = 10;
+        protected int IdFieldLength = 5;
+        protected int StringFieldLength = 10;
+        protected int BoolFieldLength = 7;
+        protected int DoubleFieldLength = 25;
 
         [TestMethod]
         public void GenerateTestFile()
@@ -225,10 +228,10 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         protected override IFlatFileLayoutDescriptor<PrimitiveTypesModel> GetLayout()
         {
             return new LayoutDescriptor<PrimitiveTypesModel>()
-                .AppendField(x => x.id, defaultFieldLength)
-                .AppendField(x => x.stringTest, stringFieldLength)
-                .AppendField(x => x.boolTest, defaultFieldLength)
-                .AppendField(x => x.doubleTest, 15);
+                .AppendField(x => x.id, IdFieldLength)
+                .AppendField(x => x.stringTest, StringFieldLength)
+                .AppendField(x => x.boolTest, BoolFieldLength)
+                .AppendField(x => x.doubleTest, DoubleFieldLength);
         }
 
         private string GetOutputFilePath()

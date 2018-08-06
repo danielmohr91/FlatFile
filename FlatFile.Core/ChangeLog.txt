@@ -270,3 +270,11 @@ Don't worry about deadlines
 	- The main place we use the type converter, we already know the expected return type (through field.PropertyInfo.PropertyType). Not a huge advantage, and makes things messy. 
 		- besides, modelProperty.SetValue expects and object for the converted value. Anything more specific is unnecessary.
 	- Removed byte and sbyte from unit tests
+
+8/6/18
+	- Thought through quick and dirty File Writer
+		- What about doubles that exceed field length (e.g. 1.33333333333333333333333333E+100)
+		- This would truncate to 1.3333333333 with a shorter column width, and loose the exponent. Would rather get exception than bad data.
+		- Threw exception if value length exceeds configured field length. Eventually could use a type converter here.
+
+
