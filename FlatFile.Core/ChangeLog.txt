@@ -277,4 +277,7 @@ Don't worry about deadlines
 		- This would truncate to 1.3333333333 with a shorter column width, and loose the exponent. Would rather get exception than bad data.
 		- Threw exception if value length exceeds configured field length. Eventually could use a type converter here.
 
+8/7/18
+	- Generated test file for primitive types
+
 

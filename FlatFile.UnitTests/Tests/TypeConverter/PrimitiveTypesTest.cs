@@ -14,11 +14,10 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
     public class PrimitiveTypesTest : ParserTestBase<PrimitiveTypesModel>
 
     {
-        //private readonly int defaultFieldLength = 10;
-        protected int IdFieldLength = 5;
-        protected int StringFieldLength = 10;
         protected int BoolFieldLength = 7;
-        protected int DoubleFieldLength = 25;
+        protected int NumberFieldLength = 35;
+        protected int IdFieldLength = 5;
+        protected int StringFieldLength = 18;
 
         [TestMethod]
         public void GenerateTestFile()
@@ -154,7 +153,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
 
         protected override ICollection<PrimitiveTypesModel> GetExpectedRows()
         {
-            return new Collection<PrimitiveTypesModel>
+            var rows = new Collection<PrimitiveTypesModel>
             {
                 new PrimitiveTypesModel
                 {
@@ -217,6 +216,27 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     ushortTest = 0
                 }
             };
+
+            for (var i = 4; i <= 1000; i++)
+            {
+                rows.Add(new PrimitiveTypesModel
+                {
+                    id = i,
+                    boolTest = i % 2 == 0,
+                    longTest = (long) (i * 25.25),
+                    decimalTest = (decimal) (i * 36.36),
+                    doubleTest = i * 50.5,
+                    floatTest = i * -25.5f,
+                    intTest = i * 25,
+                    ulongTest = (ulong) (i * 500),
+                    stringTest = $"Test String {i}",
+                    shortTest = (short) (i * -2.5),
+                    ushortTest = (ushort) (i * 4),
+                    uintTest = (uint) (i * 5)
+                });
+            }
+
+            return rows;
         }
 
         protected override string GetFilePath()
@@ -228,10 +248,18 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         protected override IFlatFileLayoutDescriptor<PrimitiveTypesModel> GetLayout()
         {
             return new LayoutDescriptor<PrimitiveTypesModel>()
-                .AppendField(x => x.id, IdFieldLength)
-                .AppendField(x => x.stringTest, StringFieldLength)
-                .AppendField(x => x.boolTest, BoolFieldLength)
-                .AppendField(x => x.doubleTest, DoubleFieldLength);
+                    .AppendField(x => x.id, IdFieldLength)
+                    .AppendField(x => x.boolTest, BoolFieldLength)
+                    .AppendField(x => x.longTest, NumberFieldLength)
+                    .AppendField(x => x.decimalTest, NumberFieldLength)
+                    .AppendField(x => x.doubleTest, NumberFieldLength)
+                    .AppendField(x => x.floatTest, NumberFieldLength)
+                    .AppendField(x => x.intTest, NumberFieldLength)
+                    .AppendField(x => x.ulongTest, NumberFieldLength)
+                    .AppendField(x => x.stringTest, StringFieldLength)
+                    .AppendField(x => x.shortTest, NumberFieldLength)
+                    .AppendField(x => x.ushortTest, NumberFieldLength)
+                    .AppendField(x => x.uintTest, NumberFieldLength);
         }
 
         private string GetOutputFilePath()

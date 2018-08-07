@@ -59,7 +59,7 @@ namespace FlatFile.FixedWidth.Implementation
                     // TODO: Accept a type converter here for writes
                     if (field.Length < modelValue.Length)
                     {
-                        throw new Exception($"Field is too short for value. Field length of {field.Length} " +
+                        throw new Exception($"Field is too short for value. '{field.PropertyInfo.Name}' field length of {field.Length} " +
                                             $"is less than required length of {modelValue.Length} for value {modelValue}");
                     }
 
