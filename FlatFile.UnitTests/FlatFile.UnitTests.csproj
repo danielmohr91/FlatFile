@@ -64,6 +64,8 @@
     <Compile Include="Tests\ParseWithTypeConverter\ParseWithCustomTypeConverterTests.cs" />
     <Compile Include="Tests\TypeConverter\CustomTypeConvertTests.cs" />
     <Compile Include="Tests\TypeConverter\DateTimeConverterTests.cs" />
+    <Compile Include="Tests\TypeConverter\FixedWidthFileWriterTest.cs" />
+    <Compile Include="Tests\TypeConverter\Helpers\PrimitiveTypeExpectations.cs" />
     <Compile Include="Tests\TypeConverter\PrimitiveTypesTest.cs" />
     <Compile Include="Tests\LayoutDescriptor\LayoutDescriptorExpressionTests.cs" />
     <Compile Include="Infrastructure\FixedLayout\FixedFootballLayout.cs" />
