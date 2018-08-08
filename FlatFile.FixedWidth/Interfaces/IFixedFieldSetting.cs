@@ -22,7 +22,8 @@ namespace FlatFile.FixedWidth.Interfaces
         /// <summary>
         ///     Custom Type Converter (overrides default converter)
         /// </summary>
-        ITypeConverterBase TypeConverter { get; set; }
+        ITypeConverter<object> TypeConverter { get; set; }
+
         // Base isn't good here, because need to depend on ConvertFromString with return type T
     }
 }

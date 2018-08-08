@@ -2,9 +2,9 @@
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class DecimalTypeConverter : ITypeConverter<decimal>
+    public class DecimalTypeConverter : ITypeConverter<object>
     {
-        public decimal ConvertFromString(string stringValue)
+        public object ConvertFromString(string stringValue)
         {
             return decimal.Parse(stringValue.Trim());
         }

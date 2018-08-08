@@ -15,11 +15,16 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
     public class PrimitiveTypesTest : ParserTestBase<PrimitiveTypesModel>
 
     {
-        private readonly int defaultFieldLength = 10;
+        protected int BoolFieldLength = 7;
+        protected int NumberFieldLength = 35;
+        protected int IdFieldLength = 5;
+        protected int StringFieldLength = 18;
 
         [TestMethod]
         public void GenerateTestFile()
         {
+            // See test file here: 
+            // c:\projects\flatfile\FlatFile.UnitTests\bin\Debug\OutputFiles\PrimitiveTypesOutputTest.dat
             WriteTestFile(GetExpectedRows(), GetLayout());
         }
 
@@ -32,28 +37,6 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     .ToList(),
                 typeof(bool));
         }
-
-        [TestMethod]
-        public void Should_ConvertStringToByte_When_DefaultTypeConverterIsUsed()
-        {
-            CollectionAssert.AllItemsAreInstancesOfType(
-                ParsedRows
-                    .Select(x => x.byteTest)
-                    .ToList(),
-                typeof(byte));
-        }
-
-
-        [TestMethod]
-        public void Should_ConvertStringToChar_When_DefaultTypeConverterIsUsed()
-        {
-            CollectionAssert.AllItemsAreInstancesOfType(
-                ParsedRows
-                    .Select(x => x.charTest)
-                    .ToList(),
-                typeof(char));
-        }
-
 
         [TestMethod]
         public void Should_ConvertStringToDecimal_When_DefaultTypeConverterIsUsed()
@@ -103,16 +86,6 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     .Select(x => x.longTest)
                     .ToList(),
                 typeof(long));
-        }
-
-        [TestMethod]
-        public void Should_ConvertStringToSByte_When_DefaultTypeConverterIsUsed()
-        {
-            CollectionAssert.AllItemsAreInstancesOfType(
-                ParsedRows
-                    .Select(x => x.sbyteTest)
-                    .ToList(),
-                typeof(sbyte));
         }
 
         [TestMethod]
@@ -191,23 +164,19 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
 
         protected override ICollection<PrimitiveTypesModel> GetExpectedRows()
         {
-            
-            return new Collection<PrimitiveTypesModel>
+            var rows = new Collection<PrimitiveTypesModel>
             {
                 new PrimitiveTypesModel
                 {
                     id = 0,
                     boolTest = true,
-                    byteTest = byte.MaxValue,
-                    charTest = char.MaxValue,
                     decimalTest = GetTruncatedFloatingPointNumber(decimal.MaxValue),
                     doubleTest = GetTruncatedFloatingPointNumber(double.MaxValue),
                     floatTest = GetTruncatedFloatingPointNumber(float.MaxValue),
                     intTest = int.MaxValue,
                     longTest = GetTruncatedFloatingPointNumber(long.MaxValue),
-                    sbyteTest = sbyte.MaxValue,
                     shortTest = short.MaxValue,
-                    stringTest = "Test String 1",
+                    stringTest = "Test 1",
                     uintTest = uint.MaxValue,
                     ulongTest = ulong.MaxValue,
                     ushortTest = GetTruncatedFloatingPointNumber(ushort.MaxValue)
@@ -216,16 +185,13 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 {
                     id = 1,
                     boolTest = false, // // 'FALSE' in test file (testing caps)
-                    byteTest = byte.MinValue,
-                    charTest = char.MinValue,
                     decimalTest = GetTruncatedFloatingPointNumber(decimal.MinValue),
                     doubleTest = GetTruncatedFloatingPointNumber(double.MinValue),
                     floatTest = GetTruncatedFloatingPointNumber(float.MinValue),
                     intTest = int.MinValue,
                     longTest = long.MinValue,
-                    sbyteTest = sbyte.MinValue,
                     shortTest = short.MinValue,
-                    stringTest = "Test String 2",
+                    stringTest = "Test 2",
                     uintTest = uint.MinValue,
                     ulongTest = GetTruncatedFloatingPointNumber(ulong.MinValue),
                     ushortTest = GetTruncatedFloatingPointNumber(ushort.MinValue)
@@ -234,16 +200,13 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 {
                     id = 2,
                     boolTest = false, // 0 in test file
-                    byteTest = 0xf,
-                    charTest = 'f',
                     decimalTest = (decimal) 42.42424242,
                     doubleTest = 42.42424242,
                     floatTest = (float) 42.42424242,
                     intTest = 42,
                     longTest = (long) 42.42424242,
-                    sbyteTest = 0xf,
                     shortTest = (short) 42.42424242,
-                    stringTest = "!@#$%^&*()",
+                    stringTest = "l33t $42",
                     uintTest = 42,
                     ulongTest = 42,
                     ushortTest = 42
@@ -252,14 +215,11 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                 {
                     id = 3,
                     boolTest = true, // 1 in test file
-                    byteTest = 0x0,
-                    charTest = '!',
                     decimalTest = 0,
                     doubleTest = 0,
                     floatTest = 0,
                     intTest = 0,
                     longTest = 0,
-                    sbyteTest = 0x0,
                     shortTest = 0,
                     stringTest = string.Empty,
                     uintTest = 0,
@@ -267,6 +227,27 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     ushortTest = 0
                 }
             };
+
+            for (var i = 4; i <= 1000; i++)
+            {
+                rows.Add(new PrimitiveTypesModel
+                {
+                    id = i,
+                    boolTest = i % 2 == 0,
+                    longTest = (long) (i * 25.25),
+                    decimalTest = (decimal) (i * 36.36),
+                    doubleTest = i * 50.5,
+                    floatTest = i * -25.5f,
+                    intTest = i * 25,
+                    ulongTest = (ulong) (i * 500),
+                    stringTest = $"Test String {i}",
+                    shortTest = (short) (i * -2.5),
+                    ushortTest = (ushort) (i * 4),
+                    uintTest = (uint) (i * 5)
+                });
+            }
+
+            return rows;
         }
 
         protected override string GetFilePath()
@@ -278,11 +259,18 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         protected override IFlatFileLayoutDescriptor<PrimitiveTypesModel> GetLayout()
         {
             return new LayoutDescriptor<PrimitiveTypesModel>()
-                .AppendField(x => x.id, defaultFieldLength)
-                .AppendField(x => x.charTest, defaultFieldLength)
-                .AppendField(x => x.stringTest, defaultFieldLength)
-                .AppendField(x => x.boolTest, defaultFieldLength)
-                .AppendField(x => x.doubleTest, 15);
+                    .AppendField(x => x.id, IdFieldLength)
+                    .AppendField(x => x.boolTest, BoolFieldLength)
+                    .AppendField(x => x.longTest, NumberFieldLength)
+                    .AppendField(x => x.decimalTest, NumberFieldLength)
+                    .AppendField(x => x.doubleTest, NumberFieldLength)
+                    .AppendField(x => x.floatTest, NumberFieldLength)
+                    .AppendField(x => x.intTest, NumberFieldLength)
+                    .AppendField(x => x.ulongTest, NumberFieldLength)
+                    .AppendField(x => x.stringTest, StringFieldLength)
+                    .AppendField(x => x.shortTest, NumberFieldLength)
+                    .AppendField(x => x.ushortTest, NumberFieldLength)
+                    .AppendField(x => x.uintTest, NumberFieldLength);
         }
 
         private string GetOutputFilePath()

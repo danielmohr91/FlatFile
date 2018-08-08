@@ -2,9 +2,9 @@
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class FloatTypeConverter : ITypeConverter<float>
+    public class FloatTypeConverter : ITypeConverter<object>
     {
-        public float ConvertFromString(string stringValue)
+        public object ConvertFromString(string stringValue)
         {
             return float.Parse(stringValue.Trim());
         }

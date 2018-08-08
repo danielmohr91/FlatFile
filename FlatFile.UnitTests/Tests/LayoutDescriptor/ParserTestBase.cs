@@ -9,7 +9,7 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
 {
     public abstract class ParserTestBase<T> where T : new()
     {
-        protected readonly int FieldWidth = 15;
+        protected readonly int DefaultFieldWidth = 15;
         protected readonly ICollection<T> ParsedRows;
         private ICollection<T> expectedRows;
 
