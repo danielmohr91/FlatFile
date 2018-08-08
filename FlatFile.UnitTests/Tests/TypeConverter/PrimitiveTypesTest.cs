@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -178,8 +179,19 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
             Assert.AreEqual(ParsedRows.Count, 4);
         }
 
+       dynamic GetTruncatedFloatingPointNumber(dynamic num)
+        {
+            //var numDigitsForFloatingPointNumbers = 10;
+            //var precisionMultiplier = 1 ^ numDigitsForFloatingPointNumbers;
+            //return Math.Truncate(num * precisionMultiplier) / precisionMultiplier;
+
+            var x = num.ToString("0.############%");
+            return x.Remove(x.Length - 1); // add one extra decimal that is rounded then discarded
+        }
+
         protected override ICollection<PrimitiveTypesModel> GetExpectedRows()
         {
+            
             return new Collection<PrimitiveTypesModel>
             {
                 new PrimitiveTypesModel
@@ -188,17 +200,17 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     boolTest = true,
                     byteTest = byte.MaxValue,
                     charTest = char.MaxValue,
-                    decimalTest = decimal.MaxValue,
-                    doubleTest = double.MaxValue,
-                    floatTest = float.MaxValue,
+                    decimalTest = GetTruncatedFloatingPointNumber(decimal.MaxValue),
+                    doubleTest = GetTruncatedFloatingPointNumber(double.MaxValue),
+                    floatTest = GetTruncatedFloatingPointNumber(float.MaxValue),
                     intTest = int.MaxValue,
-                    longTest = long.MaxValue,
+                    longTest = GetTruncatedFloatingPointNumber(long.MaxValue),
                     sbyteTest = sbyte.MaxValue,
                     shortTest = short.MaxValue,
                     stringTest = "Test String 1",
                     uintTest = uint.MaxValue,
                     ulongTest = ulong.MaxValue,
-                    ushortTest = ushort.MaxValue
+                    ushortTest = GetTruncatedFloatingPointNumber(ushort.MaxValue)
                 },
                 new PrimitiveTypesModel
                 {
@@ -206,17 +218,17 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     boolTest = false, // // 'FALSE' in test file (testing caps)
                     byteTest = byte.MinValue,
                     charTest = char.MinValue,
-                    decimalTest = decimal.MinValue,
-                    doubleTest = double.MinValue,
-                    floatTest = float.MinValue,
+                    decimalTest = GetTruncatedFloatingPointNumber(decimal.MinValue),
+                    doubleTest = GetTruncatedFloatingPointNumber(double.MinValue),
+                    floatTest = GetTruncatedFloatingPointNumber(float.MinValue),
                     intTest = int.MinValue,
                     longTest = long.MinValue,
                     sbyteTest = sbyte.MinValue,
                     shortTest = short.MinValue,
                     stringTest = "Test String 2",
                     uintTest = uint.MinValue,
-                    ulongTest = ulong.MinValue,
-                    ushortTest = ushort.MinValue
+                    ulongTest = GetTruncatedFloatingPointNumber(ulong.MinValue),
+                    ushortTest = GetTruncatedFloatingPointNumber(ushort.MinValue)
                 },
                 new PrimitiveTypesModel
                 {

@@ -268,3 +268,37 @@ Don't worry about deadlines
 			- Also, while it compiles, it would fail at runtime.
 				- {"Unable to cast object of type 'FlatFile.FixedWidth.Implementation.TypeConverters.IntTypeConverter' to type 'FlatFile.FixedWidth.Interfaces.ITypeConverter`1[System.Object]'."}
 	- The main place we use the type converter, we already know the expected return type (through field.PropertyInfo.PropertyType). Not a huge advantage, and makes things messy. 
+		- besides, modelProperty.SetValue expects and object for the converted value. Anything more specific is unnecessary.
+	- Removed byte and sbyte from unit tests
+
+8/6/18
+	- Thought through quick and dirty File Writer
+		- What about doubles that exceed field length (e.g. 1.33333333333333333333333333E+100)
+		- This would truncate to 1.3333333333 with a shorter column width, and loose the exponent. Would rather get exception than bad data.
+		- Threw exception if value length exceeds configured field length. Eventually could use a type converter here.
+
+8/7/18
+	- Generated test file for primitive types
+
+8/8/18
+	- Hit the following exception: 
+	  FileNotFoundException Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+	- Can't run any tests. Cleaned / rebuilt, then closed / reopened solution with no success. Restarted visual studio, now running successfully. 
+		- Details: https://developercommunity.visualstudio.com/content/problem/222892/filenotfoundexception-microsoftvisualstudiotestpla.html
+	- Started looking into failed unit test for parsing double. 
+		- Can repro in linqpad. This seems strange: double.Parse(double.MaxValue.ToString()); fails
+			- OverflowException
+			- Value was either too large or too small for a Double.
+			- Subtracting small amounts doesn't help. Subtracting 1E300 works: 
+			  double.Parse((double.MaxValue - 1E300).ToString());
+			- Resume here looking into this unexpected language behavior...
+			- Can't be a language bug, but sure looks that way: 
+				- Parse throw OverFlow Exception when: "s represents a number that is less than MinValue or greater than MaxValue."
+     			  https://msdn.microsoft.com/en-us/library/fd84bdyt(v=vs.110).aspx
+				  Where "MaxValue" is Double.MaxValue (https://msdn.microsoft.com/en-us/library/system.double.maxvalue(v=vs.110).aspx)
+		- Here's what's happening...
+			- double.MaxValue.ToString() is 1.79769313486232E+308
+			- double.MaxValue is actually   1.7976931348623157E+308
+			- ToString() is rounding, just over the threshold. Makes sense.
+
+
