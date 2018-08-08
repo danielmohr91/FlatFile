@@ -292,5 +292,8 @@ Don't worry about deadlines
 			- Subtracting small amounts doesn't help. Subtracting 1E300 works: 
 			  double.Parse((double.MaxValue - 1E300).ToString());
 			- Resume here looking into this unexpected language behavior...
-
+			- Can't be a language bug, but sure looks that way: 
+				- Parse throw OverFlow Exception when: "s represents a number that is less than MinValue or greater than MaxValue."
+     			  https://msdn.microsoft.com/en-us/library/fd84bdyt(v=vs.110).aspx
+				  Where "MaxValue" is Double.MaxValue (https://msdn.microsoft.com/en-us/library/system.double.maxvalue(v=vs.110).aspx)
 
