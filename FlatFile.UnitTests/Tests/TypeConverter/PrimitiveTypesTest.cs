@@ -122,21 +122,24 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     .ToList(),
                 typeof(ushort));
         }
-
-
+        
         [TestMethod]
         public void Should_ParseAllFieldsMatchingExpected_When_ParseFileIsCalled()
         {
             AssertAllRowsMatchExpected();
         }
 
+        [TestMethod]
+        public void Should_ParseFirstRowMatchingExpected_When_ParseFileIsCalled()
+        {
+            AssertFirstRowMatchesExpected();
+        }
 
         [TestMethod]
         public void Should_ReadNumberOfRowsMatchingInputFile_When_ParseFileIsCalled()
         {
-            Assert.AreEqual(ParsedRows.Count, 4);
+            Assert.AreEqual(ParsedRows.Count, ExpectedRows.Count);
         }
-
 
         protected override ICollection<PrimitiveTypesModel> GetExpectedRows()
         {

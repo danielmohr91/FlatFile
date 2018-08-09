@@ -28,7 +28,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
             // See test file here: 
             // c:\projects\flatfile\FlatFile.UnitTests\bin\Debug\OutputFiles\PrimitiveTypesOutputTest.dat
 
-            // No gaurentee is made to correctness. 
+            // No guarantee is made to correctness. 
             // Copy / Paste the results from the OutputFiles\PrimitiveTypesOutputTest.dat into InputFiles\PrimitiveTypesTest.dat to test this
             WriteTestFile(rows, layout);
             Assert.IsTrue(File.Exists(GetOutputFilePath()));

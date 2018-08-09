@@ -301,4 +301,12 @@ Don't worry about deadlines
 			- double.MaxValue is actually   1.7976931348623157E+308
 			- ToString() is rounding, just over the threshold. Makes sense.
 
+8/9/18
+	- Removed unused IPrimitiveTypeConverter interface
+	- Removed 0 and 1 from boolean type converter. Stay away from truthy falsey type conversions for the default converter. 
+	- Started on tying up code so unit tests all pass. 
+		- Resume here: 
+			floatTest
+			expected: -0.214748368
+			actual: -0.2147484
 
