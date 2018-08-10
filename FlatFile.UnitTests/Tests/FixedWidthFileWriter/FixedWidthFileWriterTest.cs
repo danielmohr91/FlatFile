@@ -30,6 +30,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
 
             // No guarantee is made to correctness. 
             // Copy / Paste the results from the OutputFiles\PrimitiveTypesOutputTest.dat into InputFiles\PrimitiveTypesTest.dat to test this
+            File.Delete(GetOutputFilePath());
             WriteTestFile(rows, layout);
             Assert.IsTrue(File.Exists(GetOutputFilePath()));
         }

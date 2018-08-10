@@ -301,6 +301,12 @@ Don't worry about deadlines
 			- double.MaxValue is actually   1.7976931348623157E+308
 			- ToString() is rounding, just over the threshold. Makes sense.
 
+8/8/18
+CODE REVIEW COMMENTS
+	- Remove truthy / falsey dictionary from boolean type converter
+	- Remove IPrimitiveTypeConverter interface (no longer used, forgot to delete it)
+	- Reviewed the "double.Parse(double.MaxValue.ToString());" question. Documented above. 
+
 8/9/18
 	- Removed unused IPrimitiveTypeConverter interface
 	- Removed 0 and 1 from boolean type converter. Stay away from truthy falsey type conversions for the default converter. 
@@ -309,4 +315,9 @@ Don't worry about deadlines
 			floatTest
 			expected: -0.214748368
 			actual: -0.2147484
+
+8/10/18
+	- Looked into issue truncating float when writing out the test file.
+	- TODO: resume on unit test _____________Should_TruncateFloatToTenDigits_When_GetTruncatedFloatingPointNumberIsCalled
+	  also, the truncating logic should probably be in the layout desciptor for file writers? 
 

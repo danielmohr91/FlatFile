@@ -35,7 +35,7 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
             // FAIL
             // floatTest
             //expected: -0.214748368
-            //actual: -0.2147484
+            //actual:   -0.2147484
             Assert.AreEqual(expected, actual);
         }
 

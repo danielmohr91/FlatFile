@@ -127,37 +127,37 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
             return truncatedNumber;
         }
 
-        private float GetTruncatedFloatingPointNumber(float num)
+        public float GetTruncatedFloatingPointNumber(float num)
         {
             return (float) GetTruncatedDouble(num);
         }
 
-        private long GetTruncatedFloatingPointNumber(long num)
+        public long GetTruncatedFloatingPointNumber(long num)
         {
             return (long) GetTruncatedDouble(num);
         }
 
-        private short GetTruncatedFloatingPointNumber(short num)
+        public short GetTruncatedFloatingPointNumber(short num)
         {
             return (short) GetTruncatedDouble(num);
         }
 
-        private ushort GetTruncatedFloatingPointNumber(ushort num)
+        public ushort GetTruncatedFloatingPointNumber(ushort num)
         {
             return (ushort) GetTruncatedDouble(num);
         }
 
-        private double GetTruncatedFloatingPointNumber(double num)
+        public double GetTruncatedFloatingPointNumber(double num)
         {
             return GetTruncatedDouble(num);
         }
 
-        private ulong GetTruncatedFloatingPointNumber(ulong num)
+        public ulong GetTruncatedFloatingPointNumber(ulong num)
         {
             return (ulong) GetTruncatedDouble(num);
         }
 
-        private decimal GetTruncatedFloatingPointNumber(decimal num)
+        public decimal GetTruncatedFloatingPointNumber(decimal num)
         {
             return (decimal) GetTruncatedDouble((double) num);
         }

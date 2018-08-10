@@ -58,13 +58,13 @@
     <Compile Include="Models\DummyEnumModel.cs" />
     <Compile Include="Models\PrimitiveTypesModel.cs" />
     <Compile Include="Models\DummyStringModel.cs" />
+    <Compile Include="Tests\FixedWidthFileWriter\PrimitiveTypeExpectationsTest.cs" />
     <Compile Include="Tests\FixedWidthParser\StringTest.cs" />
-    <Compile Include="Tests\LayoutDescriptor\WriterTestBase.cs" />
     <Compile Include="Tests\LayoutDescriptor\ParserTestBase.cs" />
     <Compile Include="Tests\ParseWithTypeConverter\ParseWithCustomTypeConverterTests.cs" />
     <Compile Include="Tests\TypeConverter\CustomTypeConvertTests.cs" />
     <Compile Include="Tests\TypeConverter\DateTimeConverterTests.cs" />
-    <Compile Include="Tests\TypeConverter\FixedWidthFileWriterTest.cs" />
+    <Compile Include="Tests\FixedWidthFileWriter\FixedWidthFileWriterTest.cs" />
     <Compile Include="Tests\TypeConverter\Helpers\PrimitiveTypeExpectations.cs" />
     <Compile Include="Tests\TypeConverter\PrimitiveTypesTest.cs" />
     <Compile Include="Tests\LayoutDescriptor\LayoutDescriptorExpressionTests.cs" />
