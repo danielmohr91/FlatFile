@@ -119,9 +119,8 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
         }
 
 
-        private double GetTruncatedDouble(double x)
+        private double GetTruncatedDouble(double x, int decimalPlaces = 10)
         {
-            var decimalPlaces = 10;
             var truncatedNumberInt = (int) (x * Math.Pow(10, decimalPlaces));
             var truncatedNumber = truncatedNumberInt / Math.Pow(10, decimalPlaces);
             return truncatedNumber;

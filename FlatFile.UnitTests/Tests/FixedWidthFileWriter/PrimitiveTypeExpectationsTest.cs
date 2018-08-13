@@ -5,10 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FlatFileParserUnitTests.Tests.FixedWidthFileWriter
 {
     [TestClass]
-    internal class PrimitiveTypeExpectationsTest
+    public class PrimitiveTypeExpectationsTest
     {
         [TestMethod]
-        public void _____________Should_TruncateFloatToTenDigits_When_GetTruncatedFloatingPointNumberIsCalled()
+        public void Should_TruncateFloatToEightDigits_When_GetTruncatedFloatingPointNumberIsCalled()
         {
             var logic = new PrimitiveTypeExpectations();
             var number = float.MaxValue;
@@ -17,8 +17,18 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthFileWriter
             {
                 floatTest = logic.GetTruncatedFloatingPointNumber(number)
             };
-            // TODO: resume here testing the GetTruncatedFloatingPointNumber on floats. INput file is incorrect. 
+            // TODO: resume here testing the GetTruncatedFloatingPointNumber on floats. Input file is incorrect. 
             Assert.AreEqual(number, test.floatTest);
+        }
+
+        [TestMethod]
+        public void Should_TruncateDouble_When_GetTruncatedFloatingPointNumberIsCalled()
+        {
+            var logic = new PrimitiveTypeExpectations();
+            var number = double.MaxValue;
+            var doubleTest = logic.GetTruncatedFloatingPointNumber(number);
+
+            Assert.AreEqual((double)1.7976931348E+308, doubleTest);
         }
     }
 }
