@@ -58,7 +58,6 @@
     <Compile Include="Models\DummyEnumModel.cs" />
     <Compile Include="Models\PrimitiveTypesModel.cs" />
     <Compile Include="Models\DummyStringModel.cs" />
-    <Compile Include="Tests\FixedWidthFileWriter\PrimitiveTypeExpectationsTest.cs" />
     <Compile Include="Tests\FixedWidthParser\StringTest.cs" />
     <Compile Include="Tests\LayoutDescriptor\ParserTestBase.cs" />
     <Compile Include="Tests\ParseWithTypeConverter\ParseWithCustomTypeConverterTests.cs" />

@@ -21,31 +21,31 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                 {
                     id = 0,
                     boolTest = true,
-                    decimalTest = GetTruncatedFloatingPointNumber(decimal.MaxValue),
-                    doubleTest = GetTruncatedFloatingPointNumber(double.MaxValue),
-                    floatTest = GetTruncatedFloatingPointNumber(float.MaxValue),
+                    decimalTest = decimal.MaxValue - 1,
+                    doubleTest = double.MaxValue - 1E300,
+                    floatTest = float.MaxValue- (float)1E32,
                     intTest = int.MaxValue,
-                    longTest = GetTruncatedFloatingPointNumber(long.MaxValue),
+                    longTest = long.MaxValue,
                     shortTest = short.MaxValue,
                     stringTest = "Test 1",
                     uintTest = uint.MaxValue,
                     ulongTest = ulong.MaxValue,
-                    ushortTest = GetTruncatedFloatingPointNumber(ushort.MaxValue)
+                    ushortTest = ushort.MaxValue
                 },
                 new PrimitiveTypesModel
                 {
                     id = 1,
                     boolTest = false, // // 'FALSE' in test file (testing caps)
-                    decimalTest = GetTruncatedFloatingPointNumber(decimal.MinValue),
-                    doubleTest = GetTruncatedFloatingPointNumber(double.MinValue),
-                    floatTest = GetTruncatedFloatingPointNumber(float.MinValue),
+                    decimalTest = (decimal.MinValue),
+                    doubleTest = (double.MinValue),
+                    floatTest = (float.MinValue),
                     intTest = int.MinValue,
                     longTest = long.MinValue,
                     shortTest = short.MinValue,
                     stringTest = "Test 2",
                     uintTest = uint.MinValue,
-                    ulongTest = GetTruncatedFloatingPointNumber(ulong.MinValue),
-                    ushortTest = GetTruncatedFloatingPointNumber(ushort.MinValue)
+                    ulongTest = (ulong.MinValue),
+                    ushortTest = (ushort.MinValue)
                 },
                 new PrimitiveTypesModel
                 {
@@ -116,49 +116,6 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                 .AppendField(x => x.shortTest, NumberFieldLength)
                 .AppendField(x => x.ushortTest, NumberFieldLength)
                 .AppendField(x => x.uintTest, NumberFieldLength);
-        }
-
-
-        private double GetTruncatedDouble(double x, int decimalPlaces = 10)
-        {
-            var truncatedNumberInt = (int) (x * Math.Pow(10, decimalPlaces));
-            var truncatedNumber = truncatedNumberInt / Math.Pow(10, decimalPlaces);
-            return truncatedNumber;
-        }
-
-        public float GetTruncatedFloatingPointNumber(float num)
-        {
-            return (float) GetTruncatedDouble(num);
-        }
-
-        public long GetTruncatedFloatingPointNumber(long num)
-        {
-            return (long) GetTruncatedDouble(num);
-        }
-
-        public short GetTruncatedFloatingPointNumber(short num)
-        {
-            return (short) GetTruncatedDouble(num);
-        }
-
-        public ushort GetTruncatedFloatingPointNumber(ushort num)
-        {
-            return (ushort) GetTruncatedDouble(num);
-        }
-
-        public double GetTruncatedFloatingPointNumber(double num)
-        {
-            return GetTruncatedDouble(num);
-        }
-
-        public ulong GetTruncatedFloatingPointNumber(ulong num)
-        {
-            return (ulong) GetTruncatedDouble(num);
-        }
-
-        public decimal GetTruncatedFloatingPointNumber(decimal num)
-        {
-            return (decimal) GetTruncatedDouble((double) num);
         }
     }
 }
