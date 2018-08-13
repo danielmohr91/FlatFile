@@ -22,8 +22,8 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                     id = 0,
                     boolTest = true,
                     decimalTest = decimal.MaxValue - 1,
-                    doubleTest = double.MaxValue - 1E300,
-                    floatTest = float.MaxValue- (float)1E32,
+                    doubleTest = Math.Round(double.MaxValue - 1E300, 10), // Have to shave a touch off these, otherwise rounding will push just outside min / max values for each type (Overflow exception)
+                    floatTest = (float)Math.Round(float.MaxValue- (float)1E32, 10),
                     intTest = int.MaxValue,
                     longTest = long.MaxValue,
                     shortTest = short.MaxValue,
@@ -35,10 +35,10 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                 new PrimitiveTypesModel
                 {
                     id = 1,
-                    boolTest = false, // // 'FALSE' in test file (testing caps)
-                    decimalTest = (decimal.MinValue),
-                    doubleTest = (double.MinValue),
-                    floatTest = (float.MinValue),
+                    boolTest = false, 
+                    decimalTest = (decimal.MinValue + 1),
+                    doubleTest = Math.Round(double.MinValue + 1E+300, 10),
+                    floatTest = (float)Math.Round(float.MinValue + (float)1E+32, 10),
                     intTest = int.MinValue,
                     longTest = long.MinValue,
                     shortTest = short.MinValue,
@@ -50,7 +50,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                 new PrimitiveTypesModel
                 {
                     id = 2,
-                    boolTest = false, // 0 in test file
+                    boolTest = false, 
                     decimalTest = (decimal) 42.42424242,
                     doubleTest = 42.42424242,
                     floatTest = (float) 42.42424242,
@@ -65,7 +65,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                 new PrimitiveTypesModel
                 {
                     id = 3,
-                    boolTest = true, // 1 in test file
+                    boolTest = true,
                     decimalTest = 0,
                     doubleTest = 0,
                     floatTest = 0,
