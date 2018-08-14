@@ -22,8 +22,8 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                     id = 0,
                     boolTest = true,
                     decimalTest = decimal.MaxValue - 1,
-                    doubleTest = Math.Round(double.MaxValue - 1E300, 10), // Have to shave a touch off these, otherwise rounding will push just outside min / max values for each type (Overflow exception)
-                    floatTest = (float)Math.Round(float.MaxValue- (float)1E32, 10),
+                    doubleTest = 1.79769312486232E+308, // Math.Round(double.MaxValue - 1E300, 10), // Have to shave a touch off these, otherwise rounding will push just outside min / max values for each type (Overflow exception)
+                    floatTest = 3.402822E+38f, //(float)Math.Round(float.MaxValue- (float)1E32, 10),
                     intTest = int.MaxValue,
                     longTest = long.MaxValue,
                     shortTest = short.MaxValue,
@@ -37,8 +37,8 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                     id = 1,
                     boolTest = false, 
                     decimalTest = (decimal.MinValue + 1),
-                    doubleTest = Math.Round(double.MinValue + 1E+300, 10),
-                    floatTest = (float)Math.Round(float.MinValue + (float)1E+32, 10),
+                    doubleTest = -1.79769312486232E+308, //Math.Round(double.MinValue + 1E+300, 10),
+                    floatTest = -3.402822E+38f, // (float)Math.Round(float.MinValue + (float)1E+32, 10),
                     intTest = int.MinValue,
                     longTest = long.MinValue,
                     shortTest = short.MinValue,
