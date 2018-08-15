@@ -3,9 +3,9 @@ using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class BooleanTypeConverter : ITypeConverter<object>
+    public class BooleanTypeConverter : ITypeConverter<bool>
     {
-        public object ConvertFromString(string stringValue)
+        public bool ConvertFromString(string stringValue)
         {
             try
             {

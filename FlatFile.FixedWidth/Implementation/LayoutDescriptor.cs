@@ -21,7 +21,7 @@ namespace FlatFile.FixedWidth.Implementation
         private readonly IDictionary<int, IFixedFieldSetting> fields;
 
         // Make a factory to get the type converter, or change ITypeConverter<object> to just object
-        private readonly IDictionary<Type, ITypeConverter<object>> typeConverters;
+        private readonly IDictionary<Type, object> typeConverters;
 
 
 
@@ -80,7 +80,7 @@ namespace FlatFile.FixedWidth.Implementation
             throw new ArgumentException($"No default type converter defined for object type: {propertyInfo?.PropertyType}. Please explicitly define a TypeConverter.");
         }
 
-        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<object> typeConverter)
+        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, object typeConverter)
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
 
@@ -88,7 +88,7 @@ namespace FlatFile.FixedWidth.Implementation
             return this;
         }
 
-        private void Add(int length, PropertyInfo property, ITypeConverter<object> typeConverter)
+        private void Add(int length, PropertyInfo property, object typeConverter)
         {
             Add(length, property);
             fields[currentPosition].TypeConverter = typeConverter;
@@ -139,18 +139,17 @@ namespace FlatFile.FixedWidth.Implementation
             return null;
         }
 
-        private IDictionary<Type, ITypeConverter<object>> GetTypeConverters()
+        private IDictionary<Type, object> GetTypeConverters()
         {
-            ITypeConverter<object> boolConverter = new BooleanTypeConverter();
-
+ 
             // Should ITypeConverter take a generic? Makes use cases like this cumbersome.
             // https://stackoverflow.com/questions/353126/c-sharp-multiple-generic-types-in-one-list
 
-            return new Dictionary<Type, ITypeConverter<object>>
+            return new Dictionary<Type, object>
             {
                 {
                     typeof(bool),
-                    boolConverter
+                    new BooleanTypeConverter()
                 },
                 {
                     typeof(decimal),

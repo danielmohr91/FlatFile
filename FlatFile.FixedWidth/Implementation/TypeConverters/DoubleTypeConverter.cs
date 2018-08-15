@@ -2,9 +2,9 @@
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class DoubleTypeConverter : ITypeConverter<object>
+    public class DoubleTypeConverter : ITypeConverter<double>
     {
-        public object ConvertFromString(string stringValue)
+        public double ConvertFromString(string stringValue)
         {
             // This currently fails for double.MaxValue.
             // Can reproduce here: double.Parse(double.MaxValue.ToString());

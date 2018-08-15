@@ -376,17 +376,16 @@ CODE REVIEW COMMENTS
 8/15/18
 
 Code review comments
-	-    // Make a factory to get the type converter, or change ITypeConverter<object> to just object
-        private readonly IDictionary<Type, ITypeConverter<object>> typeConverters;
-
-		        IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<object> typeConverter);
-
-        // ITypeConverter<object> is wrong here, should be TProperty? 
-
+	- Fix instances of ITypeConverter<object> - generic should be a primitive type, or the Day enum. Not object
+		// Make a factory to get the type converter, or change ITypeConverter<object> to just object
+		private readonly IDictionary<Type, ITypeConverter<object>> typeConverters;
+	- Fix AppendField
+		IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<object> typeConverter);
+		// ITypeConverter<object> is wrong here, should be TProperty? 
 	- If there are any instances of "ITypeConverter<object>" something is wrong, should be TProperty or similar.
 	- Remove all instances of "ITypeConverter<object>"
-
-	- AppendField method - clean up generics in this method and in the whole class. 
-
+		- AppendField method - clean up generics in this method and in the whole class. 
 	- type converter generics, should NOT be object, should be primitive types
-	- 
+
+	- Started a few of the above changes. Resume here on object vs. ITypeConverter<TProperty> 
+

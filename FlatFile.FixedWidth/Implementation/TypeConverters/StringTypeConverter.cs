@@ -2,7 +2,7 @@
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class StringTypeConverter : ITypeConverter<object>
+    public class StringTypeConverter : ITypeConverter<string>
     {
         private readonly bool trim;
 
@@ -11,7 +11,7 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
             this.trim = trim;
         }
 
-        public object ConvertFromString(string stringValue)
+        public string ConvertFromString(string stringValue)
         {
             return trim ? stringValue.Trim() : stringValue;
         }
