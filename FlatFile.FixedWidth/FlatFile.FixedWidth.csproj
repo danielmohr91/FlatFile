@@ -40,8 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\TypeConverters\PrimitiveTypeConverter.cs" />
+    <Compile Include="Implementation\FixedWidthFileWriter.cs" />
+    <Compile Include="Implementation\TypeConverters\DateTimeTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\BooleanTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\DecimalTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\FloatTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\DoubleTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\LongTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\UShortTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\StringTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\IntTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\ShortTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\UIntTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\ULongTypeConverter.cs" />
     <Compile Include="Interfaces\ITypeConverter.cs" />
     <Compile Include="Interfaces\IFixedFieldSetting.cs" />
     <Compile Include="Interfaces\IFixedWidthFileParser.cs" />

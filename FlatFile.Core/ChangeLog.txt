@@ -171,3 +171,129 @@
 	TODO: tidy up and refactor above feature
 
 		- ********* RESUME HERE ********* 
+
+7/18/18
+CODE REVIEW COMMENTS
+	- The if condition for booleans is a violation of the open closed principle.
+		- Make BooleanTypeConverter a fully fledged type converter (like DummyEnumTypeConverter) that extends TypeConverter
+	- Follow this same pattern for the other primitive types (and possible others, like DateTime)
+	- Don't use by default in Parse method, but add the appropriate TypeConverter in AppendField using a known dictionary of converters above.
+		- It's OK to have lots of small classes, it's good when you're using composition. What's bad is lots of small classes that traverse down and down a call stack to a shared method that handles 81 different things
+		- Building with small classes is good. 
+
+TODO's
+	- Change PrimitiveTypeConverter (formerlly GenericTypeConverter) to a TypeConverter for each supported type, extending TypeConverter, and perhaps implementing my ITypeConverter interface. ITypeConverter interface might no longer be necessary. 
+	- Use a Dictionary of known types, and in AppendField add a type converter from this dictionary (if available) if none is passed in
+	- Dictionary should be <Type, Object>, where the object is the newed up type converter. They can be shared instances. No need to use reflection to new up type converter for each field (would be the case if using Dictionary<Type, Type>)
+
+7/19/18
+	- Quote of the day: "Once the requirements do change though it’s quite likely that they will change in a similar way again later on"
+		- Implement with this in mind.
+	- Added type converters for each primitive type. Removed if condition for bools, and the generic converter (that uses reflection to call "Parse").
+	- Tied parsing and unit tests for the above
+
+7/23/18
+	- Filled in unit tests for remaining primitive types.
+	- Need to think through if the new test methods checking type add much value - just checking if the model property is of expected type.
+	
+7/24/18
+	- Added boundary conditions to list of expected values. 
+		- Next, either duplicate in a test file or (preferred), write a simple class to write LayoutDescriptors to a file
+
+7/25/18
+	- Started automating writing a test file given a collection of expected rows and layout descriptor.
+		- See FixedWidthFileWriter.cs
+
+	- Tie up test w/ GetExpectedRows
+	- TODO: Add to GetExpectedRows() and input file to seed test values for the new primitive types.
+
+
+
+7/25/18
+CODE REVIEW COMMENTS
+	- depend on abstractions, not concrete implementations. When we extend the .net TypeConverter is this a violation? 
+	- Remove true true, false / false from the dictionary. if not found, then we just have the tolower value.
+	- Probably don't make the TypeConverters extend TypeConverter. Perhaps leverage the TypeConverter code, but don't extend it
+	- Not thinking through the api's / interfaces fully... very quick to jump on "there's already a typeconverter so no need to think through the api"
+		- think through the api, that should drive the implementation
+		- Keep ITypeConverter interface, think through only what I need (e.g. ConvertFromString), and only use that. 
+			- only need ConvertFromString method
+			- overcomplicating things to extend the .net typeconverter. keep it simple. think through the api.
+				- don't just look what's available and use it. Design the api, and go from there. 
+			- Sbyte, etc... can be skipped. If the file actually has individual bytes, the user should probably be deciding how to convert them. 
+				- only worry about the primary ones, datetime, decimal, int, etc... 
+				- only use double. for decimal, float, etc... just use decimaltypeconverter and cast to decimal
+				- do the easy, straighforward ones. Leave the rest up to the enduser. 
+	- e.g. 
+		Before: 
+			StringTypeConverter : TypeConverter, ITypeConverter
+		After: 
+			StringTypeConverter : ITypeConverter
+	- LayoutDescriptor
+		- shouldn't have knowledge of all the type converters. This should be an abstraction
+		- violation of single responsibility principle, and open / closed principle
+			- if a new type converter was created, LayoutDescriptor would have to change with current implementation
+			- only depend on abstractions in LayoutDescriptor
+
+simplify type TypeConverters
+	- think through which ones I want to handle, get rid of all the rest
+		- awkward to convert string to sybte, etc... skip
+		- provided end user ability to configure this themself (ITypeConverter and AppendField method that accepts one)
+Think hard about the api / interface for the TypeConverters, make sure it's what I want it to be... e.g. return object in ConvertFromString? What about a Generic Type instead on the ITypeConverter class? 
+
+Don't worry about deadlines
+
+
+
+7/26/18
+	- Removed uncommon primitive types.
+	- No longer extending .net TypeConverter. Kept it simple, and only implemented pre-existing ITypeConverter. 
+		- Changes in progress, perhaps using a generic for return type of ITypeConverter. If too messy, will make it an object. 
+
+7/31/18
+	- Removed extra entry from dictionary
+	- ITypeConverter only defines "ConvertFromString"
+		- Should ITypeConverter return a generic, or an object? 
+		- Can't mix generics in a collection, so would need to introduce a new base interface and use this instead.
+			- At that point, how much benefit is there to using a generic? 
+			- Played around with some different options. Used <object> as the type, too messy. 
+				- using the empty base interface works well for keeping all the other interfaces and method signatures clean, but when using "ConvertFromString" it becomes problematic
+				- If it was an abstract class, might be easier than a base interface
+
+8/1/18
+	- Thought through implications of using a generic for ITypeConverter
+		- Could make things compile pretty cleanly with a base interface without the generic.
+			- Gets messy with having a collection of mixed types. 
+			- Could cast to ITypeConverter<object> or ITypeConverter<dynamic>, but that feels so wrong
+			- Also, while it compiles, it would fail at runtime.
+				- {"Unable to cast object of type 'FlatFile.FixedWidth.Implementation.TypeConverters.IntTypeConverter' to type 'FlatFile.FixedWidth.Interfaces.ITypeConverter`1[System.Object]'."}
+	- The main place we use the type converter, we already know the expected return type (through field.PropertyInfo.PropertyType). Not a huge advantage, and makes things messy. 
+		- besides, modelProperty.SetValue expects and object for the converted value. Anything more specific is unnecessary.
+	- Removed byte and sbyte from unit tests
+
+8/6/18
+	- Thought through quick and dirty File Writer
+		- What about doubles that exceed field length (e.g. 1.33333333333333333333333333E+100)
+		- This would truncate to 1.3333333333 with a shorter column width, and loose the exponent. Would rather get exception than bad data.
+		- Threw exception if value length exceeds configured field length. Eventually could use a type converter here.
+
+8/7/18
+	- Generated test file for primitive types
+
+8/8/18
+	- Hit the following exception: 
+	  FileNotFoundException Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+	- Can't run any tests. Cleaned / rebuilt, then closed / reopened solution with no success. Restarted visual studio, now running successfully. 
+		- Details: https://developercommunity.visualstudio.com/content/problem/222892/filenotfoundexception-microsoftvisualstudiotestpla.html
+	- Started looking into failed unit test for parsing double. 
+		- Can repro in linqpad. This seems strange: double.Parse(double.MaxValue.ToString()); fails
+			- OverflowException
+			- Value was either too large or too small for a Double.
+			- Subtracting small amounts doesn't help. Subtracting 1E300 works: 
+			  double.Parse((double.MaxValue - 1E300).ToString());
+			- Resume here looking into this unexpected language behavior...
+			- Can't be a language bug, but sure looks that way: 
+				- Parse throw OverFlow Exception when: "s represents a number that is less than MinValue or greater than MaxValue."
+     			  https://msdn.microsoft.com/en-us/library/fd84bdyt(v=vs.110).aspx
+				  Where "MaxValue" is Double.MaxValue (https://msdn.microsoft.com/en-us/library/system.double.maxvalue(v=vs.110).aspx)
+

@@ -39,7 +39,7 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthParser
 
                 generatedRows.Add(new DummyStringModel
                 {
-                    Id = rowNumber.ToString().PadLeft(FieldWidth),
+                    Id = rowNumber.ToString(),
                     Field1 = $"Row{rowNumber}Field1",
                     Field2 = $"Row{rowNumber}Field2",
                     Field3 = $"Row{rowNumber}Field3",
@@ -59,11 +59,11 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthParser
         protected override IFlatFileLayoutDescriptor<DummyStringModel> GetLayout()
         {
             return new LayoutDescriptor<DummyStringModel>()
-                .AppendField(x => x.Id, FieldWidth)
-                .AppendField(x => x.Field1, FieldWidth)
-                .AppendField(x => x.Field2, FieldWidth)
-                .AppendField(x => x.Field3, FieldWidth)
-                .AppendField(x => x.Field4, FieldWidth);
+                .AppendField(x => x.Id, DefaultFieldWidth)
+                .AppendField(x => x.Field1, DefaultFieldWidth)
+                .AppendField(x => x.Field2, DefaultFieldWidth)
+                .AppendField(x => x.Field3, DefaultFieldWidth)
+                .AppendField(x => x.Field4, DefaultFieldWidth);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace FlatFileParserUnitTests.Tests.ParseWithTypeConverter
     [TestClass]
     public class ParseWithCustomTypeConverterTests : ParserTestBase<DummyEnumModel>
     {
-        private readonly System.ComponentModel.TypeConverter converter;
+        private readonly ITypeConverter<object> converter;
 
         public ParseWithCustomTypeConverterTests()
         {

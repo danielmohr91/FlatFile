@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using FlatFile.FixedWidth.Implementation.TypeConverters;
 using FlatFile.FixedWidth.Interfaces;
 using FlatFile.FixedWidth.Models;
 
@@ -18,12 +19,14 @@ namespace FlatFile.FixedWidth.Implementation
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
     {
         private readonly IDictionary<int, IFixedFieldSetting> fields;
+        private readonly IDictionary<Type, ITypeConverter<object>> typeConverters;
         private int currentPosition;
         private ICollection<IFixedFieldSetting> orderedFields;
 
         public LayoutDescriptor()
         {
             fields = new Dictionary<int, IFixedFieldSetting>();
+            typeConverters = GetTypeConverters();
         }
 
         /// <summary>
@@ -31,7 +34,6 @@ namespace FlatFile.FixedWidth.Implementation
         ///     Note that this could throw key not found exception. Perhaps wrap this...
         /// </summary>
         public IFixedFieldSetting GetField(int key) => fields[key];
-
 
         /// <inheritdoc />
         public ICollection<IFixedFieldSetting> GetOrderedFields()
@@ -64,11 +66,16 @@ namespace FlatFile.FixedWidth.Implementation
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
 
-            Add(fieldLength, propertyInfo);
-            return this;
+            if (propertyInfo != null && typeConverters.TryGetValue(propertyInfo.PropertyType, out var converter))
+            {
+                Add(fieldLength, propertyInfo, converter);
+                return this;
+            }
+
+            throw new ArgumentException($"No default type converter defined for object type: {propertyInfo?.PropertyType}. Please explicitly define a TypeConverter.");
         }
 
-        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter typeConverter)
+        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<object> typeConverter)
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
 
@@ -76,7 +83,7 @@ namespace FlatFile.FixedWidth.Implementation
             return this;
         }
 
-        private void Add(int length, PropertyInfo property, ITypeConverter typeConverter)
+        private void Add(int length, PropertyInfo property, ITypeConverter<object> typeConverter)
         {
             Add(length, property);
             fields[currentPosition].TypeConverter = typeConverter;
@@ -125,6 +132,62 @@ namespace FlatFile.FixedWidth.Implementation
             }
 
             return null;
+        }
+
+        private IDictionary<Type, ITypeConverter<object>> GetTypeConverters()
+        {
+            ITypeConverter<object> boolConverter = new BooleanTypeConverter();
+
+            // Should ITypeConverter take a generic? Makes use cases like this cumbersome.
+            // https://stackoverflow.com/questions/353126/c-sharp-multiple-generic-types-in-one-list
+
+            return new Dictionary<Type, ITypeConverter<object>>
+            {
+                {
+                    typeof(bool),
+                    boolConverter
+                },
+                {
+                    typeof(decimal),
+                    new DecimalTypeConverter()
+                },
+                {
+                    typeof(double),
+                    new DoubleTypeConverter()
+                },
+                {
+                    typeof(float),
+                    new FloatTypeConverter()
+                },
+                {
+                    typeof(int),
+                    new IntTypeConverter()
+                },
+                {
+                    typeof(uint),
+                    new UIntTypeConverter()
+                },
+                {
+                    typeof(long),
+                    new LongTypeConverter()
+                },
+                {
+                    typeof(ulong),
+                    new ULongTypeConverter()
+                },
+                {
+                    typeof(short),
+                    new ShortTypeConverter()
+                },
+                {
+                    typeof(ushort),
+                    new UShortTypeConverter()
+                },
+                {
+                    typeof(string),
+                    new StringTypeConverter()
+                }
+            };
         }
     }
 }

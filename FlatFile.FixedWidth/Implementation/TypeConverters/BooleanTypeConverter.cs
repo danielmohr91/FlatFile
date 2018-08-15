@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    internal class BooleanTypeConverter : IPrimitiveTypeConverter
+    public class BooleanTypeConverter : ITypeConverter<object>
     {
         private readonly Dictionary<string, string> conversions;
 
@@ -12,16 +13,19 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
             conversions = GetConversions();
         }
 
-        public string GetConvertedString(string unparsedString)
+        public object ConvertFromString(string stringValue)
         {
-            unparsedString = unparsedString
-                .Trim()
-                .ToLower();
+            try
+            {
+                var sanitizedString = GetSanitizedString(stringValue);
+                conversions.TryGetValue(sanitizedString, out var convertedString);
 
-            string value;
-            return conversions.TryGetValue(unparsedString, out value)
-                ? value
-                : unparsedString;
+                return bool.Parse(convertedString ?? sanitizedString);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Input must be true / false, or 1 / 0.", nameof(stringValue), e);
+            }
         }
 
         private Dictionary<string, string> GetConversions()
@@ -31,6 +35,20 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
                 {"1", "true"},
                 {"0", "false"}
             };
+        }
+
+        private string GetSanitizedString(string unparsedString)
+        {
+            unparsedString = unparsedString
+                .Trim()
+                .ToLower();
+
+
+            var sanitizedString = conversions.TryGetValue(unparsedString, out var value)
+                ? value
+                : unparsedString;
+
+            return sanitizedString;
         }
     }
 }

@@ -1,9 +1,7 @@
-﻿using System.Reflection;
-
-namespace FlatFile.FixedWidth.Interfaces
+﻿namespace FlatFile.FixedWidth.Interfaces
 {
-    public interface ITypeConverter
+    public interface ITypeConverter<T>
     {
-        object ConvertFromString(string stringValue, PropertyInfo propertyInfo);
+        T ConvertFromString(string stringValue);
     }
 }
