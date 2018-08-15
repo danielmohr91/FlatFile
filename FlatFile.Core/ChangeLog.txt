@@ -296,4 +296,78 @@ Don't worry about deadlines
 				- Parse throw OverFlow Exception when: "s represents a number that is less than MinValue or greater than MaxValue."
      			  https://msdn.microsoft.com/en-us/library/fd84bdyt(v=vs.110).aspx
 				  Where "MaxValue" is Double.MaxValue (https://msdn.microsoft.com/en-us/library/system.double.maxvalue(v=vs.110).aspx)
+		- Here's what's happening...
+			- double.MaxValue.ToString() is 1.79769313486232E+308
+			- double.MaxValue is actually   1.7976931348623157E+308
+			- ToString() is rounding, just over the threshold. Makes sense.
 
+8/8/18
+CODE REVIEW COMMENTS
+	- Remove truthy / falsey dictionary from boolean type converter
+	- Remove IPrimitiveTypeConverter interface (no longer used, forgot to delete it)
+	- Reviewed the "double.Parse(double.MaxValue.ToString());" question. Documented above. 
+
+8/9/18
+	- Removed unused IPrimitiveTypeConverter interface
+	- Removed 0 and 1 from boolean type converter. Stay away from truthy falsey type conversions for the default converter. 
+	- Started on tying up code so unit tests all pass. 
+		- Resume here: 
+			floatTest
+			expected: -0.214748368
+			actual: -0.2147484
+
+8/10/18
+	- Looked into issue truncating float when writing out the test file.
+	- TODO: resume on unit test _____________Should_TruncateFloatToTenDigits_When_GetTruncatedFloatingPointNumberIsCalled
+	  also, the truncating logic should probably be in the layout desciptor for file writers? 
+
+8/14/18
+	- Thought through float and decimal conversion / rounding behavior as a user of the application. 
+	- Ran a test file. Everything works as one would expect, except for float and double
+		- float and double precision isn't exact. Thinking through how this should work. As an example:
+		  Expected 
+			Name	Value	Type
+			boolTest	TRUE	bool
+			decimalTest	7.92282E+28	decimal
+			doubleTest	1.7976931248623157E+308	double
+			floatTest	3.40E+38	float
+			id	0	int
+			intTest	2147483647	int
+			longTest	9.22337E+18	long
+			shortTest	32767	short
+			stringTest	"Test 1"	string
+			uintTest	4294967295	uint
+			ulongTest	1.84467E+19	ulong
+			ushortTest	65535	ushort
+		   Actual
+			Name	Value	Type
+			boolTest	TRUE	bool
+			decimalTest	7.92282E+28	decimal
+			doubleTest	1.79769312486232E+308	double
+			floatTest	3.40E+38	float
+			id	0	int
+			intTest	2147483647	int
+			longTest	9.22337E+18	long
+			shortTest	32767	short
+			stringTest	"Test 1"	string
+			uintTest	4294967295	uint
+			ulongTest	1.84467E+19	ulong
+			ushortTest	65535	ushort
+		- Expected: 
+			doubleTest	1.7976931248623157E+308
+			floatTest	3.40282245E+38
+		- Actual: 
+			doubleTest	1.79769312486232E+308 (Rounded)
+			floatTest	3.402822E+38 (Rounded)
+		- The input file matches "actual", the issue was with generating the test file. Just need to shave some precision off.
+			- The precision used in generating the test file isn't supported by the language. e.g.
+				var test = 1.7976931248623157E+308;
+				test.Dump(); // 1.79769312486232E+308
+				test.ToString().Dump(); // 1.79769312486232E+308
+			- Note the rounding above, even without ToString().
+	- Fixed the first row. Resume on fixing the matching on the second row (run unit tests to generate the exception)
+		- Message: CollectionAssert.AreEqual failed. (Element at index 2 do not match.)
+
+8/15/18
+	- All unit tests now pass. 
+		- Updated expected values for floats, too many digits of precision were used so rounding occured. 

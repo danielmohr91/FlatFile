@@ -18,7 +18,7 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
             ParsedRows = ParseTestFile();
         }
 
-        private ICollection<T> ExpectedRows => expectedRows ?? (expectedRows = GetExpectedRows());
+        protected ICollection<T> ExpectedRows => expectedRows ?? (expectedRows = GetExpectedRows());
 
 
         protected void AssertAllRowsMatchExpected()
@@ -29,7 +29,19 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
         protected void AssertFirstRowMatchesExpected()
         {
             // This is reference equals by default. Equals method is overriden in T to implement value equals vs. reference equals
-            Assert.AreEqual(ExpectedRows.First(), ParsedRows.First());
+            var expected = ExpectedRows.First();
+            var actual = ParsedRows.First();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        protected void AssertRowMatchesExpected(int rowNumber)
+        {
+            // This is reference equals by default. Equals method is overriden in T to implement value equals vs. reference equals
+            var expected = ExpectedRows.Skip(rowNumber - 1).First();
+            var actual = ParsedRows.Skip(rowNumber - 1).First();
+
+            Assert.AreEqual(expected, actual);
         }
 
         protected abstract ICollection<T> GetExpectedRows();
