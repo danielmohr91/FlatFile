@@ -368,3 +368,6 @@ CODE REVIEW COMMENTS
 	- Fixed the first row. Resume on fixing the matching on the second row (run unit tests to generate the exception)
 		- Message: CollectionAssert.AreEqual failed. (Element at index 2 do not match.)
 
+8/15/18
+	- All unit tests now pass. 
+		- Updated expected values for floats, too many digits of precision were used so rounding occured. 

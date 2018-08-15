@@ -32,10 +32,15 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
             var expected = ExpectedRows.First();
             var actual = ParsedRows.First();
 
-            // FAIL
-            // floatTest
-            //expected: -0.214748368
-            //actual:   -0.2147484
+            Assert.AreEqual(expected, actual);
+        }
+
+        protected void AssertRowMatchesExpected(int rowNumber)
+        {
+            // This is reference equals by default. Equals method is overriden in T to implement value equals vs. reference equals
+            var expected = ExpectedRows.Skip(rowNumber - 1).First();
+            var actual = ParsedRows.Skip(rowNumber - 1).First();
+
             Assert.AreEqual(expected, actual);
         }
 

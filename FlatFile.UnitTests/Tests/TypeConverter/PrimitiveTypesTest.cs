@@ -122,7 +122,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
                     .ToList(),
                 typeof(ushort));
         }
-        
+
         [TestMethod]
         public void Should_ParseAllFieldsMatchingExpected_When_ParseFileIsCalled()
         {
@@ -133,6 +133,20 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         public void Should_ParseFirstRowMatchingExpected_When_ParseFileIsCalled()
         {
             AssertFirstRowMatchesExpected();
+        }
+
+
+        [TestMethod]
+        public void Should_ParseSecondRowMatchingExpected_When_ParseFileIsCalled()
+        {
+            AssertRowMatchesExpected(2);
+        }
+
+
+        [TestMethod]
+        public void Should_ParseThirdRowMatchingExpected_When_ParseFileIsCalled()
+        {
+            AssertRowMatchesExpected(3);
         }
 
         [TestMethod]

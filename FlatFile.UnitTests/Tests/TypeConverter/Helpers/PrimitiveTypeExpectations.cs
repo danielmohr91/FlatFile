@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using FlatFile.FixedWidth.Implementation;
 using FlatFile.FixedWidth.Interfaces;
 using FlatFileParserUnitTests.Models;
@@ -35,8 +34,8 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                 new PrimitiveTypesModel
                 {
                     id = 1,
-                    boolTest = false, 
-                    decimalTest = (decimal.MinValue + 1),
+                    boolTest = false,
+                    decimalTest = decimal.MinValue + 1,
                     doubleTest = -1.79769312486232E+308, //Math.Round(double.MinValue + 1E+300, 10),
                     floatTest = -3.402822E+38f, // (float)Math.Round(float.MinValue + (float)1E+32, 10),
                     intTest = int.MinValue,
@@ -44,16 +43,16 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                     shortTest = short.MinValue,
                     stringTest = "Test 2",
                     uintTest = uint.MinValue,
-                    ulongTest = (ulong.MinValue),
-                    ushortTest = (ushort.MinValue)
+                    ulongTest = ulong.MinValue,
+                    ushortTest = ushort.MinValue
                 },
                 new PrimitiveTypesModel
                 {
                     id = 2,
-                    boolTest = false, 
+                    boolTest = false,
                     decimalTest = (decimal) 42.42424242,
                     doubleTest = 42.42424242,
-                    floatTest = (float) 42.42424242,
+                    floatTest = (float) 42.42424,
                     intTest = 42,
                     longTest = (long) 42.42424242,
                     shortTest = (short) 42.42424242,
