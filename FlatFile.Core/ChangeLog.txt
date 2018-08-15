@@ -368,6 +368,25 @@ CODE REVIEW COMMENTS
 	- Fixed the first row. Resume on fixing the matching on the second row (run unit tests to generate the exception)
 		- Message: CollectionAssert.AreEqual failed. (Element at index 2 do not match.)
 
+
 8/15/18
 	- All unit tests now pass. 
 		- Updated expected values for floats, too many digits of precision were used so rounding occured. 
+
+8/15/18
+
+Code review comments
+	-    // Make a factory to get the type converter, or change ITypeConverter<object> to just object
+        private readonly IDictionary<Type, ITypeConverter<object>> typeConverters;
+
+		        IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<object> typeConverter);
+
+        // ITypeConverter<object> is wrong here, should be TProperty? 
+
+	- If there are any instances of "ITypeConverter<object>" something is wrong, should be TProperty or similar.
+	- Remove all instances of "ITypeConverter<object>"
+
+	- AppendField method - clean up generics in this method and in the whole class. 
+
+	- type converter generics, should NOT be object, should be primitive types
+	- 

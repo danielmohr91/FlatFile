@@ -19,7 +19,12 @@ namespace FlatFile.FixedWidth.Implementation
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
     {
         private readonly IDictionary<int, IFixedFieldSetting> fields;
+
+        // Make a factory to get the type converter, or change ITypeConverter<object> to just object
         private readonly IDictionary<Type, ITypeConverter<object>> typeConverters;
+
+
+
         private int currentPosition;
         private ICollection<IFixedFieldSetting> orderedFields;
 

@@ -34,6 +34,8 @@ namespace FlatFile.FixedWidth.Interfaces
         /// <returns></returns>
         IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<object> typeConverter);
 
+        // ITypeConverter<object> is wrong here, should be TProperty? 
+
         /// <summary>
         ///     Returns field for specified key. Returns null if not found.
         /// </summary>
