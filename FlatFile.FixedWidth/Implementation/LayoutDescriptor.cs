@@ -20,11 +20,9 @@ namespace FlatFile.FixedWidth.Implementation
     {
         private readonly IDictionary<int, IFixedFieldSetting> fields;
 
-        // Make a factory to get the type converter, or change ITypeConverter<object> to just object
-        private readonly IDictionary<Type, object> typeConverters;
-
-
-
+        // TODO: Make a static factory to get the type converter. Changed ITypeConverter<object> to just object for now
+        private readonly IDictionary<Type, ITypeConverter<dynamic>> typeConverters;
+        
         private int currentPosition;
         private ICollection<IFixedFieldSetting> orderedFields;
 
@@ -73,7 +71,11 @@ namespace FlatFile.FixedWidth.Implementation
 
             if (propertyInfo != null && typeConverters.TryGetValue(propertyInfo.PropertyType, out var converter))
             {
-                Add(fieldLength, propertyInfo, converter);
+                var stronglyTyped = (ITypeConverter<dynamic>) converter;
+                // Generics are really aimed at static typing rather than types only known at execution time
+                // Using dynamic for now, probably the most specific I can get above "object"
+
+                Add(fieldLength, propertyInfo, stronglyTyped);
                 return this;
             }
 
@@ -139,58 +141,67 @@ namespace FlatFile.FixedWidth.Implementation
             return null;
         }
 
-        private IDictionary<Type, object> GetTypeConverters()
+        private IDictionary<Type, ITypeConverter<dynamic>> GetTypeConverters()
         {
  
             // Should ITypeConverter take a generic? Makes use cases like this cumbersome.
             // https://stackoverflow.com/questions/353126/c-sharp-multiple-generic-types-in-one-list
+            ITypeConverter<dynamic>  boolConverter = new BooleanTypeConverter();
 
-            return new Dictionary<Type, object>
+            //var x = new BooleanTypeConverter(); // some arbitrary expression for an example.
+            //Type T = x.GetType(); // or set T however you wish.
+
+            //Type objectType = typeof(BooleanTypeConverter);
+            //var genericType = objectType.MakeGenericType(T);
+            //var instance = Activator.CreateInstance(genericType);
+            
+
+            return new Dictionary<Type, ITypeConverter<dynamic>>
             {
                 {
                     typeof(bool),
-                    new BooleanTypeConverter()
-                },
-                {
-                    typeof(decimal),
-                    new DecimalTypeConverter()
-                },
-                {
-                    typeof(double),
-                    new DoubleTypeConverter()
-                },
-                {
-                    typeof(float),
-                    new FloatTypeConverter()
-                },
-                {
-                    typeof(int),
-                    new IntTypeConverter()
-                },
-                {
-                    typeof(uint),
-                    new UIntTypeConverter()
-                },
-                {
-                    typeof(long),
-                    new LongTypeConverter()
-                },
-                {
-                    typeof(ulong),
-                    new ULongTypeConverter()
-                },
-                {
-                    typeof(short),
-                    new ShortTypeConverter()
-                },
-                {
-                    typeof(ushort),
-                    new UShortTypeConverter()
-                },
-                {
-                    typeof(string),
-                    new StringTypeConverter()
-                }
+                    boolConverter
+                }//,
+                //{
+                //    typeof(decimal),
+                //    new DecimalTypeConverter()
+                //},
+                //{
+                //    typeof(double),
+                //    new DoubleTypeConverter()
+                //},
+                //{
+                //    typeof(float),
+                //    new FloatTypeConverter()
+                //},
+                //{
+                //    typeof(int),
+                //    new IntTypeConverter()
+                //},
+                //{
+                //    typeof(uint),
+                //    new UIntTypeConverter()
+                //},
+                //{
+                //    typeof(long),
+                //    new LongTypeConverter()
+                //},
+                //{
+                //    typeof(ulong),
+                //    new ULongTypeConverter()
+                //},
+                //{
+                //    typeof(short),
+                //    new ShortTypeConverter()
+                //},
+                //{
+                //    typeof(ushort),
+                //    new UShortTypeConverter()
+                //},
+                //{
+                //    typeof(string),
+                //    new StringTypeConverter()
+                //}
             };
         }
     }
