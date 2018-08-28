@@ -389,3 +389,6 @@ Code review comments
 
 	- Started a few of the above changes. Resume here on object vs. ITypeConverter<TProperty> 
 
+8/16/18
+	- Started thinking through options for making the TypeConverter strongly typed (vs. object). 
+	  Get's tricky because the generic type is not known at compile time for the default type converters.
