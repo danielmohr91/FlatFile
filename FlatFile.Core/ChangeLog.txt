@@ -392,3 +392,9 @@ Code review comments
 8/16/18
 	- Started thinking through options for making the TypeConverter strongly typed (vs. object). 
 	  Get's tricky because the generic type is not known at compile time for the default type converters.
+
+8/27/18
+	- Thinking through how to best handle TypeConverters with a runtime generic. 
+
+8/28/19
+	- Added linqpad script for above question.
