@@ -31,18 +31,18 @@ public class PrimitiveTypeConverter : ITypeConverterFactory<PrimitiveTypeConvert
 
 
 // Abstract Type Converter
-public interface ITypeConverter<T>
+public interface ITypeConverter<TTypeConverter>
 {
-	void SharedMethod(); // Can't use convert from string here yet, without another generic 
+	bool CanConvertFromString(string s); // Can't use convert from string here yet, without another generic 
 }
 
 
 // Concrete Type Converters 
 public class IntTypeConverter : ITypeConverter<PrimitiveTypeConverter>
 {
-	public void SharedMethod()
+	public bool CanConvertFromString(string s)
 	{
-		Console.WriteLine("shared thing");
+		return true;
 	}
 
 	public int ConvertFromString()
@@ -53,9 +53,9 @@ public class IntTypeConverter : ITypeConverter<PrimitiveTypeConverter>
 
 public class BoolTypeConverter : ITypeConverter<PrimitiveTypeConverter>
 {
-	public void SharedMethod()
+	public bool CanConvertFromString(string s)
 	{
-		Console.WriteLine("shared thing");
+		return true;
 	}
 
 	public bool ConvertFromString()
