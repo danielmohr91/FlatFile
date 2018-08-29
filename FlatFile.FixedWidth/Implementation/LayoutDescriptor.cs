@@ -18,28 +18,31 @@ namespace FlatFile.FixedWidth.Implementation
     /// <typeparam name="TTarget">Type of target model</typeparam>
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
     {
-        private readonly IDictionary<int, IFixedFieldSetting> fields;
+        private readonly IDictionary<int, IFixedFieldSetting<TTarget>> fields;
 
         // TODO: Make a static factory to get the type converter. Changed ITypeConverter<object> to just object for now
-        private readonly IDictionary<Type, ITypeConverter<dynamic>> typeConverters;
-        
+        //private readonly IDictionary<Type, ITypeConverter<TTarget>> typeConverters;
+
         private int currentPosition;
-        private ICollection<IFixedFieldSetting> orderedFields;
+        private ICollection<IFixedFieldSetting<TTarget>> orderedFields;
 
         public LayoutDescriptor()
         {
-            fields = new Dictionary<int, IFixedFieldSetting>();
-            typeConverters = GetTypeConverters();
+            fields = new Dictionary<int, IFixedFieldSetting<TTarget>>();
+            // typeConverters = GetTypeConverters();
         }
 
         /// <summary>
         ///     Implements IFlatFileLayoutDescriptor.
         ///     Note that this could throw key not found exception. Perhaps wrap this...
         /// </summary>
-        public IFixedFieldSetting GetField(int key) => fields[key];
+        public IFixedFieldSetting<TTarget> GetField(int key)
+        {
+            return fields[key];
+        }
 
         /// <inheritdoc />
-        public ICollection<IFixedFieldSetting> GetOrderedFields()
+        public ICollection<IFixedFieldSetting<TTarget>> GetOrderedFields()
         {
             // @Lee - Is there a best practice for ToList vs. casting to a collection? 
 
@@ -51,12 +54,10 @@ namespace FlatFile.FixedWidth.Implementation
             // This cast generated an invalid cast exception, details above. Using ToList instead. 
 
             if (orderedFields == null)
-            {
                 orderedFields = fields
                     .OrderBy(x => x.Key)
                     .Select(x => x.Value)
                     .ToList();
-            }
 
             return orderedFields;
         }
@@ -65,32 +66,26 @@ namespace FlatFile.FixedWidth.Implementation
         ///     Implements IFlatFileLayoutDescriptor.
         ///     Positions are managed internally in an auto ordered settings container.
         /// </summary>
+        // public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength)
         public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength)
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
+            var typeConverter = GetTypeConverter(propertyInfo.PropertyType);
 
-            if (propertyInfo != null && typeConverters.TryGetValue(propertyInfo.PropertyType, out var converter))
+            if (propertyInfo != null && typeConverter != null)
             {
-                var stronglyTyped = (ITypeConverter<dynamic>) converter;
+                //var stronglyTyped = (ITypeConverter<dynamic>)typeConverter;
                 // Generics are really aimed at static typing rather than types only known at execution time
                 // Using dynamic for now, probably the most specific I can get above "object"
 
-                Add(fieldLength, propertyInfo, stronglyTyped);
+                Add(fieldLength, propertyInfo, typeConverter);
                 return this;
             }
 
             throw new ArgumentException($"No default type converter defined for object type: {propertyInfo?.PropertyType}. Please explicitly define a TypeConverter.");
         }
 
-        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, object typeConverter)
-        {
-            var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
-
-            Add(fieldLength, propertyInfo, typeConverter);
-            return this;
-        }
-
-        private void Add(int length, PropertyInfo property, object typeConverter)
+        private void Add(int length, PropertyInfo property, ITypeConverter<TTarget> typeConverter)
         {
             Add(length, property);
             fields[currentPosition].TypeConverter = typeConverter;
@@ -104,15 +99,15 @@ namespace FlatFile.FixedWidth.Implementation
         /// <param name="property">Property Info of the field</param>
         private void Add(int length, PropertyInfo property)
         {
-            int startPosition = 0;
-            IFixedFieldSetting key;
+            var startPosition = 0;
+            IFixedFieldSetting<TTarget> key;
             if (fields.TryGetValue(currentPosition, out key))
             {
                 currentPosition++;
                 startPosition = key.StartPosition + key.Length;
             }
 
-            var setting = new FixedFieldSetting
+            var setting = new FixedFieldSetting<TTarget>
             {
                 StartPosition = startPosition,
                 Length = length,
@@ -124,6 +119,14 @@ namespace FlatFile.FixedWidth.Implementation
             orderedFields = null; // Ordered fields are now dirty, clear cache
         }
 
+        public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<TTarget> typeConverter)
+        {
+            var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
+
+            Add(fieldLength, propertyInfo, typeConverter);
+            return this;
+        }
+
 
         /// <summary>
         ///     Gets the member expression. Only Member Access is currently implemented.
@@ -133,76 +136,79 @@ namespace FlatFile.FixedWidth.Implementation
         private MemberExpression GetMemberExpression(Expression body)
         {
             // Must treat MemberAccess expressions differently from lambda expressions, et al.
-            if (body.NodeType == ExpressionType.MemberAccess)
-            {
-                return body as MemberExpression;
-            }
-
+            if (body.NodeType == ExpressionType.MemberAccess) return body as MemberExpression;
             return null;
         }
 
-        private IDictionary<Type, ITypeConverter<dynamic>> GetTypeConverters()
+        private ITypeConverter<TTarget> GetTypeConverter(Type propertyInfoPropertyType)
         {
- 
-            // Should ITypeConverter take a generic? Makes use cases like this cumbersome.
-            // https://stackoverflow.com/questions/353126/c-sharp-multiple-generic-types-in-one-list
-            ITypeConverter<dynamic>  boolConverter = new BooleanTypeConverter();
-
-            //var x = new BooleanTypeConverter(); // some arbitrary expression for an example.
-            //Type T = x.GetType(); // or set T however you wish.
-
-            //Type objectType = typeof(BooleanTypeConverter);
-            //var genericType = objectType.MakeGenericType(T);
-            //var instance = Activator.CreateInstance(genericType);
-            
-
-            return new Dictionary<Type, ITypeConverter<dynamic>>
-            {
-                {
-                    typeof(bool),
-                    boolConverter
-                }//,
-                //{
-                //    typeof(decimal),
-                //    new DecimalTypeConverter()
-                //},
-                //{
-                //    typeof(double),
-                //    new DoubleTypeConverter()
-                //},
-                //{
-                //    typeof(float),
-                //    new FloatTypeConverter()
-                //},
-                //{
-                //    typeof(int),
-                //    new IntTypeConverter()
-                //},
-                //{
-                //    typeof(uint),
-                //    new UIntTypeConverter()
-                //},
-                //{
-                //    typeof(long),
-                //    new LongTypeConverter()
-                //},
-                //{
-                //    typeof(ulong),
-                //    new ULongTypeConverter()
-                //},
-                //{
-                //    typeof(short),
-                //    new ShortTypeConverter()
-                //},
-                //{
-                //    typeof(ushort),
-                //    new UShortTypeConverter()
-                //},
-                //{
-                //    typeof(string),
-                //    new StringTypeConverter()
-                //}
-            };
+            if (typeof(TTarget) == typeof(bool))
+                return (ITypeConverter<TTarget>) new BooleanTypeConverter();
+            return (ITypeConverter<TTarget>) new IntTypeConverter(); // TODO: finish these}
         }
+
+// Make this a static factory instead
+//private IDictionary<Type, ITypeConverter<TTarget>> GetTypeConverters()
+//{
+
+//    // Should ITypeConverter take a generic? Makes use cases like this cumbersome.
+//    // https://stackoverflow.com/questions/353126/c-sharp-multiple-generic-types-in-one-list
+//    var  boolConverter = new BooleanTypeConverter();
+
+//    //var x = new BooleanTypeConverter(); // some arbitrary expression for an example.
+//    //Type T = x.GetType(); // or set T however you wish.
+
+//    //Type objectType = typeof(BooleanTypeConverter);
+//    //var genericType = objectType.MakeGenericType(T);
+//    //var instance = Activator.CreateInstance(genericType);
+
+
+//    return new Dictionary<Type, ITypeConverter<dynamic>>
+//    {
+//        {
+//            typeof(bool),
+//            boolConverter
+//        }//,
+//        //{
+//        //    typeof(decimal),
+//        //    new DecimalTypeConverter()
+//        //},
+//        //{
+//        //    typeof(double),
+//        //    new DoubleTypeConverter()
+//        //},
+//        //{
+//        //    typeof(float),
+//        //    new FloatTypeConverter()
+//        //},
+//        //{
+//        //    typeof(int),
+//        //    new IntTypeConverter()
+//        //},
+//        //{
+//        //    typeof(uint),
+//        //    new UIntTypeConverter()
+//        //},
+//        //{
+//        //    typeof(long),
+//        //    new LongTypeConverter()
+//        //},
+//        //{
+//        //    typeof(ulong),
+//        //    new ULongTypeConverter()
+//        //},
+//        //{
+//        //    typeof(short),
+//        //    new ShortTypeConverter()
+//        //},
+//        //{
+//        //    typeof(ushort),
+//        //    new UShortTypeConverter()
+//        //},
+//        //{
+//        //    typeof(string),
+//        //    new StringTypeConverter()
+//        //}
+//    };
     }
 }

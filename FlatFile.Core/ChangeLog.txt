@@ -401,3 +401,8 @@ Code review comments
 
 8/29/18
 	- Added quick abstract factory linqpad script for vehicles to get some ideas / practice generics w/ factory pattern
+
+	CODE REVIEW COMMENTS
+		- In the boolean type converter, just let the error bubble up
+		- Don't worry about the return type for the concrete type converters. Perhaps pass in type T on the fixed field settingsetting?
+		- Continue on with the Type Converters

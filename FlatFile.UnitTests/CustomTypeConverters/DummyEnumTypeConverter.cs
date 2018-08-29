@@ -10,7 +10,7 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
     {
         private readonly IDictionary<string, Day> conversions;
 
-        public DummyEnumTypeConverter()
+        public DummyEnumTypeConverter() : ITypeConverter<Day>
         {
             conversions = new Dictionary<string, Day>
             {

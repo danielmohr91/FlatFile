@@ -1,5 +1,4 @@
-﻿using System;
-using FlatFile.FixedWidth.Interfaces;
+﻿using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
@@ -7,14 +6,7 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
     {
         public bool ConvertFromString(string stringValue)
         {
-            try
-            {
-                return bool.Parse(stringValue.Trim());
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("Input must be true / false (case insensitive)", nameof(stringValue), e);
-            }
+            return bool.Parse(stringValue.Trim());
         }
     }
 }
