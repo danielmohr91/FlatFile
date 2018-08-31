@@ -5,6 +5,7 @@ void Main()
 
 	var typeConverterFactory = new TypeConverterFactory<PrimitiveTypeConverter>();
 
+	// For now, getting a strongly typed type converter, with the method ConvertFromString and w/ strongly typed return value.
 	var intTypeConverter = typeConverterFactory.Create<IntTypeConverter>();
 	var boolTypeConverter = typeConverterFactory.Create<BoolTypeConverter>();
 

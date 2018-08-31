@@ -18,18 +18,13 @@ namespace FlatFile.FixedWidth.Implementation
     /// <typeparam name="TTarget">Type of target model</typeparam>
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
     {
-        private readonly IDictionary<int, IFixedFieldSetting<TTarget>> fields;
-
-        // TODO: Make a static factory to get the type converter. Changed ITypeConverter<object> to just object for now
-        //private readonly IDictionary<Type, ITypeConverter<TTarget>> typeConverters;
-
+        private readonly IDictionary<int, IFixedFieldSetting<TTarget>> fields; 
         private int currentPosition;
         private ICollection<IFixedFieldSetting<TTarget>> orderedFields;
 
         public LayoutDescriptor()
         {
             fields = new Dictionary<int, IFixedFieldSetting<TTarget>>();
-            // typeConverters = GetTypeConverters();
         }
 
         /// <summary>
@@ -38,6 +33,7 @@ namespace FlatFile.FixedWidth.Implementation
         /// </summary>
         public IFixedFieldSetting<TTarget> GetField(int key)
         {
+            // TTarget is wrong here for the generic... use TProperty, but different for each element... maybe just object for now...
             return fields[key];
         }
 
@@ -70,7 +66,7 @@ namespace FlatFile.FixedWidth.Implementation
         public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength)
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
-            var typeConverter = GetTypeConverter(propertyInfo.PropertyType);
+            var typeConverter = GetTypeConverter<TProperty>();
 
             if (propertyInfo != null && typeConverter != null)
             {
@@ -85,10 +81,10 @@ namespace FlatFile.FixedWidth.Implementation
             throw new ArgumentException($"No default type converter defined for object type: {propertyInfo?.PropertyType}. Please explicitly define a TypeConverter.");
         }
 
-        private void Add(int length, PropertyInfo property, ITypeConverter<TTarget> typeConverter)
+        private void Add<TProperty>(int length, PropertyInfo property, ITypeConverter<TProperty> typeConverter)
         {
-            Add(length, property);
-            fields[currentPosition].TypeConverter = typeConverter;
+            Add<TProperty>(length, property);
+            fields[currentPosition].TypeConverter = typeConverter; // TODO: Use a new generic here? 
         }
 
         /// <summary>
@@ -97,11 +93,11 @@ namespace FlatFile.FixedWidth.Implementation
         /// </summary>
         /// <param name="length">Length in characters of the field</param>
         /// <param name="property">Property Info of the field</param>
-        private void Add(int length, PropertyInfo property)
+        private void Add<TProperty>(int length, PropertyInfo property)
         {
             var startPosition = 0;
-            IFixedFieldSetting<TTarget> key;
-            if (fields.TryGetValue(currentPosition, out key))
+            //IFixedFieldSetting<TProperty> key;
+            if (fields.TryGetValue(currentPosition, out var key))
             {
                 currentPosition++;
                 startPosition = key.StartPosition + key.Length;
@@ -114,7 +110,7 @@ namespace FlatFile.FixedWidth.Implementation
                 PropertyInfo = property
             };
 
-            fields[currentPosition] = setting;
+            fields[currentPosition] =  setting;
 
             orderedFields = null; // Ordered fields are now dirty, clear cache
         }
@@ -140,11 +136,11 @@ namespace FlatFile.FixedWidth.Implementation
             return null;
         }
 
-        private ITypeConverter<TTarget> GetTypeConverter(Type propertyInfoPropertyType)
+        private ITypeConverter<T> GetTypeConverter<T>()
         {
-            if (typeof(TTarget) == typeof(bool))
-                return (ITypeConverter<TTarget>) new BooleanTypeConverter();
-            return (ITypeConverter<TTarget>) new IntTypeConverter(); // TODO: finish these}
+            if (typeof(T) == typeof(bool))
+                return (ITypeConverter<T>) new BooleanTypeConverter();
+            return (ITypeConverter<T>) new IntTypeConverter(); // TODO: finish these}
         }
 
 // Make this a static factory instead
