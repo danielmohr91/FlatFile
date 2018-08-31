@@ -18,27 +18,27 @@ namespace FlatFile.FixedWidth.Implementation
     /// <typeparam name="TTarget">Type of target model</typeparam>
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
     {
-        private readonly IDictionary<int, IFixedFieldSetting<TTarget>> fields; 
+        private readonly IDictionary<int, IFixedFieldSetting<object>> fields; // Generic type for fixed field setting represents the property, not the whole model (TTarget). Since the properties may be assorted, using object for now.
         private int currentPosition;
-        private ICollection<IFixedFieldSetting<TTarget>> orderedFields;
+        private ICollection<IFixedFieldSetting<object>> orderedFields;
 
         public LayoutDescriptor()
         {
-            fields = new Dictionary<int, IFixedFieldSetting<TTarget>>();
+            fields = new Dictionary<int, IFixedFieldSetting<object>>();
         }
 
         /// <summary>
         ///     Implements IFlatFileLayoutDescriptor.
         ///     Note that this could throw key not found exception. Perhaps wrap this...
         /// </summary>
-        public IFixedFieldSetting<TTarget> GetField(int key)
+        public IFixedFieldSetting<object> GetField(int key)
         {
             // TTarget is wrong here for the generic... use TProperty, but different for each element... maybe just object for now...
             return fields[key];
         }
 
         /// <inheritdoc />
-        public ICollection<IFixedFieldSetting<TTarget>> GetOrderedFields()
+        public ICollection<IFixedFieldSetting<object>> GetOrderedFields()
         {
             // @Lee - Is there a best practice for ToList vs. casting to a collection? 
 
@@ -84,7 +84,7 @@ namespace FlatFile.FixedWidth.Implementation
         private void Add<TProperty>(int length, PropertyInfo property, ITypeConverter<TProperty> typeConverter)
         {
             Add<TProperty>(length, property);
-            fields[currentPosition].TypeConverter = typeConverter; // TODO: Use a new generic here? 
+            fields[currentPosition].TypeConverter = (ITypeConverter<object>)typeConverter; // TODO: Use a new generic here? 
         }
 
         /// <summary>
@@ -103,14 +103,14 @@ namespace FlatFile.FixedWidth.Implementation
                 startPosition = key.StartPosition + key.Length;
             }
 
-            var setting = new FixedFieldSetting<TTarget>
+            var setting = new FixedFieldSetting<TProperty>
             {
                 StartPosition = startPosition,
                 Length = length,
                 PropertyInfo = property
             };
 
-            fields[currentPosition] =  setting;
+            fields[currentPosition] = (IFixedFieldSetting<object>) setting;
 
             orderedFields = null; // Ordered fields are now dirty, clear cache
         }
