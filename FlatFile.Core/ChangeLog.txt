@@ -412,4 +412,10 @@ Code review comments
 	- Compiles, but messy for collections of IFixedFieldSetting. Could cast generic type to object, but probably going to fail during runtime.
 
 9/4/18
-	- 
+	- Added comments in LayoutDescriptor on the challenges of using a generic field inside a collection. 
+		-   // This will throw runtime exception. Setting is of type TProperty. 
+            // Trying to the fixedfieldsetting add to the collection of fields, that are currently of type <object>
+            // I can't think of a way to strongly type the collection of fields. 
+            //     - Would typically use a generic, but can't mix generics in a collection, right? 
+            //     - e.g. at element zero of an array, can't have field<bool>, element one field<string>, etc...
+            // Generated an example here: C:\Projects\FlatFile\FlatFile.FixedWidth\IdeaSandbox\CollectionWithGeneric.linq
