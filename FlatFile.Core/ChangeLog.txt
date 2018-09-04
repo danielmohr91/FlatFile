@@ -406,3 +406,10 @@ Code review comments
 		- In the boolean type converter, just let the error bubble up
 		- Don't worry about the return type for the concrete type converters. Perhaps pass in type T on the fixed field settingsetting?
 		- Continue on with the Type Converters
+
+8/31/18
+	- Changed the generic for a collection of ITypeConverters or IFixedFieldSettings to object, since the generics are of assorted types, not all of type TProperty
+	- Compiles, but messy for collections of IFixedFieldSetting. Could cast generic type to object, but probably going to fail during runtime.
+
+9/4/18
+	- 

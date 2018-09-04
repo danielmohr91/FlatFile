@@ -110,6 +110,12 @@ namespace FlatFile.FixedWidth.Implementation
                 PropertyInfo = property
             };
 
+            // This will throw runtime exception. Setting is of type TProperty. 
+            // Trying to the fixedfieldsetting add to the collection of fields, that are currently of type <object>
+            // I can't think of a way to strongly type the collection of fields. 
+            //     - Would typically use a generic, but can't mix generics in a collection, right? 
+            //     - e.g. at element zero of an array, can't have field<bool>, element one field<string>, etc...
+            // Generated an example here: C:\Projects\FlatFile\FlatFile.FixedWidth\IdeaSandbox\CollectionWithGeneric.linq
             fields[currentPosition] = (IFixedFieldSetting<object>) setting;
 
             orderedFields = null; // Ordered fields are now dirty, clear cache
