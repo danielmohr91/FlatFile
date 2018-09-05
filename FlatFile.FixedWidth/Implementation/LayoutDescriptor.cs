@@ -118,8 +118,13 @@ namespace FlatFile.FixedWidth.Implementation
             //     - Would typically use a generic, but can't mix generics in a collection, right? 
             //     - e.g. at element zero of an array, can't have field<bool>, element one field<string>, etc...
             // Generated an example here: C:\Projects\FlatFile\FlatFile.FixedWidth\IdeaSandbox\CollectionWithGeneric.linq
-            fields[currentPosition] = (IFixedFieldSetting<object>) setting;
 
+            // Option 1 - Cast with 'object' as the generic type. Compiles, but runtime exception w/ the IFixedFieldSetting<object> cast
+            //fields[currentPosition] = (IFixedFieldSetting<object>) setting; // InvalidCastException: Unable to cast object of type FixedFieldSetting<int> to IFixedFieldSetting<ojb
+
+            // Option 2 - Rething using IFixedFieldSetting<object> in the collection of fields (e.g. line 21 - IDictionary<int, IFixedFieldSetting<object>> fields)
+            fields[currentPosition] =  setting; // cast is needed if colletion is uses 'object' as the generic type
+            
             orderedFields = null; // Ordered fields are now dirty, clear cache
         }
 

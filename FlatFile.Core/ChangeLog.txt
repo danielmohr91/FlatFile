@@ -164,13 +164,9 @@
 	- Added field.TypeConverter and tied up with AppendField
 	- Added conditional in FixedWidthFileParser to choose the default or custom type converter
 	- Tied up loose ends, unit tests for converting string to enum w/ custom type convert all pass. 
-	- TODO: Perhaps change the boolean type converter from IPrimitiveTypeConverter to ITypeConverter. 
+	- Perhaps change the boolean type converter from IPrimitiveTypeConverter to ITypeConverter. 
 		- All that is needed is the dictionary from 1, 0 and bad casing on "true" and "false", to "true" and "false". 
 		- The rest is shared with the generic type converter. No changes recommended. 
-
-	TODO: tidy up and refactor above feature
-
-		- ********* RESUME HERE ********* 
 
 7/18/18
 CODE REVIEW COMMENTS
@@ -181,10 +177,10 @@ CODE REVIEW COMMENTS
 		- It's OK to have lots of small classes, it's good when you're using composition. What's bad is lots of small classes that traverse down and down a call stack to a shared method that handles 81 different things
 		- Building with small classes is good. 
 
-TODO's
-	- Change PrimitiveTypeConverter (formerlly GenericTypeConverter) to a TypeConverter for each supported type, extending TypeConverter, and perhaps implementing my ITypeConverter interface. ITypeConverter interface might no longer be necessary. 
-	- Use a Dictionary of known types, and in AppendField add a type converter from this dictionary (if available) if none is passed in
-	- Dictionary should be <Type, Object>, where the object is the newed up type converter. They can be shared instances. No need to use reflection to new up type converter for each field (would be the case if using Dictionary<Type, Type>)
+	To do's
+		- Change PrimitiveTypeConverter (formerlly GenericTypeConverter) to a TypeConverter for each supported type, extending TypeConverter, and perhaps implementing my ITypeConverter interface. ITypeConverter interface might no longer be necessary. 
+		- Use a Dictionary of known types, and in AppendField add a type converter from this dictionary (if available) if none is passed in
+		- Dictionary should be <Type, Object>, where the object is the newed up type converter. They can be shared instances. No need to use reflection to new up type converter for each field (would be the case if using Dictionary<Type, Type>)
 
 7/19/18
 	- Quote of the day: "Once the requirements do change though it’s quite likely that they will change in a similar way again later on"
@@ -205,10 +201,7 @@ TODO's
 		- See FixedWidthFileWriter.cs
 
 	- Tie up test w/ GetExpectedRows
-	- TODO: Add to GetExpectedRows() and input file to seed test values for the new primitive types.
-
-
-
+	
 7/25/18
 CODE REVIEW COMMENTS
 	- depend on abstractions, not concrete implementations. When we extend the .net TypeConverter is this a violation? 
@@ -318,7 +311,7 @@ CODE REVIEW COMMENTS
 
 8/10/18
 	- Looked into issue truncating float when writing out the test file.
-	- TODO: resume on unit test _____________Should_TruncateFloatToTenDigits_When_GetTruncatedFloatingPointNumberIsCalled
+	- Resume on unit test _____________Should_TruncateFloatToTenDigits_When_GetTruncatedFloatingPointNumberIsCalled
 	  also, the truncating logic should probably be in the layout desciptor for file writers? 
 
 8/14/18
