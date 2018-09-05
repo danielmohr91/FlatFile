@@ -74,6 +74,7 @@
     <None Include="IdeaSandbox\DynamicGenericSimplified.linq" />
     <None Include="IdeaSandbox\CollectionWithGeneric.linq" />
     <None Include="IdeaSandbox\FactoryForTypeConverter.linq" />
+    <None Include="IdeaSandbox\GenericCollectionWithProperties.linq" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

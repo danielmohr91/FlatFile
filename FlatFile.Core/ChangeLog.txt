@@ -429,3 +429,4 @@ Code review comments
 		  type of the type converter.
 	- We could perhaps remove the generic from IFixedFieldSetting, but that tells us the return type of the TypeConverter field: 
 	  ITypeConverter<TProperty> TypeConverter { get; set; }
+	- One workaround is to use properties - GenericCollectionWithProperties.linq
