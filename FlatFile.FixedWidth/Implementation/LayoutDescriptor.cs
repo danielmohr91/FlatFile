@@ -50,10 +50,12 @@ namespace FlatFile.FixedWidth.Implementation
             // This cast generated an invalid cast exception, details above. Using ToList instead. 
 
             if (orderedFields == null)
+            {
                 orderedFields = fields
                     .OrderBy(x => x.Key)
                     .Select(x => x.Value)
                     .ToList();
+            }
 
             return orderedFields;
         }
@@ -138,14 +140,21 @@ namespace FlatFile.FixedWidth.Implementation
         private MemberExpression GetMemberExpression(Expression body)
         {
             // Must treat MemberAccess expressions differently from lambda expressions, et al.
-            if (body.NodeType == ExpressionType.MemberAccess) return body as MemberExpression;
+            if (body.NodeType == ExpressionType.MemberAccess)
+            {
+                return body as MemberExpression;
+            }
+
             return null;
         }
 
         private ITypeConverter<T> GetTypeConverter<T>()
         {
             if (typeof(T) == typeof(bool))
+            {
                 return (ITypeConverter<T>) new BooleanTypeConverter();
+            }
+
             return (ITypeConverter<T>) new IntTypeConverter(); // TODO: finish these}
         }
 

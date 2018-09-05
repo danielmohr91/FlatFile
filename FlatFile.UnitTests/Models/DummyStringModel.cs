@@ -60,7 +60,9 @@ namespace FlatFileParserUnitTests.Models
                 Field11 != model.Field11 ||
                 Field12 != model.Field12
             )
+            {
                 return false;
+            }
 
             return true;
         }
