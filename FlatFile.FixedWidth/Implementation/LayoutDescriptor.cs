@@ -96,7 +96,7 @@ namespace FlatFile.FixedWidth.Implementation
         private void Add<TProperty>(int length, PropertyInfo property)
         {
             var startPosition = 0;
-            //IFixedFieldSetting<TProperty> key;
+
             if (fields.TryGetValue(currentPosition, out var key))
             {
                 currentPosition++;

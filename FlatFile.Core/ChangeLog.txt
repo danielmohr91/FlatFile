@@ -419,3 +419,13 @@ Code review comments
             //     - Would typically use a generic, but can't mix generics in a collection, right? 
             //     - e.g. at element zero of an array, can't have field<bool>, element one field<string>, etc...
             // Generated an example here: C:\Projects\FlatFile\FlatFile.FixedWidth\IdeaSandbox\CollectionWithGeneric.linq
+
+9/5/18
+	- See line 119 in LayoutDescriptor for example of issue
+		- Each field has a TypeConverter of a generic type. No problem right? Use a generic on IFixedFieldSetting - but IFixedFieldSetting 
+		  can't mix generics, because it's a collection: 
+		  IDictionary<int, IFixedFieldSetting<object>> fields; 
+		  Used object as an example for now to get it to compile when IFixedFieldSetting requires a generic to TProperty as return
+		  type of the type converter.
+	- We could perhaps remove the generic from IFixedFieldSetting, but that tells us the return type of the TypeConverter field: 
+	  ITypeConverter<TProperty> TypeConverter { get; set; }
