@@ -60,6 +60,7 @@
     <Compile Include="Models\DummyStringModel.cs" />
     <Compile Include="Tests\FixedWidthParser\StringTest.cs" />
     <Compile Include="Tests\LayoutDescriptor\GenericCollectionTests.cs" />
+    <Compile Include="Tests\LayoutDescriptor\ConventionBasedTypeConverterTests.cs" />
     <Compile Include="Tests\LayoutDescriptor\ParserTestBase.cs" />
     <Compile Include="Tests\ParseWithTypeConverter\ParseWithCustomTypeConverterTests.cs" />
     <Compile Include="Tests\TypeConverter\CustomTypeConvertTests.cs" />
@@ -67,7 +68,7 @@
     <Compile Include="Tests\FixedWidthFileWriter\FixedWidthFileWriterTest.cs" />
     <Compile Include="Tests\TypeConverter\Helpers\PrimitiveTypeExpectations.cs" />
     <Compile Include="Tests\TypeConverter\PrimitiveTypesTest.cs" />
-    <Compile Include="Tests\LayoutDescriptor\LayoutDescriptorExpressionTests.cs" />
+    <Compile Include="Tests\LayoutDescriptor\ExpressionTests.cs" />
     <Compile Include="Infrastructure\FixedLayout\FixedFootballLayout.cs" />
     <Compile Include="Models\FootballScore.cs" />
     <Compile Include="Models\DummyStringPairModel.cs" />

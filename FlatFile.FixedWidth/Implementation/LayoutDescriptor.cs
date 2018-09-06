@@ -122,7 +122,7 @@ namespace FlatFile.FixedWidth.Implementation
             // Option 1 - Cast with 'object' as the generic type. Compiles, but runtime exception w/ the IFixedFieldSetting<object> cast
             fields[currentPosition] = (IFixedFieldSetting<object>) setting; // InvalidCastException: Unable to cast object of type FixedFieldSetting<int> to IFixedFieldSetting<ojb
 
-            // Option 2 - Rething using IFixedFieldSetting<object> in the collection of fields (e.g. line 21 - IDictionary<int, IFixedFieldSetting<object>> fields)
+            // Option 2 - Rethink using IFixedFieldSetting<object> in the collection of fields (e.g. line 21 - IDictionary<int, IFixedFieldSetting<object>> fields)
             // fields[currentPosition] =  setting; // cast is needed if colletion is uses 'object' as the generic type
             
             orderedFields = null; // Ordered fields are now dirty, clear cache
@@ -159,72 +159,52 @@ namespace FlatFile.FixedWidth.Implementation
             {
                 return (ITypeConverter<T>) new BooleanTypeConverter();
             }
+            if (typeof(T) == typeof(DateTime))
+            {
+                return (ITypeConverter<T>)new DateTimeTypeConverter();
+            }
+            if (typeof(T) == typeof(decimal))
+            {
+                return (ITypeConverter<T>)new DecimalTypeConverter();
+            }
+            if (typeof(T) == typeof(double))
+            {
+                return (ITypeConverter<T>)new DoubleTypeConverter();
+            }
+            if (typeof(T) == typeof(float))
+            {
+                return (ITypeConverter<T>)new FloatTypeConverter();
+            }
+            if (typeof(T) == typeof(int))
+            {
+                return (ITypeConverter<T>)new IntTypeConverter();
+            }
+            if (typeof(T) == typeof(long))
+            {
+                return (ITypeConverter<T>)new LongTypeConverter();
+            }
+            if (typeof(T) == typeof(short))
+            {
+                return (ITypeConverter<T>)new ShortTypeConverter();
+            }
+            if (typeof(T) == typeof(string))
+            {
+                return (ITypeConverter<T>)new StringTypeConverter();
+            }
+            if (typeof(T) == typeof(uint))
+            {
+                return (ITypeConverter<T>)new UIntTypeConverter();
+            }
+            if (typeof(T) == typeof(ulong))
+            {
+                return (ITypeConverter<T>)new ULongTypeConverter();
+            }
+            if (typeof(T) == typeof(ushort))
+            {
+                return (ITypeConverter<T>)new UShortTypeConverter();
+            }
 
-            return (ITypeConverter<T>) new IntTypeConverter(); // TODO: finish these}
+            return null;
         }
-
-// Make this a static factory instead
-//private IDictionary<Type, ITypeConverter<TTarget>> GetTypeConverters()
-//{
-
-//    // Should ITypeConverter take a generic? Makes use cases like this cumbersome.
-//    // https://stackoverflow.com/questions/353126/c-sharp-multiple-generic-types-in-one-list
-//    var  boolConverter = new BooleanTypeConverter();
-
-//    //var x = new BooleanTypeConverter(); // some arbitrary expression for an example.
-//    //Type T = x.GetType(); // or set T however you wish.
-
-//    //Type objectType = typeof(BooleanTypeConverter);
-//    //var genericType = objectType.MakeGenericType(T);
-//    //var instance = Activator.CreateInstance(genericType);
-
-
-//    return new Dictionary<Type, ITypeConverter<dynamic>>
-//    {
-//        {
-//            typeof(bool),
-//            boolConverter
-//        }//,
-//        //{
-//        //    typeof(decimal),
-//        //    new DecimalTypeConverter()
-//        //},
-//        //{
-//        //    typeof(double),
-//        //    new DoubleTypeConverter()
-//        //},
-//        //{
-//        //    typeof(float),
-//        //    new FloatTypeConverter()
-//        //},
-//        //{
-//        //    typeof(int),
-//        //    new IntTypeConverter()
-//        //},
-//        //{
-//        //    typeof(uint),
-//        //    new UIntTypeConverter()
-//        //},
-//        //{
-//        //    typeof(long),
-//        //    new LongTypeConverter()
-//        //},
-//        //{
-//        //    typeof(ulong),
-//        //    new ULongTypeConverter()
-//        //},
-//        //{
-//        //    typeof(short),
-//        //    new ShortTypeConverter()
-//        //},
-//        //{
-//        //    typeof(ushort),
-//        //    new UShortTypeConverter()
-//        //},
-//        //{
-//        //    typeof(string),
-//        //    new StringTypeConverter()
-//        //}
-//    };
     }
 }

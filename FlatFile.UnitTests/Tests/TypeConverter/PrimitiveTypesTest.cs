@@ -14,7 +14,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
 
     {
         [TestMethod]
-        public void Should_ConvertStringToBool_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertCollectionOfStringToBool_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows
@@ -24,7 +24,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ConvertStringToDecimal_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertCollectionOfStringToDecimal_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows
@@ -34,7 +34,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ConvertStringToDouble_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertCollectionOfStringToDouble_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows
@@ -44,7 +44,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ConvertStringToFloat_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertCollectionOfStringToFloat_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows
@@ -54,7 +54,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ConvertStringToInt_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertCollectionOfStringToInt_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows
@@ -64,7 +64,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ConvertStringToLong_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertCollectionOfStringToLong_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows
@@ -74,7 +74,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ConvertStringToShort_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertCollectionOfStringToShort_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows
@@ -84,7 +84,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ConvertStringToString_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertCollectionOfStringToString_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows
@@ -94,7 +94,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ConvertStringToUInt_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertCollectionOfStringToUInt_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows
@@ -104,7 +104,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ConvertStringToULong_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertCollectionOfStringToULong_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows
@@ -114,7 +114,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ConvertStringToUShort_When_DefaultTypeConverterIsUsed()
+        public void Should_ConvertCollectionOfStringToUShort_When_DefaultTypeConverterIsUsed()
         {
             CollectionAssert.AllItemsAreInstancesOfType(
                 ParsedRows
@@ -124,7 +124,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        public void Should_ParseAllFieldsMatchingExpected_When_ParseFileIsCalled()
+        public void Should_ParseCollectionOfFieldsMatchingExpected_When_ParseFileIsCalled()
         {
             AssertAllRowsMatchExpected();
         }
