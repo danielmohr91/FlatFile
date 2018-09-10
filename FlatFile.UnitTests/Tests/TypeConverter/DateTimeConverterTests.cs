@@ -7,11 +7,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FlatFileParserUnitTests.Tests.TypeConverter
 {
     [TestClass]
-    public class DateTimeTest
+    public class DateTimeTests
     {
         private readonly ITypeConverter<DateTime> converter;
 
-        public DateTimeTest()
+        public DateTimeTests()
         {
             converter = new DateTimeTypeConverter();
         }

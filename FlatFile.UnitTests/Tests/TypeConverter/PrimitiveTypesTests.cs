@@ -10,7 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FlatFileParserUnitTests.Tests.TypeConverter
 {
     [TestClass]
-    public class PrimitiveTypesTest : ParserTestBase<PrimitiveTypesModel>
+    public class PrimitiveTypesTests : ParserTestBase<PrimitiveTypesModel>
 
     {
         [TestMethod]
@@ -164,7 +164,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         protected override string GetFilePath()
         {
             var directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            return $"{directory}\\InputFiles\\PrimitiveTypesTest.dat"; // file properties should be "Content" and "Copy If Newer" (or similar)
+            return $"{directory}\\InputFiles\\PrimitiveTypesTests.dat"; // file properties should be "Content" and "Copy If Newer" (or similar)
         }
 
         protected override IFlatFileLayoutDescriptor<PrimitiveTypesModel> GetLayout()

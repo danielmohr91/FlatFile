@@ -427,3 +427,7 @@ Code review comments
 9/6/18
 	- Finished static factory for convention based type converters
 	- Added unit test for int converter. Other primitive types need unit tests next. 
+
+9/10/18
+	- Added unit tests for all other primitive type defaults for the convention based type converters
+
