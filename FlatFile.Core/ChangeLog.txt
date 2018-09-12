@@ -431,3 +431,10 @@ Code review comments
 9/10/18
 	- Added unit tests for all other primitive type defaults for the convention based type converters
 
+9/12/18
+	- Thought about the collection of mixed generic types. I don't see a way around using a non-generic base class, or 
+	  non-generic interface that the collection uses as the type. Can cast as needed, and perhaps a type in the base class
+	  to keep the casting clean. 
+	- Created a dictionary of mixed generics that returns a strongly typed object (e.g. TypeConverter<int>)
+		- See: C:\Projects\FlatFile\FlatFile.FixedWidth\IdeaSandbox\CollectionWithNonGenericBaseClass.linq
+	- Created an example for TypeConverter factory
