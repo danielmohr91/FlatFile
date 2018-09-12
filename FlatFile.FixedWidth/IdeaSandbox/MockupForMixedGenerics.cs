@@ -49,7 +49,9 @@ namespace FlatFile.FixedWidth.IdeaSandbox
             fields.Add(boolField);
 
             var fieldTest = fields.FirstOrDefault();
-            // var stronglyTypedField = (Field<typeof(fieldTest.Type)>) fieldTest; // Can't cast on the fly - fieldTest.Type is a variable, can't be used as a type
+             var stronglyTypedField = (Field<fieldTest.Type>) fieldTest; // Can't cast on the fly - fieldTest.Type is a variable, can't be used as a type
+            // If this can be case here, this may be a solid solition (using an base class w/o generic or second interface w/o generic, and instead tracking the type). 
+
         }
 
         //private Field<T> GetField<T>()
