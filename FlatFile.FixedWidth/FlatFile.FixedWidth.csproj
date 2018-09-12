@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="IdeaSandbox\AbstractFactoryForVehicles.linq" />
+    <None Include="IdeaSandbox\CollectionOfTypedFields.linq" />
     <None Include="IdeaSandbox\CollectionWithNonGenericBaseClass.linq" />
     <None Include="IdeaSandbox\DynamicGeneric.linq" />
     <None Include="IdeaSandbox\DynamicGenericSimplified.linq" />

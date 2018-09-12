@@ -25,7 +25,7 @@ public abstract class TypeConverter<T> : TypeConverter // where T : new()
 {
 	public override Type Type => typeof(T);
 
-	public abstract T GetValueFromString(string s)
+	public abstract T GetValueFromString(string s);
 }
 
 public class IntTypeConverter : TypeConverter<int> {
