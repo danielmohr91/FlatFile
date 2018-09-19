@@ -456,3 +456,9 @@ Don't worry about deadlines
 			- Other interfaces (e.g. `IFixedFieldSetting`) depend on this `dynamic` return type, vs. type `T`, which now allows collections
 			  since the collection is all of type dynamic, vs. mixed generics
 		- Updated misc loose ends so all 48 unit tests now pass again.
+
+### Code Review Thoughts
+	- Interesting approach using the base clase, and relying on the dynamic method instead
+		- Consider changing dynamic to object
+		- Consider renaming one of the methods `ConvertFromString` so we aren't using conflicting method names in `ITypeConverter` and `ITypeConverterBase`
+	- Going forward, wrap up TODOs in the codebase, then revisit original code kata problem statement

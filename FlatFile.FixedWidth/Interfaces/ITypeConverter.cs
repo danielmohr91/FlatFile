@@ -2,6 +2,6 @@
 {
     public interface ITypeConverter<T> : ITypeConverterBase
     {
-        new T ConvertFromString(string stringValue);
+        T ConvertFromString(string stringValue);
     }
 }

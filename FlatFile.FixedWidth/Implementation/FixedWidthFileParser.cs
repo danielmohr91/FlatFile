@@ -57,7 +57,7 @@ namespace FlatFile.FixedWidth.Implementation
                 {
                     var stringToConvert = row.Substring(field.StartPosition, field.Length);
                     var typeConverter = field.TypeConverter;
-                    var convertedValue = typeConverter.ConvertFromString(stringToConvert); //, modelProperty);
+                    var convertedValue = typeConverter.GetConvertedValue(stringToConvert); //, modelProperty);
 
                     modelProperty.SetValue(
                         model,

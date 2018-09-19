@@ -44,7 +44,7 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
             throw new ArgumentException("Input must be a day of the week (full name or abbreviated), case insensitive.", nameof(stringValue));
         }
 
-        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
+        dynamic ITypeConverterBase.GetConvertedValue(string stringValue)
         {
             return ConvertFromString(stringValue);
         }

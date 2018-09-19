@@ -2,6 +2,6 @@
 {
     public interface ITypeConverterBase
     {
-        dynamic ConvertFromString(string stringValue);
+        object GetConvertedValue(string stringValue);
     }
 }

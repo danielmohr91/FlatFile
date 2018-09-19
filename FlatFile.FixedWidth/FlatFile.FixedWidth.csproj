@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IdeaSandbox\MockupForMixedGenerics.cs" />
     <Compile Include="Implementation\FixedWidthFileWriter.cs" />
     <Compile Include="Implementation\TypeConverters\DateTimeTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\BooleanTypeConverter.cs" />
