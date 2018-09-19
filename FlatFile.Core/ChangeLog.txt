@@ -438,3 +438,10 @@ Code review comments
 	- Created a dictionary of mixed generics that returns a strongly typed object (e.g. TypeConverter<int>)
 		- See: C:\Projects\FlatFile\FlatFile.FixedWidth\IdeaSandbox\CollectionWithNonGenericBaseClass.linq
 	- Created an example for TypeConverter factory
+
+9/13/18
+	- Wrote some throwaway code for list and dictionary type converter lookups
+	- will implement this in test suite next: C:\Projects\FlatFile\FlatFile.FixedWidth\IdeaSandbox\CollectionOfTypedFields.linq
+
+9/17/18
+	- 

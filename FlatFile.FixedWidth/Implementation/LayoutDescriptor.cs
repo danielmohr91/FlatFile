@@ -19,6 +19,7 @@ namespace FlatFile.FixedWidth.Implementation
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
     {
         private readonly IDictionary<int, IFixedFieldSetting<object>> fields; // Generic type for fixed field setting represents the property, not the whole model (TTarget). Since the properties may be assorted, using object for now.
+
         private int currentPosition;
         private ICollection<IFixedFieldSetting<object>> orderedFields;
 
@@ -121,10 +122,20 @@ namespace FlatFile.FixedWidth.Implementation
 
             // Option 1 - Cast with 'object' as the generic type. Compiles, but runtime exception w/ the IFixedFieldSetting<object> cast
             fields[currentPosition] = (IFixedFieldSetting<object>) setting; // InvalidCastException: Unable to cast object of type FixedFieldSetting<int> to IFixedFieldSetting<ojb
-
+            
             // Option 2 - Rethink using IFixedFieldSetting<object> in the collection of fields (e.g. line 21 - IDictionary<int, IFixedFieldSetting<object>> fields)
             // fields[currentPosition] =  setting; // cast is needed if colletion is uses 'object' as the generic type
             
+            // Option 3 - Ugly Switch for now
+            //if (setting is FixedFieldSetting<string>)
+            //{
+            //    fields[currentPosition] = (IFixedFieldSetting<string>) setting;
+            //} else if (setting is FixedFieldSetting<bool>)
+            //{
+            //    fields[currentPosition] = (IFixedFieldSetting<bool>) setting;
+            //}...
+            fields[currentPosition] = (IFixedFieldSetting<object>) setting;
+
             orderedFields = null; // Ordered fields are now dirty, clear cache
         }
 
