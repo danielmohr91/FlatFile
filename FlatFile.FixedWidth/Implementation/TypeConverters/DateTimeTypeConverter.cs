@@ -3,16 +3,11 @@ using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class DateTimeTypeConverter : ITypeConverter<DateTime>
+    public class DateTimeTypeConverter : TypeConverterBase<DateTime>, ITypeConverter<DateTime>
     {
-        public DateTime ConvertFromString(string stringValue)
+        public override DateTime ConvertFromString(string stringValue)
         {
             return DateTime.Parse(stringValue.Trim());
-        }
-
-        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
-        {
-            return ConvertFromString(stringValue);
         }
     }
 }

@@ -2,16 +2,11 @@
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class UShortTypeConverter : ITypeConverter<ushort>
+    public class UShortTypeConverter : TypeConverterBase<ushort>, ITypeConverter<ushort>
     {
-        public ushort ConvertFromString(string stringValue)
+        public override ushort ConvertFromString(string stringValue)
         {
             return ushort.Parse(stringValue.Trim());
-        }
-
-        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
-        {
-            return ConvertFromString(stringValue);
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿namespace FlatFileParserUnitTests.Models
+﻿using System;
+
+namespace FlatFileParserUnitTests.Models
 {
     public class DateTimeModel
     {
-        public System.DateTime DateTime1 { get; set; }
-        public System.DateTime DateTime2 { get; set; }
+        public DateTime DateTime1 { get; set; }
+        public DateTime DateTime2 { get; set; }
 
         public override bool Equals(object obj)
         {

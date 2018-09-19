@@ -4,7 +4,7 @@ namespace FlatFileParserUnitTests.Models
 {
     public class DummyStringModel
     {
-        public string Id { get; set; } 
+        public string Id { get; set; }
         public string Field1 { get; set; }
         public string Field2 { get; set; }
         public string Field3 { get; set; }
@@ -41,10 +41,7 @@ namespace FlatFileParserUnitTests.Models
 
             // C# 6 polyfill
             var model = (DummyStringModel) obj;
-            if (Equals(model, null))
-            {
-                return false;
-            }
+            if (Equals(model, null)) return false;
 
             if (Id != model.Id ||
                 Field1 != model.Field1 ||
@@ -60,9 +57,7 @@ namespace FlatFileParserUnitTests.Models
                 Field11 != model.Field11 ||
                 Field12 != model.Field12
             )
-            {
                 return false;
-            }
 
             return true;
         }

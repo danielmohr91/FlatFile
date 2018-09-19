@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using FlatFile.FixedWidth.Implementation.TypeConverters;
+﻿using System.Reflection;
 using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Models

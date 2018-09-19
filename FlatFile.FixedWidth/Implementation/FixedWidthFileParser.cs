@@ -20,9 +20,7 @@ namespace FlatFile.FixedWidth.Implementation
 
             if (layout.GetOrderedFields()
                 .Any(x => x.TypeConverter == null))
-            {
                 throw new ArgumentException("Missing TypeConverter for one or more fields", nameof(layout));
-            }
         }
 
         public ICollection<T> ParseFile()
@@ -31,10 +29,7 @@ namespace FlatFile.FixedWidth.Implementation
             using (var reader = new StreamReader(filePath))
             {
                 string row;
-                while ((row = reader.ReadLine()) != null)
-                {
-                    rows.Add(GetModelFromLine(row));
-                }
+                while ((row = reader.ReadLine()) != null) rows.Add(GetModelFromLine(row));
             }
 
             return rows;

@@ -1,6 +1,4 @@
 ﻿using FlatFile.FixedWidth.Implementation.TypeConverters;
-using FlatFile.FixedWidth.Interfaces;
-using FlatFile.FixedWidth.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatFileParserUnitTests.Tests.LayoutDescriptor

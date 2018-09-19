@@ -48,6 +48,7 @@
     <Compile Include="Implementation\TypeConverters\FloatTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\DoubleTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\LongTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\TypeConverterBase.cs" />
     <Compile Include="Implementation\TypeConverters\UShortTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\StringTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\IntTypeConverter.cs" />

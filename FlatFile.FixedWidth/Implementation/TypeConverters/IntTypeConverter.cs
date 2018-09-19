@@ -2,16 +2,11 @@
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class IntTypeConverter : ITypeConverter<int>
+    public class IntTypeConverter : TypeConverterBase<int>, ITypeConverter<int>
     {
-        public int ConvertFromString(string stringValue)
+        public override int ConvertFromString(string stringValue)
         {
             return int.Parse(stringValue.Trim());
-        }
-
-        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
-        {
-            return ConvertFromString(stringValue);
         }
     }
 }

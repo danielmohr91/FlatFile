@@ -29,7 +29,6 @@ namespace FlatFile.FixedWidth.Implementation
         }
 
 
-
         /// <summary>
         ///     Implements IFlatFileLayoutDescriptor.
         ///     Note that this could throw key not found exception. Perhaps wrap this...
@@ -68,7 +67,7 @@ namespace FlatFile.FixedWidth.Implementation
         /// </summary>
         // public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength)
         public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(
-            Expression<Func<TTarget, TProperty>> expression, 
+            Expression<Func<TTarget, TProperty>> expression,
             int fieldLength)
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
@@ -97,8 +96,8 @@ namespace FlatFile.FixedWidth.Implementation
 
 
         public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(
-            Expression<Func<TTarget, TProperty>> expression, 
-            int fieldLength, 
+            Expression<Func<TTarget, TProperty>> expression,
+            int fieldLength,
             ITypeConverter<TProperty> typeConverter)
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;

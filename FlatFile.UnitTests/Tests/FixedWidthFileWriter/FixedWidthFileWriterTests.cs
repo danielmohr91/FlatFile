@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Reflection;
 using FlatFile.FixedWidth.Implementation;
 using FlatFile.FixedWidth.Interfaces;
 using FlatFileParserUnitTests.Models;
@@ -37,7 +38,7 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthFileWriter
 
         private string GetOutputFilePath()
         {
-            var directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             return $"{directory}\\OutputFiles\\PrimitiveTypesOutputTest.dat";
         }
 

@@ -2,16 +2,11 @@
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class ULongTypeConverter : ITypeConverter<ulong>
+    public class ULongTypeConverter : TypeConverterBase<ulong>, ITypeConverter<ulong>
     {
-        public ulong ConvertFromString(string stringValue)
+        public override ulong ConvertFromString(string stringValue)
         {
             return ulong.Parse(stringValue.Trim());
-        }
-
-        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
-        {
-            return ConvertFromString(stringValue);
         }
     }
 }
