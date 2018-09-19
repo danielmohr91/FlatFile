@@ -32,7 +32,7 @@ namespace FlatFile.FixedWidth.Interfaces
         /// ///
         /// <param name="typeConverter">Custom type converter (overrides default)</param>
         /// <returns></returns>
-        IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<TTarget> typeConverter);
+        IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<TProperty> typeConverter);
         
         /// <summary>
         ///     Returns field for specified key. Returns null if not found.

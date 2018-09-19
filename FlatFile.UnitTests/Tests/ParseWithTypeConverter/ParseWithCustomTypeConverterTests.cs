@@ -80,7 +80,7 @@ namespace FlatFileParserUnitTests.Tests.ParseWithTypeConverter
             ITypeConverter<Day> enumConverter = new DummyEnumTypeConverter();
             return new LayoutDescriptor<DummyEnumModel>()
                 .AppendField(x => x.Id, 2)
-                .AppendField(x => x.DayTest, 10) // enumConverter)
+                .AppendField(x => x.DayTest, 10, enumConverter)
                 .AppendField(x => x.StringTest, 7);
         }
     }
