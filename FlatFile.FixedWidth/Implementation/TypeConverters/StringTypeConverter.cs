@@ -15,5 +15,10 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
         {
             return trim ? stringValue.Trim() : stringValue;
         }
+
+        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
+        {
+            return ConvertFromString(stringValue);
+        }
     }
 }

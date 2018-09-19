@@ -58,6 +58,7 @@
     <Compile Include="Interfaces\IFixedFieldSetting.cs" />
     <Compile Include="Interfaces\IFixedWidthFileParser.cs" />
     <Compile Include="Interfaces\IFlatFileLayoutDescriptor.cs" />
+    <Compile Include="Interfaces\ITypeConverterBase.cs" />
     <Compile Include="Models\FixedFieldSetting.cs" />
     <Compile Include="Implementation\LayoutDescriptor.cs" />
     <Compile Include="Implementation\FixedWidthFileParser.cs" />

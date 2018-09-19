@@ -12,7 +12,7 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
         public void Should_SuccessfullyCastIntTypeConverterToObject_When_CastIsUsed()
         {
             var intConverter = new IntTypeConverter();
-            var genericConverter = (FixedFieldSetting<object>) intConverter;
+            var genericConverter = intConverter;
         }
     }
 }

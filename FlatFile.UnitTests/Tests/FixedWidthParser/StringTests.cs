@@ -53,7 +53,7 @@ namespace FlatFileParserUnitTests.Tests.FixedWidthParser
         protected override string GetFilePath()
         {
             var directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            return $"{directory}\\InputFiles\\StringTests.dat"; // file properties should be "Content" and "Copy If Newer" (or similar)
+            return $"{directory}\\InputFiles\\StringTest.dat"; // file properties should be "Content" and "Copy If Newer" (or similar)
         }
 
         protected override IFlatFileLayoutDescriptor<DummyStringModel> GetLayout()

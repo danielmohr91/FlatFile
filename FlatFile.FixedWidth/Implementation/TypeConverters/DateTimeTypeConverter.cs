@@ -9,5 +9,10 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
         {
             return DateTime.Parse(stringValue.Trim());
         }
+
+        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
+        {
+            return ConvertFromString(stringValue);
+        }
     }
 }

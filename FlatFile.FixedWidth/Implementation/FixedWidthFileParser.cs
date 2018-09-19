@@ -61,7 +61,7 @@ namespace FlatFile.FixedWidth.Implementation
                 if (modelProperty != null)
                 {
                     var stringToConvert = row.Substring(field.StartPosition, field.Length);
-                    var typeConverter = (ITypeConverter<object>)field.TypeConverter;
+                    var typeConverter = field.TypeConverter;
                     var convertedValue = typeConverter.ConvertFromString(stringToConvert); //, modelProperty);
 
                     modelProperty.SetValue(

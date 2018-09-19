@@ -11,6 +11,11 @@ namespace FlatFile.FixedWidth.IdeaSandbox
         {
             return 42;
         }
+
+        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
+        {
+            return ConvertFromString(stringValue);
+        }
     }
 
     public class BoolTypeConverter : ITypeConverter<bool>
@@ -18,6 +23,11 @@ namespace FlatFile.FixedWidth.IdeaSandbox
         public bool ConvertFromString(string s)
         {
             return false;
+        }
+
+        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
+        {
+            return ConvertFromString(stringValue);
         }
     }
 

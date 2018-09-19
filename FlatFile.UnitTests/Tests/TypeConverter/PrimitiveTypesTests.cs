@@ -164,7 +164,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         protected override string GetFilePath()
         {
             var directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            return $"{directory}\\InputFiles\\PrimitiveTypesTests.dat"; // file properties should be "Content" and "Copy If Newer" (or similar)
+            return $"{directory}\\InputFiles\\PrimitiveTypesTest.dat"; // file properties should be "Content" and "Copy If Newer" (or similar)
         }
 
         protected override IFlatFileLayoutDescriptor<PrimitiveTypesModel> GetLayout()

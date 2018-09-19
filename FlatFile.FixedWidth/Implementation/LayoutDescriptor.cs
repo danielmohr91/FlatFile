@@ -18,28 +18,28 @@ namespace FlatFile.FixedWidth.Implementation
     /// <typeparam name="TTarget">Type of target model</typeparam>
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
     {
-        private readonly IDictionary<int, IFixedFieldSetting<object>> fields; // Generic type for fixed field setting represents the property, not the whole model (TTarget). Since the properties may be assorted, using object for now.
+        private readonly IDictionary<int, IFixedFieldSetting> fields; // Generic type for fixed field setting represents the property, not the whole model (TTarget). Since the properties may be assorted, using object for now.
 
         private int currentPosition;
-        private ICollection<IFixedFieldSetting<object>> orderedFields;
+        private ICollection<IFixedFieldSetting> orderedFields;
 
         public LayoutDescriptor()
         {
-            fields = new Dictionary<int, IFixedFieldSetting<object>>();
+            fields = new Dictionary<int, IFixedFieldSetting>();
         }
 
         /// <summary>
         ///     Implements IFlatFileLayoutDescriptor.
         ///     Note that this could throw key not found exception. Perhaps wrap this...
         /// </summary>
-        public IFixedFieldSetting<object> GetField(int key)
+        public IFixedFieldSetting GetField(int key)
         {
             // TTarget is wrong here for the generic... use TProperty, but different for each element... maybe just object for now...
             return fields[key];
         }
 
         /// <inheritdoc />
-        public ICollection<IFixedFieldSetting<object>> GetOrderedFields()
+        public ICollection<IFixedFieldSetting> GetOrderedFields()
         {
             // @Lee - Is there a best practice for ToList vs. casting to a collection? 
 
@@ -87,7 +87,7 @@ namespace FlatFile.FixedWidth.Implementation
         private void Add<TProperty>(int length, PropertyInfo property, ITypeConverter<TProperty> typeConverter)
         {
             Add<TProperty>(length, property);
-            fields[currentPosition].TypeConverter = (ITypeConverter<object>)typeConverter; // TODO: Use a new generic here? 
+            fields[currentPosition].TypeConverter = typeConverter; // TODO: Use a new generic here? 
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace FlatFile.FixedWidth.Implementation
             // Generated an example here: C:\Projects\FlatFile\FlatFile.FixedWidth\IdeaSandbox\CollectionWithGeneric.linq
 
             // Option 1 - Cast with 'object' as the generic type. Compiles, but runtime exception w/ the IFixedFieldSetting<object> cast
-            fields[currentPosition] = (IFixedFieldSetting<object>) setting; // InvalidCastException: Unable to cast object of type FixedFieldSetting<int> to IFixedFieldSetting<ojb
+            fields[currentPosition] = (IFixedFieldSetting) setting; // InvalidCastException: Unable to cast object of type FixedFieldSetting<int> to IFixedFieldSetting<ojb
             
             // Option 2 - Rethink using IFixedFieldSetting<object> in the collection of fields (e.g. line 21 - IDictionary<int, IFixedFieldSetting<object>> fields)
             // fields[currentPosition] =  setting; // cast is needed if colletion is uses 'object' as the generic type
@@ -134,7 +134,7 @@ namespace FlatFile.FixedWidth.Implementation
             //{
             //    fields[currentPosition] = (IFixedFieldSetting<bool>) setting;
             //}...
-            fields[currentPosition] = (IFixedFieldSetting<object>) setting;
+            fields[currentPosition] = (IFixedFieldSetting) setting;
 
             orderedFields = null; // Ordered fields are now dirty, clear cache
         }

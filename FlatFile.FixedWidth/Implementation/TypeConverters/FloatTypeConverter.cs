@@ -8,5 +8,10 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
         {
             return float.Parse(stringValue.Trim());
         }
+
+        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
+        {
+            return ConvertFromString(stringValue);
+        }
     }
 }

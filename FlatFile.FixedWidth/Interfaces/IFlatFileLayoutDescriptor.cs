@@ -39,13 +39,13 @@ namespace FlatFile.FixedWidth.Interfaces
         /// </summary>
         /// <param name="key">Index of column</param>
         /// <returns>Field, if found. Else, throws exception</returns>
-        IFixedFieldSetting<object> GetField(int key);
+        IFixedFieldSetting GetField(int key);
 
         /// <summary>
         ///     Returns all fields, ordered by key. This corresponds to the Left to Right position of each column in the flat file.
         /// </summary>
         /// <param name="key">Index of column</param>
         /// <returns>Field, if found. Else, throws exception</returns>
-        ICollection<IFixedFieldSetting<object>> GetOrderedFields();
+        ICollection<IFixedFieldSetting> GetOrderedFields();
     }
 }
