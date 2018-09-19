@@ -1,8 +1,6 @@
-﻿using FlatFile.FixedWidth.Interfaces;
-
-namespace FlatFile.FixedWidth.Implementation.TypeConverters
+﻿namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class StringTypeConverter : TypeConverterBase<string>, ITypeConverter<string>
+    public class StringTypeConverter : TypeConverter<string>
     {
         private readonly bool trim;
 

@@ -1,8 +1,6 @@
-﻿using FlatFile.FixedWidth.Interfaces;
-
-namespace FlatFile.FixedWidth.Implementation.TypeConverters
+﻿namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class DecimalTypeConverter : TypeConverterBase<decimal>, ITypeConverter<decimal>
+    public class DecimalTypeConverter : TypeConverter<decimal>
     {
         public override decimal ConvertFromString(string stringValue)
         {
