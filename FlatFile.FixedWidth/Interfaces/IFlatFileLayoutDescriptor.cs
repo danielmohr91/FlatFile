@@ -32,20 +32,20 @@ namespace FlatFile.FixedWidth.Interfaces
         /// ///
         /// <param name="typeConverter">Custom type converter (overrides default)</param>
         /// <returns></returns>
-        IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<TTarget> typeConverter);
-        
+        IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<TProperty> typeConverter);
+
         /// <summary>
         ///     Returns field for specified key. Returns null if not found.
         /// </summary>
         /// <param name="key">Index of column</param>
         /// <returns>Field, if found. Else, throws exception</returns>
-        IFixedFieldSetting<object> GetField(int key);
+        IFixedFieldSetting GetField(int key);
 
         /// <summary>
         ///     Returns all fields, ordered by key. This corresponds to the Left to Right position of each column in the flat file.
         /// </summary>
         /// <param name="key">Index of column</param>
         /// <returns>Field, if found. Else, throws exception</returns>
-        ICollection<IFixedFieldSetting<object>> GetOrderedFields();
+        ICollection<IFixedFieldSetting> GetOrderedFields();
     }
 }

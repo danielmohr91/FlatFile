@@ -1,10 +1,8 @@
-﻿using FlatFile.FixedWidth.Interfaces;
-
-namespace FlatFile.FixedWidth.Implementation.TypeConverters
+﻿namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class FloatTypeConverter : ITypeConverter<float>
+    public class FloatTypeConverter : TypeConverter<float>
     {
-        public float ConvertFromString(string stringValue)
+        public override float ConvertFromString(string stringValue)
         {
             return float.Parse(stringValue.Trim());
         }

@@ -1,4 +1,6 @@
-﻿using FlatFileParserUnitTests.CustomTypeConverters;
+﻿using System;
+using FlatFile.FixedWidth.Interfaces;
+using FlatFileParserUnitTests.CustomTypeConverters;
 using FlatFileParserUnitTests.Enum;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,7 +9,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
     [TestClass]
     public class CustomTypeConvertTests
     {
-        private readonly FlatFile.FixedWidth.Interfaces.ITypeConverter<Day> converter;
+        private readonly ITypeConverter<Day> converter;
 
         public CustomTypeConvertTests()
         {
@@ -33,7 +35,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void Should_NotConvertStringToEnum_When_ValidInvalidStringIsUsed()
         {
             converter.ConvertFromString("garbage");

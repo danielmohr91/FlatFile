@@ -1,10 +1,8 @@
-﻿using FlatFile.FixedWidth.Interfaces;
-
-namespace FlatFile.FixedWidth.Implementation.TypeConverters
+﻿namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class BooleanTypeConverter : ITypeConverter<bool>
+    public class BooleanTypeConverter : TypeConverter<bool>
     {
-        public bool ConvertFromString(string stringValue)
+        public override bool ConvertFromString(string stringValue)
         {
             return bool.Parse(stringValue.Trim());
         }

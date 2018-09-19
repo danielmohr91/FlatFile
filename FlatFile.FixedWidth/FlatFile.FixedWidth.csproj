@@ -48,6 +48,7 @@
     <Compile Include="Implementation\TypeConverters\FloatTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\DoubleTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\LongTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\TypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\UShortTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\StringTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\IntTypeConverter.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Interfaces\IFixedFieldSetting.cs" />
     <Compile Include="Interfaces\IFixedWidthFileParser.cs" />
     <Compile Include="Interfaces\IFlatFileLayoutDescriptor.cs" />
+    <Compile Include="Interfaces\ITypeConverterBase.cs" />
     <Compile Include="Models\FixedFieldSetting.cs" />
     <Compile Include="Implementation\LayoutDescriptor.cs" />
     <Compile Include="Implementation\FixedWidthFileParser.cs" />

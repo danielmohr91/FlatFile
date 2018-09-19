@@ -1,10 +1,8 @@
-﻿using FlatFile.FixedWidth.Interfaces;
-
-namespace FlatFile.FixedWidth.Implementation.TypeConverters
+﻿namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class DoubleTypeConverter : ITypeConverter<double>
+    public class DoubleTypeConverter : TypeConverter<double>
     {
-        public double ConvertFromString(string stringValue)
+        public override double ConvertFromString(string stringValue)
         {
             // This currently fails for double.MaxValue.
             // Can reproduce here: double.Parse(double.MaxValue.ToString());

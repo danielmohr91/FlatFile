@@ -39,12 +39,14 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
 
         public Day ConvertFromString(string stringValue)
         {
-            if (conversions.TryGetValue(stringValue.Trim().ToUpper(), out var day))
-            {
-                return day;
-            }
+            if (conversions.TryGetValue(stringValue.Trim().ToUpper(), out var day)) return day;
 
             throw new ArgumentException("Input must be a day of the week (full name or abbreviated), case insensitive.", nameof(stringValue));
+        }
+
+        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
+        {
+            return ConvertFromString(stringValue);
         }
     }
 }
