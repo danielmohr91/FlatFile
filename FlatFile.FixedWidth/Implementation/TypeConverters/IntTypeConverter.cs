@@ -1,10 +1,8 @@
-﻿using FlatFile.FixedWidth.Interfaces;
-
-namespace FlatFile.FixedWidth.Implementation.TypeConverters
+﻿namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class IntTypeConverter : ITypeConverter<object>
+    public class IntTypeConverter : TypeConverter<int>
     {
-        public object ConvertFromString(string stringValue)
+        public override int ConvertFromString(string stringValue)
         {
             return int.Parse(stringValue.Trim());
         }

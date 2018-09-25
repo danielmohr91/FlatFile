@@ -47,6 +47,7 @@
     <Compile Include="Implementation\TypeConverters\FloatTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\DoubleTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\LongTypeConverter.cs" />
+    <Compile Include="Implementation\TypeConverters\TypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\UShortTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\StringTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\IntTypeConverter.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Interfaces\IFixedFieldSetting.cs" />
     <Compile Include="Interfaces\IFixedWidthFileParser.cs" />
     <Compile Include="Interfaces\IFlatFileLayoutDescriptor.cs" />
+    <Compile Include="Interfaces\ITypeConverterBase.cs" />
     <Compile Include="Models\FixedFieldSetting.cs" />
     <Compile Include="Implementation\LayoutDescriptor.cs" />
     <Compile Include="Implementation\FixedWidthFileParser.cs" />
@@ -68,7 +70,16 @@
       <Name>FlatFile.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="IdeaSandbox\AbstractFactoryForVehicles.linq" />
+    <None Include="IdeaSandbox\CollectionOfTypedFields.linq" />
+    <None Include="IdeaSandbox\CollectionWithNonGenericBaseClass.linq" />
+    <None Include="IdeaSandbox\DynamicGeneric.linq" />
+    <None Include="IdeaSandbox\DynamicGenericSimplified.linq" />
+    <None Include="IdeaSandbox\CollectionWithGeneric.linq" />
+    <None Include="IdeaSandbox\FactoryForTypeConverter.linq" />
+    <None Include="IdeaSandbox\GenericCollectionWithProperties.linq" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,7 +2,7 @@
 {
     internal class DummyStringPairModel
     {
-        public string id { get; set; } // TODO: Make this an int, and support field.PrimitiveTypeConverter
+        public int id { get; set; }
         public string x { get; set; }
         public string y { get; set; }
     }

@@ -22,9 +22,7 @@ namespace FlatFile.FixedWidth.Implementation
 
             if (layout.GetOrderedFields()
                 .Any(x => x.TypeConverter == null))
-            {
                 throw new ArgumentException("Missing TypeConverter for one or more fields", nameof(layout));
-            }
         }
 
         public void WriteFile(ICollection<T> rows)
@@ -54,14 +52,12 @@ namespace FlatFile.FixedWidth.Implementation
                 {
                     var modelValue = modelProperty.GetValue(row).ToString();
 
-                    // Fail on truncation. Exception preferable to incorrect data.
+                    // Throw exception on truncation. Early failure preferable to incorrect data.
                     // e.g. 1.234567890E+100 would truncate to 1.234 @ 5 char field length. 
                     // TODO: Accept a type converter here for writes
                     if (field.Length < modelValue.Length)
-                    {
                         throw new Exception($"Field is too short for value. '{field.PropertyInfo.Name}' field length of {field.Length} " +
                                             $"is less than required length of {modelValue.Length} for value {modelValue}");
-                    }
 
                     var valueForFile = modelValue
                         .Substring(0, Math.Min(field.Length, modelValue.Length))

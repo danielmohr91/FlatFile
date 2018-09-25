@@ -21,8 +21,8 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                     id = 0,
                     boolTest = true,
                     decimalTest = decimal.MaxValue - 1,
-                    doubleTest = 1.79769312486232E+308, // Math.Round(double.MaxValue - 1E300, 10), // Have to shave a touch off these, otherwise rounding will push just outside min / max values for each type (Overflow exception)
-                    floatTest = 3.402822E+38f, //(float)Math.Round(float.MaxValue- (float)1E32, 10),
+                    doubleTest = 1.79769312486232E+308, // Just short of min / max values for each type. If actual min / max is used, overflow exception is thrown because rounding on floats.
+                    floatTest = 3.402822E+38f,
                     intTest = int.MaxValue,
                     longTest = long.MaxValue,
                     shortTest = short.MaxValue,
@@ -79,7 +79,6 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
             };
 
             for (var i = 4; i <= 1000; i++)
-            {
                 rows.Add(new PrimitiveTypesModel
                 {
                     id = i,
@@ -95,7 +94,6 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                     ushortTest = (ushort) (i * 4),
                     uintTest = (uint) (i * 5)
                 });
-            }
 
             return rows;
         }

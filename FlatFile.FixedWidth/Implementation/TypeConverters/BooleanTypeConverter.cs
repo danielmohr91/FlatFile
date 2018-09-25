@@ -1,20 +1,10 @@
-﻿using System;
-using FlatFile.FixedWidth.Interfaces;
-
-namespace FlatFile.FixedWidth.Implementation.TypeConverters
+﻿namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
-    public class BooleanTypeConverter : ITypeConverter<object>
+    public class BooleanTypeConverter : TypeConverter<bool>
     {
-        public object ConvertFromString(string stringValue)
+        public override bool ConvertFromString(string stringValue)
         {
-            try
-            {
-                return bool.Parse(stringValue.Trim());
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("Input must be true / false (case insensitive)", nameof(stringValue), e);
-            }
+            return bool.Parse(stringValue.Trim());
         }
     }
 }

@@ -50,7 +50,7 @@
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ChangeLog.txt" />
+    <None Include="ChangeLog.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SolutionMaintenance\DefaultRuleset.ruleset" />

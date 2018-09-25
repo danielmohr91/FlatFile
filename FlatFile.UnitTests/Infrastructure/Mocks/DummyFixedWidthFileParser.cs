@@ -12,7 +12,6 @@ namespace FlatFileParserUnitTests.Infrastructure.Mocks
             this.layout = layout;
         }
 
-        // Lee - would 'GetParsedFile' be a better method name? 
         public ICollection<TEntity> ParseFile()
         {
             return null;

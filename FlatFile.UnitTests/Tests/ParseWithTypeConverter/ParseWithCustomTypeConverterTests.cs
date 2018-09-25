@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using FlatFile.FixedWidth.Implementation;
 using FlatFile.FixedWidth.Interfaces;
 using FlatFileParserUnitTests.CustomTypeConverters;
@@ -15,7 +16,7 @@ namespace FlatFileParserUnitTests.Tests.ParseWithTypeConverter
     [TestClass]
     public class ParseWithCustomTypeConverterTests : ParserTestBase<DummyEnumModel>
     {
-        private readonly ITypeConverter<object> converter;
+        private readonly ITypeConverter<Day> converter;
 
         public ParseWithCustomTypeConverterTests()
         {
@@ -71,15 +72,16 @@ namespace FlatFileParserUnitTests.Tests.ParseWithTypeConverter
 
         protected override string GetFilePath()
         {
-            var directory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             return $"{directory}\\InputFiles\\EnumTest.dat";
         }
 
         protected override IFlatFileLayoutDescriptor<DummyEnumModel> GetLayout()
         {
+            ITypeConverter<Day> enumConverter = new DummyEnumTypeConverter();
             return new LayoutDescriptor<DummyEnumModel>()
                 .AppendField(x => x.Id, 2)
-                .AppendField(x => x.DayTest, 10, new DummyEnumTypeConverter())
+                .AppendField(x => x.DayTest, 10, enumConverter)
                 .AppendField(x => x.StringTest, 7);
         }
     }

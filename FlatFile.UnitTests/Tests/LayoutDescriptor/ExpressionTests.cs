@@ -6,14 +6,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
 {
     [TestClass]
-    public class LayoutDescriptorExpressionTests
+    public class ExpressionTests
     {
         private readonly DummyStringPairModel examplePairModel = new DummyStringPairModel();
         private readonly int field1Length = 42;
         private readonly int idLength = 10;
         private readonly IFlatFileLayoutDescriptor<DummyStringPairModel> settings;
 
-        public LayoutDescriptorExpressionTests()
+        public ExpressionTests()
         {
             settings = GetTestLayoutDescriptor();
         }

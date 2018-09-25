@@ -3,7 +3,7 @@ using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFile.FixedWidth.Models
 {
-    public class FixedFieldSetting : IFixedFieldSetting
+    public class FixedFieldSetting<TProperty> : IFixedFieldSetting
     {
         public int Length { get; set; }
 
@@ -11,6 +11,6 @@ namespace FlatFile.FixedWidth.Models
 
         public PropertyInfo PropertyInfo { get; set; }
 
-        public ITypeConverter<object> TypeConverter { get; set; }
+        public ITypeConverterBase TypeConverter { get; set; }
     }
 }
