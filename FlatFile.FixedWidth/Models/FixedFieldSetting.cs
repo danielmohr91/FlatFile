@@ -12,6 +12,5 @@ namespace FlatFile.FixedWidth.Models
         public PropertyInfo PropertyInfo { get; set; }
 
         public ITypeConverterBase TypeConverter { get; set; }
-
     }
 }

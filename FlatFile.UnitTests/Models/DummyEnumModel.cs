@@ -5,9 +5,9 @@ namespace FlatFileParserUnitTests.Models
 {
     public class DummyEnumModel
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public string StringTest { get; set; }
-        public Day DayTest { get; set; } 
+        public Day DayTest { get; set; }
 
         public override bool Equals(object obj)
         {

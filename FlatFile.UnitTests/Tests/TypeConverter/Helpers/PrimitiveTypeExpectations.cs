@@ -22,7 +22,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                     boolTest = true,
                     decimalTest = decimal.MaxValue - 1,
                     doubleTest = 1.79769312486232E+308, // Just short of min / max values for each type. If actual min / max is used, overflow exception is thrown because rounding on floats.
-                    floatTest = 3.402822E+38f, 
+                    floatTest = 3.402822E+38f,
                     intTest = int.MaxValue,
                     longTest = long.MaxValue,
                     shortTest = short.MaxValue,
