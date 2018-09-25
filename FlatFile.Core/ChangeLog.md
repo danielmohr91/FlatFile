@@ -462,3 +462,6 @@ Don't worry about deadlines
 		- Consider changing dynamic to object
 		- Consider renaming one of the methods `ConvertFromString` so we aren't using conflicting method names in `ITypeConverter` and `ITypeConverterBase`
 	- Going forward, wrap up TODOs in the codebase, then revisit original code kata problem statement
+
+## 9/25/18
+	- Removed unneeded comments

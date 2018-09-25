@@ -109,7 +109,7 @@ namespace FlatFile.FixedWidth.Implementation
         private void Add<TProperty>(int length, PropertyInfo property, ITypeConverter<TProperty> typeConverter)
         {
             Add<TProperty>(length, property);
-            fields[currentPosition].TypeConverter = typeConverter; // TODO: Use a new generic here? 
+            fields[currentPosition].TypeConverter = typeConverter;
         }
 
         /// <summary>

@@ -13,11 +13,5 @@ namespace FlatFile.FixedWidth.Models
 
         public ITypeConverterBase TypeConverter { get; set; }
 
-        //public static explicit operator FixedFieldSetting<TProperty>(IntTypeConverter v)
-        //{
-        //    // Could provide an explicit cast behavior for IFixedFieldSetting<object>?
-        //    // Feels kludgy... 
-        //    throw new NotImplementedException();
-        //}
     }
 }

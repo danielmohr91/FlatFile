@@ -5,7 +5,6 @@ using FlatFileParserUnitTests.Enum;
 
 namespace FlatFileParserUnitTests.CustomTypeConverters
 {
-    // Documentation: https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
     public class DummyEnumTypeConverter : ITypeConverter<Day>
     {
         private readonly IDictionary<string, Day> conversions;
