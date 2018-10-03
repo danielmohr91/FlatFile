@@ -23,13 +23,27 @@ namespace FlatFile.FixedWidth.Implementation
                 throw new ArgumentException("Missing TypeConverter for one or more fields", nameof(layout));
         }
 
-        public ICollection<T> ParseFile()
+        public ICollection<T> ParseFile(bool ignoreFirstRow = false, bool ignoreBlankRows = false)
         {
+            var i = 0;
             var rows = new List<T>();
             using (var reader = new StreamReader(filePath))
             {
                 string row;
-                while ((row = reader.ReadLine()) != null) rows.Add(GetModelFromLine(row));
+                while ((row = reader.ReadLine()) != null)
+                {
+                    if (ignoreFirstRow && i == 0)
+                    {
+                        continue;
+                    }
+
+                    if (ignoreBlankRows && string.IsNullOrWhiteSpace(row))
+                    {
+                        continue;
+                    }
+
+                    rows.Add(GetModelFromLine(row));
+                }
             }
 
             return rows;
