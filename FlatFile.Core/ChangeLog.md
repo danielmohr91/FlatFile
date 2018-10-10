@@ -473,3 +473,18 @@ Don't worry about deadlines
 	- Last row of totals needs to be ignored. Since reading as a stream, we don't at the beginning if it's the last row.
 		- Could add new option `SkipLastRow`, and peek ahead when parsing stream.
 		- Probably cleaner, run the flat file through a pre-processor and remove the totals row. 
+
+### Code Review Comments
+1. Differentiate by `ITypeConverter` vs. `ITypeConverterBase` by namespace... not by base and not base
+	- e.g. in C# collections, there is a collections namespace and generic namespace
+	- use same naming convention for type converters
+2. `FixedFieldSetting`, generic is now unused
+	- Remove the generic here. This will have a cascading effect - will be able to remove generics from several methods and classes now
+3. On `LayoutDescriptor` > `Add`, maybe `ITypeConverterBase` as param type, not `TypeConverter` with generic. Then can remove generic on the other `Add` method
+4. On `GetTypeConverter`, probably return non-generic `ITypeConverterBase` vs. `TypeConverter<T>`
+	- Probably make the Generic a parameter instead... Type type as param vs. a generic. More readable.
+	- Since returning the non-generic base, can return each without a cast now as well :)
+5. There's another strategy vs. the generic and non generic version. Could use a container with the type stored under, say `GetResource`. I think it's called a Monad? 
+6. Remove uneeded comments
+
+
