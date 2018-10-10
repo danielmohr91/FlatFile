@@ -465,3 +465,11 @@ Don't worry about deadlines
 
 ## 9/25/18
 	- Removed unneeded comments
+
+## 10/10/18
+	- Added data munging project to test in a real world scenario (using [code kata #4](http://codekata.com/kata/kata04-data-munging/) as an example)
+	- Added custom type converter for ints, stripped out non digits. 
+		- TODO: Test above
+	- Last row of totals needs to be ignored. Since reading as a stream, we don't at the beginning if it's the last row.
+		- Could add new option `SkipLastRow`, and peek ahead when parsing stream.
+		- Probably cleaner, run the flat file through a pre-processor and remove the totals row. 

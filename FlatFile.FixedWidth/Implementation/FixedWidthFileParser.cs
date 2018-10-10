@@ -32,7 +32,7 @@ namespace FlatFile.FixedWidth.Implementation
                 string row;
                 while ((row = reader.ReadLine()) != null)
                 {
-                    if (ignoreFirstRow && i == 0)
+                    if (i++ == 0 && ignoreFirstRow)
                     {
                         continue;
                     }
