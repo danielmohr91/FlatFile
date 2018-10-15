@@ -477,6 +477,8 @@ Don't worry about deadlines
 ### Code Review Comments
 1. Differentiate by `ITypeConverter` vs. `ITypeConverterBase` by namespace... not by base and not base
 	- e.g. in C# collections, there is a collections namespace and generic namespace
+		- Collections: https://docs.microsoft.com/en-us/dotnet/api/system.collections?view=netframework-4.7.2
+		- Generic Collections: https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic?view=netframework-4.7.2
 	- use same naming convention for type converters
 2. `FixedFieldSetting`, generic is now unused
 	- Remove the generic here. This will have a cascading effect - will be able to remove generics from several methods and classes now
@@ -487,4 +489,10 @@ Don't worry about deadlines
 5. There's another strategy vs. the generic and non generic version. Could use a container with the type stored under, say `GetResource`. I think it's called a Monad? 
 6. Remove uneeded comments
 
-
+## 10/15/18
+	- Moved ITypeConverter to new `...Interfaces.Generic` namespace. Renamed `ITypeConverterBase` to `ITypeConverter`
+	- Removed generic from `FixedFieldSetting`
+		- Removed generic from method call
+		- Removed generic from second `LayoutDescriptor.Add` method
+			- The generic is needed in methods above `Add` in the call stack, because TProperty is used as return type for `TypeConverter`
+	- Resume on #3 tomorrow. 

@@ -1,4 +1,5 @@
 ﻿using FlatFile.FixedWidth.Interfaces;
+using FlatFile.FixedWidth.Interfaces.Generic;
 
 namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
