@@ -456,3 +456,20 @@ Don't worry about deadlines
 			- Other interfaces (e.g. `IFixedFieldSetting`) depend on this `dynamic` return type, vs. type `T`, which now allows collections
 			  since the collection is all of type dynamic, vs. mixed generics
 		- Updated misc loose ends so all 48 unit tests now pass again.
+
+### Code Review Thoughts
+	- Interesting approach using the base clase, and relying on the dynamic method instead
+		- Consider changing dynamic to object
+		- Consider renaming one of the methods `ConvertFromString` so we aren't using conflicting method names in `ITypeConverter` and `ITypeConverterBase`
+	- Going forward, wrap up TODOs in the codebase, then revisit original code kata problem statement
+
+## 9/25/18
+	- Removed unneeded comments
+
+## 10/10/18
+	- Added data munging project to test in a real world scenario (using [code kata #4](http://codekata.com/kata/kata04-data-munging/) as an example)
+	- Added custom type converter for ints, stripped out non digits. 
+		- TODO: Test above
+	- Last row of totals needs to be ignored. Since reading as a stream, we don't at the beginning if it's the last row.
+		- Could add new option `SkipLastRow`, and peek ahead when parsing stream.
+		- Probably cleaner, run the flat file through a pre-processor and remove the totals row. 

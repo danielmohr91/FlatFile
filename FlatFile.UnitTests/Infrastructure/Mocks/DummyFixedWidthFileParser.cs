@@ -12,10 +12,9 @@ namespace FlatFileParserUnitTests.Infrastructure.Mocks
             this.layout = layout;
         }
 
-        // Lee - would 'GetParsedFile' be a better method name? 
-        public ICollection<TEntity> ParseFile()
+        public ICollection<TEntity> ParseFile(bool ignoreFirstRow = false, bool ignoreBlankRows = false)
         {
-            return null;
+            throw new System.NotImplementedException();
         }
     }
 }

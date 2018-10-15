@@ -5,7 +5,6 @@ using FlatFileParserUnitTests.Enum;
 
 namespace FlatFileParserUnitTests.CustomTypeConverters
 {
-    // Documentation: https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
     public class DummyEnumTypeConverter : ITypeConverter<Day>
     {
         private readonly IDictionary<string, Day> conversions;
@@ -44,7 +43,7 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
             throw new ArgumentException("Input must be a day of the week (full name or abbreviated), case insensitive.", nameof(stringValue));
         }
 
-        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
+        dynamic ITypeConverterBase.GetConvertedValue(string stringValue)
         {
             return ConvertFromString(stringValue);
         }

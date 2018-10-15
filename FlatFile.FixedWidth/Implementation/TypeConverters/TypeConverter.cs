@@ -4,7 +4,7 @@ namespace FlatFile.FixedWidth.Implementation.TypeConverters
 {
     public abstract class TypeConverter<T> : ITypeConverter<T>
     {
-        dynamic ITypeConverterBase.ConvertFromString(string stringValue)
+        public object GetConvertedValue(string stringValue)
         {
             return ConvertFromString(stringValue);
         }

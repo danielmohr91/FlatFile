@@ -52,7 +52,7 @@ namespace FlatFile.FixedWidth.Implementation
                 {
                     var modelValue = modelProperty.GetValue(row).ToString();
 
-                    // Fail on truncation. Exception preferable to incorrect data.
+                    // Throw exception on truncation. Early failure preferable to incorrect data.
                     // e.g. 1.234567890E+100 would truncate to 1.234 @ 5 char field length. 
                     // TODO: Accept a type converter here for writes
                     if (field.Length < modelValue.Length)

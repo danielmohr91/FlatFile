@@ -5,14 +5,13 @@ namespace FlatFileParserUnitTests.Models
 {
     public class DummyEnumModel
     {
-        public int Id { get; set; } // Test default type converter for primitive types
-        public string StringTest { get; set; } // Test no type converter
-        public Day DayTest { get; set; } // Test custom type converter
+        public int Id { get; set; }
+        public string StringTest { get; set; }
+        public Day DayTest { get; set; }
 
         public override bool Equals(object obj)
         {
-            var model = obj as DummyEnumModel;
-            return model != null &&
+            return obj is DummyEnumModel model &&
                    Id == model.Id &&
                    StringTest == model.StringTest &&
                    DayTest == model.DayTest;

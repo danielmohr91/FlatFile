@@ -4,6 +4,6 @@ namespace FlatFile.FixedWidth.Interfaces
 {
     public interface IFixedWidthFileParser<T>
     {
-        ICollection<T> ParseFile();
+        ICollection<T> ParseFile(bool ignoreFirstRow = false, bool ignoreBlankRows = false);
     }
 }
