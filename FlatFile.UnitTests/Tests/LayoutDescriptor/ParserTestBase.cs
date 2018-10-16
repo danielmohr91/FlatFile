@@ -28,7 +28,8 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
 
         protected void AssertFirstRowMatchesExpected()
         {
-            // This is reference equals by default. Equals method is overriden in T to implement value equals vs. reference equals
+            // This is reference equals by default. 
+            // Equals method is overridden in T to implement value equals vs. reference equals
             var expected = ExpectedRows.First();
             var actual = ParsedRows.First();
 

@@ -57,7 +57,7 @@ namespace FlatFile.FixedWidth.Implementation
             int fieldLength)
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
-            var typeConverter = GetTypeConverter<TProperty>();
+            var typeConverter = GetTypeConverter(typeof(TProperty));
 
             if (propertyInfo != null && typeConverter != null)
             {
@@ -79,7 +79,7 @@ namespace FlatFile.FixedWidth.Implementation
             return this;
         }
 
-        private void Add<TProperty>(int length, PropertyInfo property, ITypeConverter<TProperty> typeConverter)
+        private void Add(int length, PropertyInfo property, ITypeConverter typeConverter)
         {
             Add(length, property);
             fields[currentPosition].TypeConverter = typeConverter;
@@ -130,66 +130,66 @@ namespace FlatFile.FixedWidth.Implementation
             return null;
         }
 
-        private ITypeConverter<T> GetTypeConverter<T>()
+        private ITypeConverter GetTypeConverter(Type T)
         {
-            if (typeof(T) == typeof(bool))
+            if (T == typeof(bool))
             {
-                return (ITypeConverter<T>) new BooleanTypeConverter();
+                return new BooleanTypeConverter();
             }
 
-            if (typeof(T) == typeof(DateTime))
+            if (T == typeof(DateTime))
             {
-                return (ITypeConverter<T>) new DateTimeTypeConverter();
+                return new DateTimeTypeConverter();
             }
 
-            if (typeof(T) == typeof(decimal))
+            if (T == typeof(decimal))
             {
-                return (ITypeConverter<T>) new DecimalTypeConverter();
+                return  new DecimalTypeConverter();
             }
 
-            if (typeof(T) == typeof(double))
+            if (T == typeof(double))
             {
-                return (ITypeConverter<T>) new DoubleTypeConverter();
+                return   new DoubleTypeConverter();
             }
 
-            if (typeof(T) == typeof(float))
+            if (T == typeof(float))
             {
-                return (ITypeConverter<T>) new FloatTypeConverter();
+                return new FloatTypeConverter();
             }
 
-            if (typeof(T) == typeof(int))
+            if (T == typeof(int))
             {
-                return (ITypeConverter<T>) new IntTypeConverter();
+                return  new IntTypeConverter();
             }
 
-            if (typeof(T) == typeof(long))
+            if (T == typeof(long))
             {
-                return (ITypeConverter<T>) new LongTypeConverter();
+                return new LongTypeConverter();
             }
 
-            if (typeof(T) == typeof(short))
+            if (T == typeof(short))
             {
-                return (ITypeConverter<T>) new ShortTypeConverter();
+                return  new ShortTypeConverter();
             }
 
-            if (typeof(T) == typeof(string))
+            if (T == typeof(string))
             {
-                return (ITypeConverter<T>) new StringTypeConverter();
+                return new StringTypeConverter();
             }
 
-            if (typeof(T) == typeof(uint))
+            if (T == typeof(uint))
             {
-                return (ITypeConverter<T>) new UIntTypeConverter();
+                return   new UIntTypeConverter();
             }
 
-            if (typeof(T) == typeof(ulong))
+            if (T == typeof(ulong))
             {
-                return (ITypeConverter<T>) new ULongTypeConverter();
+                return  new ULongTypeConverter();
             }
 
-            if (typeof(T) == typeof(ushort))
+            if (T == typeof(ushort))
             {
-                return (ITypeConverter<T>) new UShortTypeConverter();
+                return  new UShortTypeConverter();
             }
 
             return null;
