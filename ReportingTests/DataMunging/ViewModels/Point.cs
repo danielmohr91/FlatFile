@@ -1,6 +1,6 @@
 ﻿namespace DataMunging.Reporting.ViewModels
 {
-   public class Point
+    public class Point
     {
         public Point(int id, int x, int y)
         {
@@ -10,7 +10,9 @@
         }
 
         // Parameterless constructor is required so model can be newed up when used as a generic type (e.g. in FlatFileImporter<T>)
-        public Point() { }
+        public Point()
+        {
+        }
 
         public int Id { get; set; }
         public int X { get; set; }

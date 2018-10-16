@@ -14,11 +14,11 @@ namespace DataMunging.Reporting.Import
             parser = new FixedWidthFileParser<T>(GetLayout(fileName), fileName);
         }
 
+        public abstract IFlatFileLayoutDescriptor<T> GetLayout(string fileName);
+
         public ICollection<T> GetRows()
         {
             return rows ?? (rows = parser.ParseFile(true, true));
         }
-
-        public abstract IFlatFileLayoutDescriptor<T> GetLayout(string fileName);
     }
 }

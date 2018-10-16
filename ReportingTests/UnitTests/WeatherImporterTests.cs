@@ -60,7 +60,6 @@ namespace DataMunging.UnitTests
             // These totals at the bottom should be ignored: 
             //   mo  82.9  60.5  71.7    16  58.8       0.00              6.9          5.3
             // Perhaps want to run file through a pre-processor? 
-
         }
 
         private string GetImportFilePath()

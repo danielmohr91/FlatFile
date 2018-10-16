@@ -79,6 +79,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
             };
 
             for (var i = 4; i <= 1000; i++)
+            {
                 rows.Add(new PrimitiveTypesModel
                 {
                     id = i,
@@ -94,6 +95,7 @@ namespace FlatFileParserUnitTests.Tests.TypeConverter.Helpers
                     ushortTest = (ushort) (i * 4),
                     uintTest = (uint) (i * 5)
                 });
+            }
 
             return rows;
         }

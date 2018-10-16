@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FlatFile.FixedWidth.Interfaces;
 
 namespace FlatFileParserUnitTests.Infrastructure.Mocks
@@ -14,7 +15,7 @@ namespace FlatFileParserUnitTests.Infrastructure.Mocks
 
         public ICollection<TEntity> ParseFile(bool ignoreFirstRow = false, bool ignoreBlankRows = false)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

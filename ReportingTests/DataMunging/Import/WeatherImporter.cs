@@ -16,7 +16,7 @@ namespace DataMunging.Reporting.Import
             var dirtyIntTypeConverter = new DirtyIntTypeConverter();
             var layout = new LayoutDescriptor<Point>()
                 .AppendField(x => x.Id, 4)
-                .AppendField(x => x.X, 6, dirtyIntTypeConverter)  // Max Temp
+                .AppendField(x => x.X, 6, dirtyIntTypeConverter) // Max Temp
                 .AppendField(x => x.Y, 6, dirtyIntTypeConverter); // Min Temp
             return layout;
         }

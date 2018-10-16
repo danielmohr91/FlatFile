@@ -20,7 +20,9 @@ namespace FlatFile.FixedWidth.Implementation
 
             if (layout.GetOrderedFields()
                 .Any(x => x.TypeConverter == null))
+            {
                 throw new ArgumentException("Missing TypeConverter for one or more fields", nameof(layout));
+            }
         }
 
         public ICollection<T> ParseFile(bool ignoreFirstRow = false, bool ignoreBlankRows = false)

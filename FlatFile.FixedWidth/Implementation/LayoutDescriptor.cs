@@ -144,12 +144,12 @@ namespace FlatFile.FixedWidth.Implementation
 
             if (T == typeof(decimal))
             {
-                return  new DecimalTypeConverter();
+                return new DecimalTypeConverter();
             }
 
             if (T == typeof(double))
             {
-                return   new DoubleTypeConverter();
+                return new DoubleTypeConverter();
             }
 
             if (T == typeof(float))
@@ -159,7 +159,7 @@ namespace FlatFile.FixedWidth.Implementation
 
             if (T == typeof(int))
             {
-                return  new IntTypeConverter();
+                return new IntTypeConverter();
             }
 
             if (T == typeof(long))
@@ -169,7 +169,7 @@ namespace FlatFile.FixedWidth.Implementation
 
             if (T == typeof(short))
             {
-                return  new ShortTypeConverter();
+                return new ShortTypeConverter();
             }
 
             if (T == typeof(string))
@@ -179,17 +179,17 @@ namespace FlatFile.FixedWidth.Implementation
 
             if (T == typeof(uint))
             {
-                return   new UIntTypeConverter();
+                return new UIntTypeConverter();
             }
 
             if (T == typeof(ulong))
             {
-                return  new ULongTypeConverter();
+                return new ULongTypeConverter();
             }
 
             if (T == typeof(ushort))
             {
-                return  new UShortTypeConverter();
+                return new UShortTypeConverter();
             }
 
             return null;
