@@ -1,6 +1,6 @@
 ﻿namespace DataMunging.Reporting.ViewModels
 {
-    public class Point
+    public class Point : IPoint
     {
         public Point(int id, int x, int y)
         {
