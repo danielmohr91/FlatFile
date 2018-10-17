@@ -17,5 +17,23 @@
         public int Id { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var point = obj as Point;
+            return point != null &&
+                   Id == point.Id &&
+                   X == point.X &&
+                   Y == point.Y;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 1426304211;
+            hashCode = hashCode * -1521134295 + Id.GetHashCode();
+            hashCode = hashCode * -1521134295 + X.GetHashCode();
+            hashCode = hashCode * -1521134295 + Y.GetHashCode();
+            return hashCode;
+        }
     }
 }

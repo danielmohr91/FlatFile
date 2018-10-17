@@ -1,4 +1,4 @@
-﻿# Change Log
+# Change Log
 
 ## 6-8-18 Code Review Comments
 
@@ -504,4 +504,19 @@ CODE REVIEW COMMENTS
 - Removed generic from `GetTypeConverter`. Returning `ITypeConverter` (no generic), and Type T is now passed as a parameter instead of a generic.
 	- Since returning `ITypeConverter` base (not generic), was able to remove all the casts as well.
 - Removed unecessary comments
+- Added curly braces back on single line `if` statements, and corrected R# settings. 
+- Cleaned namespaces. 
 	
+## 10/17/18
+- The totals row is problematic. 
+  Reading line by line, unsure of what is last row since using a stream - it's not trivial to simply pass flag for IgnoreLastRow
+  Is there a better way? 
+  These totals at the bottom should be ignored: 
+  `mo  82.9  60.5  71.7    16  58.8       0.00              6.9          5.3`
+  Perhaps want to run file through a pre-processor? 
+- Used a file-preprocessor
+- Added new unit test to confirm importer reads in from flat file correctly
+	- Custom Type Converter strips out the asterisks from boundary values
+	- Correctly reads into collection. This collection matches the mocked collection, based on the weather.dat import file
+- Tomorrow - Start on reports
+
