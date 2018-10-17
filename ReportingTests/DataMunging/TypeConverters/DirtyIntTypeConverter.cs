@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using FlatFile.FixedWidth.Implementation.TypeConverters;
 
 namespace DataMunging.Reporting.TypeConverters
 {
-   public  class DirtyIntTypeConverter: TypeConverter<int>
+    public class DirtyIntTypeConverter : TypeConverter<int>
     {
         public override int ConvertFromString(string stringValue)
         {

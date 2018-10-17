@@ -22,6 +22,6 @@ namespace FlatFile.FixedWidth.Interfaces
         /// <summary>
         ///     Custom Type Converter (overrides default converter)
         /// </summary>
-        ITypeConverterBase TypeConverter { get; set; }
+        ITypeConverter TypeConverter { get; set; }
     }
 }

@@ -54,11 +54,11 @@
     <Compile Include="Implementation\TypeConverters\ShortTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\UIntTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\ULongTypeConverter.cs" />
-    <Compile Include="Interfaces\ITypeConverter.cs" />
+    <Compile Include="Interfaces\Generic\ITypeConverter.cs" />
     <Compile Include="Interfaces\IFixedFieldSetting.cs" />
     <Compile Include="Interfaces\IFixedWidthFileParser.cs" />
     <Compile Include="Interfaces\IFlatFileLayoutDescriptor.cs" />
-    <Compile Include="Interfaces\ITypeConverterBase.cs" />
+    <Compile Include="Interfaces\ITypeConverter.cs" />
     <Compile Include="Models\FixedFieldSetting.cs" />
     <Compile Include="Implementation\LayoutDescriptor.cs" />
     <Compile Include="Implementation\FixedWidthFileParser.cs" />
@@ -80,6 +80,7 @@
     <None Include="IdeaSandbox\FactoryForTypeConverter.linq" />
     <None Include="IdeaSandbox\GenericCollectionWithProperties.linq" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

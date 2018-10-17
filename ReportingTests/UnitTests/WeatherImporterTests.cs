@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using DataMunging.Reporting.Import;
+using DataMunging.Reporting.Transformations;
 using DataMunging.Reporting.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -14,11 +15,27 @@ namespace DataMunging.UnitTests
         [TestMethod]
         public void Should_ImportFlatFileToModel_When_LayoutDescriptorIsDefined()
         {
-            var importer = new WeatherImporter(GetImportFilePath());
-            var model = importer.GetRows();
+            // Arrange
+            if (!File.Exists(GetTransformedFilePath()))
+            {
+                var cleaner = new SanitizeFile();
+                cleaner.SaveCopyWithFilteredRows(GetOriginalImportFilePath(), GetTransformedFilePath(), "  mo");
+            }
 
-            // TODO: Mock expected result based on ~\DataMunging\UnitTests\InputFiles\weather.dat
-            var expected = new Collection<Point>
+            var expected = GetExpectedPoints();
+
+            // Act
+            var importer = new WeatherImporter(GetTransformedFilePath());
+            var model = importer.GetRows().ToList();
+
+            // Assert
+            CollectionAssert.AreEqual(model, expected);
+        }
+
+        private static Collection<Point> GetExpectedPoints()
+        {
+            // Mocked expected result based on ~\DataMunging\UnitTests\InputFiles\weather.dat
+            return new Collection<Point>
             {
                 new Point(1, 88, 59),
                 new Point(2, 79, 63),
@@ -51,22 +68,19 @@ namespace DataMunging.UnitTests
                 new Point(29, 88, 66),
                 new Point(30, 90, 45)
             };
-
-            CollectionAssert.AreEqual(model.ToList(), expected);
-
-            // The totals row is problematic. 
-            // Reading line by line, unsure of what is last row since using a stream - it's not trivial to simply pass flag for IgnoreLastRow
-            // Is there a better way? 
-            // These totals at the bottom should be ignored: 
-            //   mo  82.9  60.5  71.7    16  58.8       0.00              6.9          5.3
-            // Perhaps want to run file through a pre-processor? 
-
         }
 
-        private string GetImportFilePath()
+
+        private string GetOriginalImportFilePath()
         {
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             return $"{directory}\\InputFiles\\weather.dat";
+        }
+
+        private string GetTransformedFilePath()
+        {
+            var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            return $"{directory}\\InputFiles\\weatherTransformed.dat";
         }
     }
 }
