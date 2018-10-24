@@ -66,7 +66,6 @@ namespace FlatFile.FixedWidth.Implementation
             return ParseFileHelper(ignoreFirstRow, ignoreBlankRows, testForSkip);
         }
 
-
         /// <summary>
         ///     For each field in layout, the field is extracted from row and added to model (TEntity)
         /// </summary>

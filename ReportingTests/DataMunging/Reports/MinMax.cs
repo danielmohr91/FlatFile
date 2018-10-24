@@ -21,12 +21,12 @@ namespace DataMunging.Reporting.Reports
             set { }
         }
 
-        public int GetMaxSpread(IEnumerable<IPoint> points)
+        public int GetMaxSpread()
         {
             return differences.LastOrDefault();
         }
 
-        public int GetMinSpread(IEnumerable<IPoint> points)
+        public int GetMinSpread()
         {
             return differences.FirstOrDefault();
         }

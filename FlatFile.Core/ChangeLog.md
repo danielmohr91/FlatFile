@@ -546,3 +546,12 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 	- Implemented `ITestForSkip` in `ParseFile` in unit tests for weather reporting
 		- Renamed internal / private `ParseFile` to `ParseFileHelper`, too many method overloads were confusing to read.
 - Implemented ShouldSkip / ITestForSkip and tested successfully with weather report
+
+
+code review comoments
+- FlatFile
+	- **add field to column (`IFixedFieldSetting`), add new property for ShouldSkip**
+	- change `ITestForSkip` to include ignorefirstrow and ignoreblalnkrows
+- Data Munging
+	- in shouldSkip, include a row number as well (say you want to exclude all odd rows, skip first row, etc...)
+		- if this was a live API, would keep `ParseFile` as is for backwards compatability, and add [Depricated] decrator on the old method
