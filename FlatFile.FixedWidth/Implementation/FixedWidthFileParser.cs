@@ -27,6 +27,11 @@ namespace FlatFile.FixedWidth.Implementation
 
         public ICollection<T> ParseFile(bool ignoreFirstRow = false, bool ignoreBlankRows = false)
         {
+            return ParseFile(ignoreFirstRow, ignoreBlankRows);
+        }
+
+        private ICollection<T> ParseFile(bool ignoreFirstRow, bool ignoreBlankRows)
+        {
             var i = 0;
             var rows = new List<T>();
             using (var reader = new StreamReader(filePath))
@@ -49,6 +54,11 @@ namespace FlatFile.FixedWidth.Implementation
             }
 
             return rows;
+        }
+
+        public ICollection<T> ParseFile(ITestForSkip testForSkip, bool ignoreFirstRow = false, bool ignoreBlankRows = false)
+        {
+            throw new NotImplementedException();
         }
 
 

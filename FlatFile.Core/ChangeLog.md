@@ -491,7 +491,6 @@ CODE REVIEW COMMENTS
 6. Remove uneeded comments
 
 ## 10/15/18
-
 - Moved ITypeConverter to new `...Interfaces.Generic` namespace. Renamed `ITypeConverterBase` to `ITypeConverter`
 - Removed generic from `FixedFieldSetting`
 	- Removed generic from method call
@@ -523,5 +522,24 @@ CODE REVIEW COMMENTS
 		- Correctly reads into collection. This collection matches the mocked collection, based on the weather.dat import file
 - Started on Min / Max spread report
 
-_Tomorrow - resume on reports_
+## Code Review Comments
+1. Rename `Type T` in `GetTypeConverter` from Type T to something different. 
+	- `Type T` is the convention used for generics. Don't re-use it for the parameter naming
+2. Thoughts on skipping rows starting with _x_ being a pre-processor step, or something new built into flat file parsing? 
+	- Perhaps `SkipRowsWith` as an option on flat file parser. 
+	- More flexible would be something like a `TestForSkip` object _(similar to TypeConverter)_
+		- Don't provide a default implementation. If `TestForSkip` is null, just skip.
+3. Same question as above on skipping columns. Other libraries I've seen the workaround is to name a new column, say `garbage1`, `garbage2`, etc... for the width you want to skip. 
+   Would you suggest similar approach, or add a new option to skip columns? 
+	- Probably a new option for field... `shouldSkip` perhaps to skip columns? 
 
+_Tomorrow - resume on reports. Also the two new settings overviewed above._
+
+
+## 10/18/18 - 10/24/18
+- Refactored parameter naming in `GetTypeConverter`. Was `T`, now `fieldType`.
+- Though through skipping rows
+	- `TestForSkip` similar to `TypeConverter`, but not on `IFlatFileLayoutDescriptor` via `AppendField` 
+	- Similar functionality (e.g. `SkipFirstRow`, `SkipBlankRows` are on `ParseFile` method. will keep consistent)
+	- Added `ITestForSkip` as parameter on `IFixedWidthFileParser` > `ParseFile`
+		- Tricky, because this is a row by row basis. Same rule for each row though, same for file. Should be good. 

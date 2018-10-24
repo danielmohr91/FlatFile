@@ -130,64 +130,64 @@ namespace FlatFile.FixedWidth.Implementation
             return null;
         }
 
-        private ITypeConverter GetTypeConverter(Type T)
+        private ITypeConverter GetTypeConverter(Type fieldType)
         {
-            if (T == typeof(bool))
+            if (fieldType == typeof(bool))
             {
                 return new BooleanTypeConverter();
             }
 
-            if (T == typeof(DateTime))
+            if (fieldType == typeof(DateTime))
             {
                 return new DateTimeTypeConverter();
             }
 
-            if (T == typeof(decimal))
+            if (fieldType == typeof(decimal))
             {
                 return new DecimalTypeConverter();
             }
 
-            if (T == typeof(double))
+            if (fieldType == typeof(double))
             {
                 return new DoubleTypeConverter();
             }
 
-            if (T == typeof(float))
+            if (fieldType == typeof(float))
             {
                 return new FloatTypeConverter();
             }
 
-            if (T == typeof(int))
+            if (fieldType == typeof(int))
             {
                 return new IntTypeConverter();
             }
 
-            if (T == typeof(long))
+            if (fieldType == typeof(long))
             {
                 return new LongTypeConverter();
             }
 
-            if (T == typeof(short))
+            if (fieldType == typeof(short))
             {
                 return new ShortTypeConverter();
             }
 
-            if (T == typeof(string))
+            if (fieldType == typeof(string))
             {
                 return new StringTypeConverter();
             }
 
-            if (T == typeof(uint))
+            if (fieldType == typeof(uint))
             {
                 return new UIntTypeConverter();
             }
 
-            if (T == typeof(ulong))
+            if (fieldType == typeof(ulong))
             {
                 return new ULongTypeConverter();
             }
 
-            if (T == typeof(ushort))
+            if (fieldType == typeof(ushort))
             {
                 return new UShortTypeConverter();
             }

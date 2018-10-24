@@ -9,23 +9,26 @@ namespace DataMunging.Reporting.Reports
     public class ReportMinMax
     {
         private readonly IEnumerable<IPoint> points;
-        private IList<int> _differences;
-        private IList<int> differences =>
-            _differences ?? (_differences = GetDifferences());
 
         public ReportMinMax(IEnumerable<IPoint> points)
         {
             this.points = points;
         }
-        
+
+        private IList<int> differences
+        {
+            get => differences ?? (differences = GetDifferences());
+            set { }
+        }
+
         public int GetMaxSpread(IEnumerable<IPoint> points)
         {
-            return differences.FirstOrDefault();
+            return differences.LastOrDefault();
         }
 
         public int GetMinSpread(IEnumerable<IPoint> points)
         {
-            return differences.LastOrDefault();
+            return differences.FirstOrDefault();
         }
 
         private IList<int> GetDifferences()
