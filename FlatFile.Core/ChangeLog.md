@@ -297,7 +297,7 @@ Don't worry about deadlines
 		- ToString() is rounding, just over the threshold. Makes sense.
 
 ## 8/8/18
-### CODE REVIEW COMMENTS
+### Code Review Comments
 - Remove truthy / falsey dictionary from boolean type converter
 - Remove IPrimitiveTypeConverter interface (no longer used, forgot to delete it)
 - Reviewed the "double.Parse(double.MaxValue.ToString());" question. Documented above. 
@@ -370,7 +370,7 @@ Don't worry about deadlines
 
 ## 8/15/18
 
-### Code review comments
+### Code Review Comments - 8/15/18
 - Fix instances of ITypeConverter<object> - generic should be a primitive type, or the Day enum. Not object
 	// Make a factory to get the type converter, or change ITypeConverter<object> to just object
 	private readonly IDictionary<Type, ITypeConverter<object>> typeConverters;
@@ -397,7 +397,7 @@ Don't worry about deadlines
 ## 8/29/18
 - Added quick abstract factory linqpad script for vehicles to get some ideas / practice generics w/ factory pattern
 
-CODE REVIEW COMMENTS
+## Code Review Comments - 8/29/18
 	- In the boolean type converter, just let the error bubble up
 	- Don't worry about the return type for the concrete type converters. Perhaps pass in type T on the fixed field settingsetting?
 	- Continue on with the Type Converters
@@ -475,7 +475,7 @@ CODE REVIEW COMMENTS
 	- Could add new option `SkipLastRow`, and peek ahead when parsing stream.
 	- Probably cleaner, run the flat file through a pre-processor and remove the totals row. 
 
-### Code Review Comments
+### Code Review Comments - 10/10/18
 1. Differentiate by `ITypeConverter` vs. `ITypeConverterBase` by namespace... not by base and not base
 	- e.g. in C# collections, there is a collections namespace and generic namespace
 		- [Collections](https://docs.microsoft.com/en-us/dotnet/api/system.collections?view=netframework-4.7.2)
@@ -522,7 +522,7 @@ CODE REVIEW COMMENTS
 		- Correctly reads into collection. This collection matches the mocked collection, based on the weather.dat import file
 - Started on Min / Max spread report
 
-## Code Review Comments
+## Code Review Comments - 10/18/18
 1. Rename `Type T` in `GetTypeConverter` from Type T to something different. 
 	- `Type T` is the convention used for generics. Don't re-use it for the parameter naming
 2. Thoughts on skipping rows starting with _x_ being a pre-processor step, or something new built into flat file parsing? 
@@ -548,10 +548,11 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 - Implemented ShouldSkip / ITestForSkip and tested successfully with weather report
 
 
-code review comoments
+## Code Review Comments - 10/24/18
 - FlatFile
 	- **add field to column (`IFixedFieldSetting`), add new property for ShouldSkip**
-	- change `ITestForSkip` to include ignorefirstrow and ignoreblalnkrows
+	- change `ITestForSkip` to include ignorefirstrow and ignoreblankrows. Then can get rid of overloaded ParseFile method, and just have one
+		- Will need `rowNumber` for this
 - Data Munging
 	- in shouldSkip, include a row number as well (say you want to exclude all odd rows, skip first row, etc...)
 		- if this was a live API, would keep `ParseFile` as is for backwards compatability, and add [Depricated] decrator on the old method
