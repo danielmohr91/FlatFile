@@ -27,10 +27,10 @@ namespace FlatFile.FixedWidth.Implementation
 
         public ICollection<T> ParseFile(bool ignoreFirstRow = false, bool ignoreBlankRows = false)
         {
-            return ParseFile(ignoreFirstRow, ignoreBlankRows);
+            return ParseFileHelper(ignoreFirstRow, ignoreBlankRows, null);
         }
 
-        private ICollection<T> ParseFile(bool ignoreFirstRow, bool ignoreBlankRows)
+        private ICollection<T> ParseFileHelper(bool ignoreFirstRow, bool ignoreBlankRows, ITestForSkip testForSkip)
         {
             var i = 0;
             var rows = new List<T>();
@@ -49,6 +49,11 @@ namespace FlatFile.FixedWidth.Implementation
                         continue;
                     }
 
+                    if (testForSkip != null && testForSkip.ShouldSkip(row))
+                    {
+                        continue;
+                    }
+
                     rows.Add(GetModelFromLine(row));
                 }
             }
@@ -58,7 +63,7 @@ namespace FlatFile.FixedWidth.Implementation
 
         public ICollection<T> ParseFile(ITestForSkip testForSkip, bool ignoreFirstRow = false, bool ignoreBlankRows = false)
         {
-            throw new NotImplementedException();
+            return ParseFileHelper(ignoreFirstRow, ignoreBlankRows, testForSkip);
         }
 
 

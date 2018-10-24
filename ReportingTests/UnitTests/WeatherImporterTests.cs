@@ -1,10 +1,13 @@
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using DataMunging.Reporting.Import;
+using DataMunging.Reporting.TestForSkip;
 using DataMunging.Reporting.Transformations;
 using DataMunging.Reporting.ViewModels;
+using FlatFile.FixedWidth.Implementation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DataMunging.UnitTests
@@ -16,17 +19,16 @@ namespace DataMunging.UnitTests
         public void Should_ImportFlatFileToModel_When_LayoutDescriptorIsDefined()
         {
             // Arrange
-            if (!File.Exists(GetTransformedFilePath()))
+            if (!File.Exists(GetOriginalImportFilePath()))
             {
-                var cleaner = new SanitizeFile();
-                cleaner.SaveCopyWithFilteredRows(GetOriginalImportFilePath(), GetTransformedFilePath(), "  mo");
+                throw new Exception("Import file does not exist!");
             }
-
             var expected = GetExpectedPoints();
-
+            var testForSkip = new WeatherReportSkipDefinitions();
+            
             // Act
-            var importer = new WeatherImporter(GetTransformedFilePath());
-            var model = importer.GetRows().ToList();
+            var importer = new WeatherImporter(GetOriginalImportFilePath());
+            var model = importer.GetRows(testForSkip).ToList();
 
             // Assert
             CollectionAssert.AreEqual(model, expected);

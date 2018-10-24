@@ -20,5 +20,10 @@ namespace DataMunging.Reporting.Import
         {
             return rows ?? (rows = parser.ParseFile(true, true));
         }
+
+        public ICollection<T> GetRows(ITestForSkip testForSkip)
+        {
+            return rows ?? (rows = parser.ParseFile(testForSkip, true, true));
+        }
     }
 }

@@ -8,6 +8,6 @@ namespace FlatFile.FixedWidth.Interfaces
 {
     public interface ITestForSkip
     {
-        bool ShouldSkip();
+        bool ShouldSkip(string row);
     }
 }

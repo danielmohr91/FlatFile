@@ -543,3 +543,6 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 	- Similar functionality (e.g. `SkipFirstRow`, `SkipBlankRows` are on `ParseFile` method. will keep consistent)
 	- Added `ITestForSkip` as parameter on `IFixedWidthFileParser` > `ParseFile`
 		- Tricky, because this is a row by row basis. Same rule for each row though, same for file. Should be good. 
+	- Implemented `ITestForSkip` in `ParseFile` in unit tests for weather reporting
+		- Renamed internal / private `ParseFile` to `ParseFileHelper`, too many method overloads were confusing to read.
+- Implemented ShouldSkip / ITestForSkip and tested successfully with weather report
