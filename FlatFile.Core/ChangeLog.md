@@ -556,3 +556,11 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 - Data Munging
 	- in shouldSkip, include a row number as well (say you want to exclude all odd rows, skip first row, etc...)
 		- if this was a live API, would keep `ParseFile` as is for backwards compatability, and add [Depricated] decrator on the old method
+
+## 10/25/18
+- Added `ShouldSkip` to `IFixedFieldSetting`, and implementation
+	- Added `shouldSkip` as parameter to `AddField`, but only for one of the overloaded methods. The `AppendField` method that takes an ITypeConverter should never be skipped. 
+
+
+
+Tomorrow - Added unit tests for skipped columns

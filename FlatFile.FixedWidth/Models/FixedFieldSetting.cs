@@ -8,6 +8,7 @@ namespace FlatFile.FixedWidth.Models
         public int Length { get; set; }
 
         public int StartPosition { get; set; }
+        public bool ShouldSkip { get; set; }
 
         public PropertyInfo PropertyInfo { get; set; }
 

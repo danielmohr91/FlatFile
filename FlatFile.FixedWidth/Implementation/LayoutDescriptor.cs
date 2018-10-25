@@ -54,7 +54,8 @@ namespace FlatFile.FixedWidth.Implementation
         /// </summary>
         public IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(
             Expression<Func<TTarget, TProperty>> expression,
-            int fieldLength)
+            int fieldLength,
+            bool shouldSkip = false)
         {
             var propertyInfo = GetMemberExpression(expression.Body).Member as PropertyInfo;
             var typeConverter = GetTypeConverter(typeof(TProperty));

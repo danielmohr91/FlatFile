@@ -77,6 +77,11 @@ namespace FlatFile.FixedWidth.Implementation
             var model = new T();
             foreach (var field in layout.GetOrderedFields())
             {
+                if (field.ShouldSkip)
+                {
+                    continue;
+                }
+
                 // This could throw ambigous match exception if inheritance is used on the model incorrectly (e.g. new 
                 // keyword missing, and hiding a parent property)
                 // This could throw argument null exception if Field or PropertyInfo or Name are null

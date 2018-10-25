@@ -15,6 +15,11 @@ namespace FlatFile.FixedWidth.Interfaces
         int StartPosition { get; set; }
 
         /// <summary>
+        /// True if column should be skipped during file read
+        /// </summary>
+        bool ShouldSkip { get; set; }
+
+        /// <summary>
         ///     Property Info for target field
         /// </summary>
         PropertyInfo PropertyInfo { get; set; }
