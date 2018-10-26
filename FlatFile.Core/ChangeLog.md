@@ -561,6 +561,7 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 - Added `ShouldSkip` to `IFixedFieldSetting`, and implementation
 	- Added `shouldSkip` as parameter to `AddField`, but only for one of the overloaded methods. The `AppendField` method that takes an ITypeConverter should never be skipped. 
 
-
+## 10/26/18
+- Started on unit tests for `FixedFieldSettingsTests`
 
 Tomorrow - Added unit tests for skipped columns
