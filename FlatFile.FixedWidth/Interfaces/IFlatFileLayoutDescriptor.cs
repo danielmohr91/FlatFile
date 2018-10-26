@@ -20,8 +20,9 @@ namespace FlatFile.FixedWidth.Interfaces
         /// <typeparam name="TProperty"></typeparam>
         /// <param name="expression">Expression for target model and field</param>
         /// <param name="fieldLength">Length of the field in characters</param>
+        /// <param name="shouldSkip">True if column should be skipped</param>
         /// <returns></returns>
-        IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength);
+        IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, bool shouldSkip = false);
 
         /// <summary>
         ///     Appends field into next position. Order is important.
