@@ -30,6 +30,12 @@ namespace FlatFile.FixedWidth.Implementation
         }
 
 
+        public IFlatFileLayoutDescriptor<TTarget> AppendIgnoredField<TProperty>(int fieldLength)
+        {
+            Add(fieldLength, null, true);
+            return this;
+        }
+
         /// <summary>
         ///     Implements IFlatFileLayoutDescriptor.
         ///     Note that this could throw key not found exception. Perhaps wrap this...
@@ -92,7 +98,8 @@ namespace FlatFile.FixedWidth.Implementation
         /// </summary>
         /// <param name="length">Length in characters of the field</param>
         /// <param name="property">Property Info of the field</param>
-        private void Add(int length, PropertyInfo property)
+        /// <param name="shouldSkip">True if field should be skipped</param>
+        private void Add(int length, PropertyInfo property, bool shouldSkip = false)
         {
             var startPosition = 0;
 
@@ -106,7 +113,8 @@ namespace FlatFile.FixedWidth.Implementation
             {
                 StartPosition = startPosition,
                 Length = length,
-                PropertyInfo = property
+                PropertyInfo = property,
+                ShouldSkip = shouldSkip
             };
 
             fields[currentPosition] = setting;

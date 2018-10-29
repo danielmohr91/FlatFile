@@ -23,7 +23,8 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
                 .AppendField(x => x.Id, 5)
                 .AppendField(x => x.Field1, 15)
                 .AppendField(x => x.Field2, 15)
-                .AppendField(30, true) //  I don't want to have to dedicate a model property to skipped columns. Make a new AppendField method here for "skipped" field
+                .AppendIgnoredField(30) 
+                .AppendField(x => x.3, 15);
             var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath());
         }
 

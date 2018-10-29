@@ -37,6 +37,15 @@ namespace FlatFile.FixedWidth.Interfaces
         IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<TProperty> typeConverter);
 
         /// <summary>
+        /// Adds ignored field. Field is skipped when parsing.
+        /// This is useful when unecessary columns precede necessary columns.
+        /// </summary>
+        /// <typeparam name="TProperty"></typeparam>
+        /// <param name="fieldLength">Length of field(s) that will be skipped.</param>
+        /// <returns></returns>
+        IFlatFileLayoutDescriptor<TTarget> AppendIgnoredField<TProperty>(int fieldLength);
+
+        /// <summary>
         ///     Returns field for specified key. Returns null if not found.
         /// </summary>
         /// <param name="key">Index of column</param>
