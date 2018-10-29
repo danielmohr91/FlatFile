@@ -19,7 +19,11 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
         public void Should_SkipBlankRows_When_BlankRowSettingIsEnabled()
         {
             // Arrange
-            var layout = new LayoutDescriptor<DummyStringModel>();
+            var layout = new LayoutDescriptor<DummyStringModel>()
+                .AppendField(x => x.Id, 5)
+                .AppendField(x => x.Field1, 15)
+                .AppendField(x => x.Field2, 15)
+                .AppendField(30, true) //  I don't want to have to dedicate a model property to skipped columns. Make a new AppendField method here for "skipped" field
             var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath());
         }
 
