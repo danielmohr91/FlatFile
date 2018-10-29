@@ -4,14 +4,12 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using FlatFile.FixedWidth.Implementation;
 using FlatFileParserUnitTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
-{ 
+{
     [TestClass]
     public class FixedFieldSettingTests
     {
@@ -23,26 +21,47 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
                 .AppendField(x => x.Id, 5)
                 .AppendField(x => x.Field1, 15)
                 .AppendField(x => x.Field2, 15)
-                .AppendIgnoredField(30) 
-                .AppendField(x => x.3, 15);
-            var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath());
+                .AppendField(x => x.Field3, 15);
+            var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("SkipBlankRows.dat"));
+
+            // Act
+            var model = parser.ParseFile(null, false, true); // Skip blank rows
+
+            // Assert
+            var expected = GetExpectedRows().ToList();
+            var actual = model.ToList();
+            CollectionAssert.AreEqual(GetExpectedRows().ToList(), model.ToList());
         }
 
         [TestMethod]
         public void Should_SkipHeaderRow_When_SkipHeaderSettingIsEnabled()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Test SkipHeaderRow.dat");
+        }
+
+        [TestMethod]
+        public void Should_SkipIgnoredField_When_AppendIgnoredFieldIsUsed()
+        {
+            // Arrange
+            var layout = new LayoutDescriptor<DummyStringModel>()
+                .AppendField(x => x.Id, 5)
+                .AppendField(x => x.Field1, 15)
+                .AppendField(x => x.Field2, 15)
+                .AppendIgnoredField(30)
+                .AppendField(x => x.Field3, 15);
+            var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("SkipColumns.dat"));
+
+            // Act
+            var model = parser.ParseFile();
+
+            // Assert
+            CollectionAssert.AreEqual(GetExpectedRows().ToList(), model.ToList());
         }
 
         [TestMethod]
         public void Should_TestForSkip_When_TestForSkipObjectIsDefined()
         {
-            throw new NotImplementedException();
-        }
-        private string GetFilePath()
-        {
-            var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            return $"{directory}\\InputFiles\\SettingsTest.dat"; // file properties should be "Content" and "Copy If Newer" (or similar)
+            throw new NotImplementedException("TestForSkip.dat");
         }
 
         private ICollection<DummyStringModel> GetExpectedRows()
@@ -64,5 +83,10 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
             return generatedRows;
         }
 
+        private string GetFilePath(string fileName)
+        {
+            var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            return $"{directory}\\InputFiles\\SettingsTests\\{fileName}"; // file properties should be "Content" and "Copy If Newer" (or similar)
+        }
     }
 }

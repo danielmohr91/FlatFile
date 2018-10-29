@@ -30,7 +30,7 @@ namespace FlatFile.FixedWidth.Implementation
         }
 
 
-        public IFlatFileLayoutDescriptor<TTarget> AppendIgnoredField<TProperty>(int fieldLength)
+        public IFlatFileLayoutDescriptor<TTarget> AppendIgnoredField(int fieldLength)
         {
             Add(fieldLength, null, true);
             return this;

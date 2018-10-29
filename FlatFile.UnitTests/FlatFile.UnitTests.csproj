@@ -89,7 +89,16 @@
     <None Include="InputFiles\EnumTest.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="InputFiles\SettingsTest.dat">
+    <None Include="InputFiles\SettingsTests\TestForSkip.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="InputFiles\SettingsTests\SkipHeaderRow.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="InputFiles\SettingsTests\SkipBlankRows.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="InputFiles\SettingsTests\SkipColumns.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="InputFiles\StringTest.dat">

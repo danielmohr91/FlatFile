@@ -19,6 +19,7 @@ namespace FlatFile.FixedWidth.Implementation
             this.filePath = filePath;
 
             if (layout.GetOrderedFields()
+                .Where(x => !x.ShouldSkip)
                 .Any(x => x.TypeConverter == null))
             {
                 throw new ArgumentException("Missing TypeConverter for one or more fields", nameof(layout));

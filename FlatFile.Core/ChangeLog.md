@@ -564,4 +564,9 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 ## 10/26/18
 - Started on unit tests for `FixedFieldSettingTests`
 
-Tomorrow - Added unit tests for skipped columns
+## 10/29/18
+- Added feature to ignore columns
+- Added unit test for skipping blank rows
+- Unit tests in progress for SkipBlankRows, SkipColumns, SkipHeaderRow, and TestForSkip
+
+Tomorrow - resume unit tests for SkipBlankRows, SkipColumns, SkipHeaderRow, and TestForSkip

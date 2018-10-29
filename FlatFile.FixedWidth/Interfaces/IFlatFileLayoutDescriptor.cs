@@ -40,10 +40,9 @@ namespace FlatFile.FixedWidth.Interfaces
         /// Adds ignored field. Field is skipped when parsing.
         /// This is useful when unecessary columns precede necessary columns.
         /// </summary>
-        /// <typeparam name="TProperty"></typeparam>
         /// <param name="fieldLength">Length of field(s) that will be skipped.</param>
         /// <returns></returns>
-        IFlatFileLayoutDescriptor<TTarget> AppendIgnoredField<TProperty>(int fieldLength);
+        IFlatFileLayoutDescriptor<TTarget> AppendIgnoredField(int fieldLength);
 
         /// <summary>
         ///     Returns field for specified key. Returns null if not found.
