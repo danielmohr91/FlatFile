@@ -15,10 +15,26 @@ namespace DataMunging.Reporting.Reports
             this.points = points;
         }
 
+        // Infinite Recursive Loop... fix this
+        //private IList<int> differences
+        //{
+        //    get => differences ?? (differences = GetDifferences());
+        //    set { }
+        //}
+
+        // Infinite Recursive Loop... fix this
+        //private IList<int> differences
+        //{
+        //    get { return differences ?? (differences = GetDifferences()); }
+        //    set { differences = value; }
+        //}
+
+        private IList<int> _differences;
+
         private IList<int> differences
         {
-            get => differences ?? (differences = GetDifferences());
-            set { }
+            get { return _differences ?? (_differences = GetDifferences()); }
+            set { _differences = value; }
         }
 
         public int GetMaxSpread()

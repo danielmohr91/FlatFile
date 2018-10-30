@@ -569,4 +569,23 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 - Added unit test for skipping blank rows
 - Unit tests in progress for SkipBlankRows, SkipColumns, SkipHeaderRow, and TestForSkip
 
+## 10/30/18
+- Tested the existing (working) settings
+	- `Should_SkipIgnoredField_When_AppendIgnoredFieldIsUsed`
+	- `Should_SkipBlankRows_When_BlankRowSettingIsEnabled`
+	- `Should_SkipHeaderRow_When_SkipHeaderSettingIsEnabled`
+- Removed infinite recursion in `MinMax` report. I thought I could set a property like this: 
+```
+	private IList<int> differences
+	{
+	    get => differences ?? (differences = GetDifferences());
+	    set { }
+	}
+```
+- Nope, infinite recursion. Used a backing property for now. 
+
+
+
+- Next - Clean up options. This is no longer user friendly `parser.ParseFile(null, false, true); // Skip blank rows`, there are up to three optional paramters. Should have one test for skip object, or similar
+
 Tomorrow - resume unit tests for SkipBlankRows, SkipColumns, SkipHeaderRow, and TestForSkip

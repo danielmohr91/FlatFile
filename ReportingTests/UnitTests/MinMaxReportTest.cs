@@ -26,7 +26,7 @@ namespace DataMunging.UnitTests
             var min = report.GetMinSpread();
 
             // Assert
-            Assert.AreEqual(min, 50);
+            Assert.AreEqual(min, 2);
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace DataMunging.UnitTests
             var max = report.GetMaxSpread();
 
             // Assert
-            Assert.AreEqual(max, 50);
+            Assert.AreEqual(max, 54);
         }
     }
 }

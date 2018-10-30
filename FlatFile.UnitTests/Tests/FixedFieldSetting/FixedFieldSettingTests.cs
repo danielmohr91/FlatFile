@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using FlatFile.FixedWidth.Implementation;
 using FlatFileParserUnitTests.Models;
+using FlatFileParserUnitTests.Tests.RowSkippers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
@@ -36,7 +37,19 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
         [TestMethod]
         public void Should_SkipHeaderRow_When_SkipHeaderSettingIsEnabled()
         {
-            throw new NotImplementedException("Test SkipHeaderRow.dat");
+            // Arrange
+            var layout = new LayoutDescriptor<DummyStringModel>()
+                .AppendField(x => x.Id, 5)
+                .AppendField(x => x.Field1, 15)
+                .AppendField(x => x.Field2, 15)
+                .AppendField(x => x.Field3, 15);
+            var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("SkipHeaderRow.dat"));
+
+            // Act
+            var model = parser.ParseFile(null, true); // Ignore first row
+
+            // Assert
+            CollectionAssert.AreEqual(GetExpectedRows().ToList(), model.ToList());
         }
 
         [TestMethod]
@@ -61,12 +74,32 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
         [TestMethod]
         public void Should_TestForSkip_When_TestForSkipObjectIsDefined()
         {
-            throw new NotImplementedException("TestForSkip.dat");
+            // Arrange
+            var layout = new LayoutDescriptor<DummyStringModel>()
+                .AppendField(x => x.Id, 5)
+                .AppendField(x => x.Field1, 15)
+                .AppendField(x => x.Field2, 15)
+                .AppendField(x => x.Field3, 15);
+            var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("TestForSkip.dat"));
+
+            // Act
+            var model = parser.ParseFile(new DummyRowSkipper());
+
+            // Assert
+            CollectionAssert.AreEqual(GetExpectedRows().ToList(), model.ToList());
         }
 
-        private ICollection<DummyStringModel> GetExpectedRows()
+        private ICollection<DummyStringModel> GetExpectedRows(bool includeHeader = false)
         {
             ICollection<DummyStringModel> generatedRows = new Collection<DummyStringModel>();
+
+            if (includeHeader)
+            {
+                generatedRows.Add(new DummyStringModel
+                {
+                    Id = "ID", Field1 = "Field1", Field2 ="Field2", Field3 = "Field3"
+                });
+            }
             for (var i = 0; i < 20; i++)
             {
                 var rowNumber = i + 1;
