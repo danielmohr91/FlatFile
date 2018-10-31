@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementation\FixedWidthFileWriter.cs" />
+    <Compile Include="Implementation\TestForSkip\SkipFirstRow.cs" />
+    <Compile Include="Implementation\TestForSkip\SkipBlankRows.cs" />
+    <Compile Include="Implementation\TestForSkip\SkipBlankAndFirstRows.cs" />
     <Compile Include="Implementation\TypeConverters\DateTimeTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\BooleanTypeConverter.cs" />
     <Compile Include="Implementation\TypeConverters\DecimalTypeConverter.cs" />

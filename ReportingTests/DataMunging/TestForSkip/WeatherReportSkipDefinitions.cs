@@ -7,9 +7,9 @@ namespace DataMunging.Reporting.TestForSkip
 {
     public class WeatherReportSkipDefinitions : ITestForSkip
     {
-        public bool ShouldSkip(string row)
+        public bool ShouldSkip(string row, int rowNumber)
         {
-            return row.StartsWith("  mo");
+            return rowNumber == 0 || row.StartsWith("  mo") || string.IsNullOrWhiteSpace(row);
         }
     }
 }

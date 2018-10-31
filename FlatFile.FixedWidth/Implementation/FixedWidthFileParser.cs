@@ -26,31 +26,22 @@ namespace FlatFile.FixedWidth.Implementation
             }
         }
 
-        public ICollection<T> ParseFile(bool ignoreFirstRow = false, bool ignoreBlankRows = false)
+        public ICollection<T> ParseFile()
         {
-            return ParseFileHelper(ignoreFirstRow, ignoreBlankRows, null);
+            return ParseFileHelper(null);
         }
 
-        private ICollection<T> ParseFileHelper(bool ignoreFirstRow, bool ignoreBlankRows, ITestForSkip testForSkip)
+        private ICollection<T> ParseFileHelper(ITestForSkip testForSkip)
         {
-            var i = 0;
+            var rowNumber = 0;
             var rows = new List<T>();
             using (var reader = new StreamReader(filePath))
             {
                 string row;
                 while ((row = reader.ReadLine()) != null)
                 {
-                    if (i++ == 0 && ignoreFirstRow)
-                    {
-                        continue;
-                    }
-
-                    if (ignoreBlankRows && string.IsNullOrWhiteSpace(row))
-                    {
-                        continue;
-                    }
-
-                    if (testForSkip != null && testForSkip.ShouldSkip(row))
+                    // Easier to read if this is inverted? Not a fan of "Continue". Maybe break out ++ operator too. 
+                    if (testForSkip != null && testForSkip.ShouldSkip(row, rowNumber++))
                     {
                         continue;
                     }
@@ -62,9 +53,9 @@ namespace FlatFile.FixedWidth.Implementation
             return rows;
         }
 
-        public ICollection<T> ParseFile(ITestForSkip testForSkip, bool ignoreFirstRow = false, bool ignoreBlankRows = false)
+        public ICollection<T> ParseFile(ITestForSkip testForSkip)
         {
-            return ParseFileHelper(ignoreFirstRow, ignoreBlankRows, testForSkip);
+            return ParseFileHelper(testForSkip);
         }
 
         /// <summary>

@@ -13,12 +13,12 @@ namespace FlatFileParserUnitTests.Infrastructure.Mocks
             this.layout = layout;
         }
 
-        public ICollection<TEntity> ParseFile(bool ignoreFirstRow = false, bool ignoreBlankRows = false)
+        public ICollection<TEntity> ParseFile()
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<TEntity> ParseFile(ITestForSkip testForSkip, bool ignoreFirstRow = false, bool ignoreBlankRows = false)
+        public ICollection<TEntity> ParseFile(ITestForSkip testForSkip)
         {
             throw new NotImplementedException();
         }

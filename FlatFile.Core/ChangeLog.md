@@ -570,7 +570,7 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 - Unit tests in progress for SkipBlankRows, SkipColumns, SkipHeaderRow, and TestForSkip
 
 ## 10/30/18
-- Tested the existing (working) settings
+- Added the following tests
 	- `Should_SkipIgnoredField_When_AppendIgnoredFieldIsUsed`
 	- `Should_SkipBlankRows_When_BlankRowSettingIsEnabled`
 	- `Should_SkipHeaderRow_When_SkipHeaderSettingIsEnabled`
@@ -584,8 +584,8 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 ```
 - Nope, infinite recursion. Used a backing property for now. 
 
-
-
-- Next - Clean up options. This is no longer user friendly `parser.ParseFile(null, false, true); // Skip blank rows`, there are up to three optional paramters. Should have one test for skip object, or similar
-
-Tomorrow - resume unit tests for SkipBlankRows, SkipColumns, SkipHeaderRow, and TestForSkip
+## 10/31/18
+- This is no longer user friendly `parser.ParseFile(null, false, true); // Skip blank rows`, there are up to three optional paramters. Should have one test for skip object, or similar
+	- Removed all skip related options. Generalized using TestForSkip interface instead. 
+		- e.g. In `IFixedWidthFileParser` > `ParseFile`, removed optional parameters `bool ignoreFirstRow = false` and `bool ignoreBlankRows = false`.
+		- method signature is cleaner. Was `ParseFile(testForSkip, true, true)` now `ParseFile(testForSkip)`

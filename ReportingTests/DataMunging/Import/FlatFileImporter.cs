@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FlatFile.FixedWidth.Implementation;
+using FlatFile.FixedWidth.Implementation.TestForSkip;
 using FlatFile.FixedWidth.Interfaces;
 
 namespace DataMunging.Reporting.Import
@@ -16,14 +17,9 @@ namespace DataMunging.Reporting.Import
 
         public abstract IFlatFileLayoutDescriptor<T> GetLayout(string fileName);
 
-        public ICollection<T> GetRows()
-        {
-            return rows ?? (rows = parser.ParseFile(true, true));
-        }
-
         public ICollection<T> GetRows(ITestForSkip testForSkip)
         {
-            return rows ?? (rows = parser.ParseFile(testForSkip, true, true));
+            return rows ?? (rows = parser.ParseFile(testForSkip));
         }
     }
 }

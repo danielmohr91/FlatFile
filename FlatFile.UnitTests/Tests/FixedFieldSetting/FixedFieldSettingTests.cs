@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using FlatFile.FixedWidth.Implementation;
+using FlatFile.FixedWidth.Implementation.TestForSkip;
 using FlatFileParserUnitTests.Models;
 using FlatFileParserUnitTests.Tests.RowSkippers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -26,7 +27,7 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
             var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("SkipBlankRows.dat"));
 
             // Act
-            var model = parser.ParseFile(null, false, true); // Skip blank rows
+            var model = parser.ParseFile(new SkipBlankRows()); // Skip blank rows
 
             // Assert
             var expected = GetExpectedRows().ToList();
@@ -46,7 +47,7 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
             var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("SkipHeaderRow.dat"));
 
             // Act
-            var model = parser.ParseFile(null, true); // Ignore first row
+            var model = parser.ParseFile(new SkipFirstRow()); // Ignore first row
 
             // Assert
             CollectionAssert.AreEqual(GetExpectedRows().ToList(), model.ToList());
