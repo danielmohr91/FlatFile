@@ -33,15 +33,15 @@ namespace FlatFile.FixedWidth.Implementation
 
         private ICollection<T> ParseFileHelper(ITestForSkip testForSkip)
         {
-            var rowNumber = 0;
             var rows = new List<T>();
             using (var reader = new StreamReader(filePath))
             {
                 string row;
+                var rowNumber = -1;
                 while ((row = reader.ReadLine()) != null)
                 {
-                    // Easier to read if this is inverted? Not a fan of "Continue". Maybe break out ++ operator too. 
-                    if (testForSkip != null && testForSkip.ShouldSkip(row, rowNumber++))
+                    rowNumber++;
+                    if (testForSkip != null && testForSkip.ShouldSkip(row, rowNumber))
                     {
                         continue;
                     }

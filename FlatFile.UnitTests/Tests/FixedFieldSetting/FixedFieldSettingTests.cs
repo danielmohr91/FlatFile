@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -30,8 +29,6 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
             var model = parser.ParseFile(new SkipBlankRows()); // Skip blank rows
 
             // Assert
-            var expected = GetExpectedRows().ToList();
-            var actual = model.ToList();
             CollectionAssert.AreEqual(GetExpectedRows().ToList(), model.ToList());
         }
 
@@ -98,9 +95,13 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
             {
                 generatedRows.Add(new DummyStringModel
                 {
-                    Id = "ID", Field1 = "Field1", Field2 ="Field2", Field3 = "Field3"
+                    Id = "ID",
+                    Field1 = "Field1",
+                    Field2 = "Field2",
+                    Field3 = "Field3"
                 });
             }
+
             for (var i = 0; i < 20; i++)
             {
                 var rowNumber = i + 1;

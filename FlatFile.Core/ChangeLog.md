@@ -1,4 +1,4 @@
-﻿hange Log
+﻿# Change Log
 
 ## 6-8-18 Code Review Comments
 
@@ -589,3 +589,13 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 	- Removed all skip related options. Generalized using TestForSkip interface instead. 
 		- e.g. In `IFixedWidthFileParser` > `ParseFile`, removed optional parameters `bool ignoreFirstRow = false` and `bool ignoreBlankRows = false`.
 		- method signature is cleaner. Was `ParseFile(testForSkip, true, true)` now `ParseFile(testForSkip)`
+
+## Code Review Comments - 10/31/18
+- Don't use a helper for both skip first row and blank rows
+	- do one per class
+- consider removing both the implementations for testforskip
+	- Trivial to implement, the user can do it themselves. 
+- increment row number outside the if statement
+
+
+TODO: Resume on the weather reports
