@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FlatFile.FixedWidth.Interfaces;
+using FlatFile.FixedWidth.Interfaces.Generic;
 using FlatFileParserUnitTests.Enum;
 
 namespace FlatFileParserUnitTests.CustomTypeConverters
@@ -38,12 +39,15 @@ namespace FlatFileParserUnitTests.CustomTypeConverters
 
         public Day ConvertFromString(string stringValue)
         {
-            if (conversions.TryGetValue(stringValue.Trim().ToUpper(), out var day)) return day;
+            if (conversions.TryGetValue(stringValue.Trim().ToUpper(), out var day))
+            {
+                return day;
+            }
 
             throw new ArgumentException("Input must be a day of the week (full name or abbreviated), case insensitive.", nameof(stringValue));
         }
 
-        dynamic ITypeConverterBase.GetConvertedValue(string stringValue)
+        dynamic ITypeConverter.GetConvertedValue(string stringValue)
         {
             return ConvertFromString(stringValue);
         }

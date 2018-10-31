@@ -19,22 +19,44 @@ namespace FlatFile.FixedWidth.Implementation
             this.filePath = filePath;
 
             if (layout.GetOrderedFields()
+                .Where(x => !x.ShouldSkip)
                 .Any(x => x.TypeConverter == null))
+            {
                 throw new ArgumentException("Missing TypeConverter for one or more fields", nameof(layout));
+            }
         }
 
         public ICollection<T> ParseFile()
         {
+            return ParseFileHelper(null);
+        }
+
+        private ICollection<T> ParseFileHelper(ITestForSkip testForSkip)
+        {
+            var rowNumber = 0;
             var rows = new List<T>();
             using (var reader = new StreamReader(filePath))
             {
                 string row;
-                while ((row = reader.ReadLine()) != null) rows.Add(GetModelFromLine(row));
+                while ((row = reader.ReadLine()) != null)
+                {
+                    // Easier to read if this is inverted? Not a fan of "Continue". Maybe break out ++ operator too. 
+                    if (testForSkip != null && testForSkip.ShouldSkip(row, rowNumber++))
+                    {
+                        continue;
+                    }
+
+                    rows.Add(GetModelFromLine(row));
+                }
             }
 
             return rows;
         }
 
+        public ICollection<T> ParseFile(ITestForSkip testForSkip)
+        {
+            return ParseFileHelper(testForSkip);
+        }
 
         /// <summary>
         ///     For each field in layout, the field is extracted from row and added to model (TEntity)
@@ -47,6 +69,11 @@ namespace FlatFile.FixedWidth.Implementation
             var model = new T();
             foreach (var field in layout.GetOrderedFields())
             {
+                if (field.ShouldSkip)
+                {
+                    continue;
+                }
+
                 // This could throw ambigous match exception if inheritance is used on the model incorrectly (e.g. new 
                 // keyword missing, and hiding a parent property)
                 // This could throw argument null exception if Field or PropertyInfo or Name are null

@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="InputFiles\weather.dat" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="InputFiles\weather.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\FlatFile.Core\FlatFile.Core.csproj" />
+    <ProjectReference Include="..\..\FlatFile.FixedWidth\FlatFile.FixedWidth.csproj" />
+    <ProjectReference Include="..\DataMunging\DataMunging.Reporting.csproj" />
+  </ItemGroup>
+
+</Project>

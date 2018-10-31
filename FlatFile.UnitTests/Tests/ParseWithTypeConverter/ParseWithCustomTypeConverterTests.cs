@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using FlatFile.FixedWidth.Implementation;
 using FlatFile.FixedWidth.Interfaces;
+using FlatFile.FixedWidth.Interfaces.Generic;
 using FlatFileParserUnitTests.CustomTypeConverters;
 using FlatFileParserUnitTests.Enum;
 using FlatFileParserUnitTests.Models;

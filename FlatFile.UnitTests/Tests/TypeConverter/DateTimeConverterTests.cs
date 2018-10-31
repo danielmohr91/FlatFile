@@ -1,6 +1,6 @@
 ﻿using System;
 using FlatFile.FixedWidth.Implementation.TypeConverters;
-using FlatFile.FixedWidth.Interfaces;
+using FlatFile.FixedWidth.Interfaces.Generic;
 using FlatFileParserUnitTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

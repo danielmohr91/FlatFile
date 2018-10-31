@@ -58,6 +58,8 @@
     <Compile Include="Models\DummyEnumModel.cs" />
     <Compile Include="Models\PrimitiveTypesModel.cs" />
     <Compile Include="Models\DummyStringModel.cs" />
+    <Compile Include="Tests\FixedFieldSetting\FixedFieldSettingTests.cs" />
+    <Compile Include="Tests\RowSkippers\DummyRowSkipper.cs" />
     <Compile Include="Tests\FixedWidthParser\StringTests.cs" />
     <Compile Include="Tests\LayoutDescriptor\GenericCollectionTests.cs" />
     <Compile Include="Tests\LayoutDescriptor\ConventionBasedTypeConverterTests.cs" />
@@ -86,6 +88,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="InputFiles\EnumTest.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="InputFiles\SettingsTests\TestForSkip.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="InputFiles\SettingsTests\SkipHeaderRow.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="InputFiles\SettingsTests\SkipBlankRows.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="InputFiles\SettingsTests\SkipColumns.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="InputFiles\StringTest.dat">
