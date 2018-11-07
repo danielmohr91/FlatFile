@@ -24,11 +24,10 @@ namespace DataMunging.UnitTests
                 throw new Exception("Import file does not exist!");
             }
             var expected = MockedData.GetExpectedPoints();
-            var testForSkip = new WeatherReportSkipDefinitions();
-            
+           
             // Act
             var importer = new WeatherImporter(GetOriginalImportFilePath());
-            var model = importer.GetRows(testForSkip).ToList();
+            var model = importer.GetWeatherSpreads();
 
             // Assert
             CollectionAssert.AreEqual(model, expected);

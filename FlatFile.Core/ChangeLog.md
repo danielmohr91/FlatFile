@@ -621,6 +621,7 @@ private IList<int> differences
 		- Output: collection of `Point`s
 		- Overview: 
 			- Reads in list of points using `WeatherImporter`
+				- Only `Id`, `Max`, and `Min` are parsed out. 
 			- Defines `WeatherReportSkipDefinitions` for skipping header, blank rows, and summary row
 			- Defines `DirtyIntTypeConverter` for getting only digits in the integer columns (e.g. we don't want the asterisk denoting min / max value in a column)
 	- Report Min / Max with `ReportMinMax`
@@ -630,4 +631,15 @@ private IList<int> differences
 				- Just returns `FirstOrDefault` from `points` (sorted list, cached)
 			- `GetMaxSpread`
 				- Just returns `LastOrDefault` from `points` (sorted list, cached)
-TODO: Resume on the weather reports
+
+### Code Review Comments - 11/7/18
+- Can trim asterisks instead of choosing IsDigit
+	- see `Trim` overload 
+- Consider renaming x and y in `Point` to `high` and `low`. Maybe `Id` to `DayNumber`. Meaningful variable names vs. abstraction and re-usability. Hmmm... 
+- Move the import stuff in `Should_ImportFlatFileToModel_When_LayoutDescriptorIsDefined` to the `WeatherImporter` class
+	- Think through if `ITestForSkip` objects would be better in the `ILayoutDescriptor` vs. a parameter in `GetRows` method. 
+- Asked about stack overflow (detailed above). The property with the getter and setter is syntactic sugar, it's really a method - therefore when I return `differences`, that calls the method, and so forth, ad infinitum.  
+
+## 11/8/18
+- Moved `WeatherReportSkipDefinitions` into `WeatherImporter`, and added method `GetWeatherSpreads` that wraps `GetRows` with the custom `ITestForSkip` object (`WeatherReportSkipDefinitions`)
+- Resume on code review comments... ^

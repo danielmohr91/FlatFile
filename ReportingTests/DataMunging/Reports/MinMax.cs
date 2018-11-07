@@ -16,7 +16,7 @@ namespace DataMunging.Reporting.Reports
         }
 
         // Infinite Recursive Loop... fix this
-        //private IList<int> differences
+        // private IList<int> differences
         //{
         //    get => differences ?? (differences = GetDifferences());
         //    set { }
@@ -31,7 +31,7 @@ namespace DataMunging.Reporting.Reports
 
         private IList<int> _differences;
 
-        private IList<int> differences
+        public IList<int> differences
         {
             get { return _differences ?? (_differences = GetDifferences()); }
             set { _differences = value; }

@@ -1,4 +1,9 @@
-﻿using DataMunging.Reporting.TypeConverters;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using DataMunging.Reporting.TestForSkip;
+using DataMunging.Reporting.TypeConverters;
 using DataMunging.Reporting.ViewModels;
 using FlatFile.FixedWidth.Implementation;
 using FlatFile.FixedWidth.Interfaces;
@@ -9,6 +14,13 @@ namespace DataMunging.Reporting.Import
     {
         public WeatherImporter(string fileName) : base(fileName)
         {
+        }
+
+        public List<Point> GetWeatherSpreads()
+        {
+            // Could skip definitions be added to LayoutDescriptor instead? 
+            var testForSkip = new WeatherReportSkipDefinitions();
+            return GetRows(testForSkip).ToList();
         }
 
         public override IFlatFileLayoutDescriptor<Point> GetLayout(string fileName)
