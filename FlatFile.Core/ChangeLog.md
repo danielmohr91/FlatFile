@@ -598,4 +598,36 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 - increment row number outside the if statement
 
 
+## 11/7/18
+- Removed helpers, except for SkipBlankRows and SkipFirstRow
+	- Only one skip rule per class
+- In `FixedWidthFileParser.ParseFileHelper` moved `rowNumber++` outside if statement
+- Resumed on weather report
+- Implemented MinMax report
+	- ordered all points be absolute difference
+- Tested successfully in `Should_GetMaxMatchingExpected_When_MinMaxReportIsRun` and `Should_GetMinMatchingExpected_When_MinMaxReportIsRun`
+- Not sure why stack overflow in ReportMinMax if this is used: 
+```
+// Infinite Recursive Loop... fix this
+private IList<int> differences
+{
+    get => differences ?? (differences = GetDifferences());
+    set { }
+}
+```
+- Current workflow
+	- Import file with `WeatherImporter`
+		- Input: weather.dat
+		- Output: collection of `Point`s
+		- Overview: 
+			- Reads in list of points using `WeatherImporter`
+			- Defines `WeatherReportSkipDefinitions` for skipping header, blank rows, and summary row
+			- Defines `DirtyIntTypeConverter` for getting only digits in the integer columns (e.g. we don't want the asterisk denoting min / max value in a column)
+	- Report Min / Max with `ReportMinMax`
+		- Input: collection of `Point`s
+		- Output: report object. Can get min or max using the following: 
+			- `GetMinSpread`
+				- Just returns `FirstOrDefault` from `points` (sorted list, cached)
+			- `GetMaxSpread`
+				- Just returns `LastOrDefault` from `points` (sorted list, cached)
 TODO: Resume on the weather reports

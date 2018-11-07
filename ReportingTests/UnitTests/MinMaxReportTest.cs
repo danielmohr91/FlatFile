@@ -39,7 +39,7 @@ namespace DataMunging.UnitTests
             var max = report.GetMaxSpread();
 
             // Assert
-            Assert.AreEqual(max, 54);
+            Assert.AreEqual(max, 54); // 86 vs. 32 degrees in weather.dat
         }
     }
 }
