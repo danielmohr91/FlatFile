@@ -57,5 +57,9 @@ namespace FlatFile.FixedWidth.Interfaces
         /// <param name="key">Index of column</param>
         /// <returns>Field, if found. Else, throws exception</returns>
         ICollection<IFixedFieldSetting> GetOrderedFields();
+
+        ICollection<ITestForSkip> GetSkipDefinitions();
+
+        IFlatFileLayoutDescriptor<TTarget> WithSkipDefinition(ITestForSkip skipDefinition);
     }
 }

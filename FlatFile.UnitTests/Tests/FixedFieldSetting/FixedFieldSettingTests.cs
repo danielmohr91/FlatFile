@@ -22,11 +22,12 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
                 .AppendField(x => x.Id, 5)
                 .AppendField(x => x.Field1, 15)
                 .AppendField(x => x.Field2, 15)
-                .AppendField(x => x.Field3, 15);
+                .AppendField(x => x.Field3, 15)
+                .WithSkipDefinition(new SkipBlankRows());
             var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("SkipBlankRows.dat"));
 
             // Act
-            var model = parser.ParseFile(new SkipBlankRows()); // Skip blank rows
+            var model = parser.ParseFile(); 
 
             // Assert
             CollectionAssert.AreEqual(GetExpectedRows().ToList(), model.ToList());
@@ -40,11 +41,12 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
                 .AppendField(x => x.Id, 5)
                 .AppendField(x => x.Field1, 15)
                 .AppendField(x => x.Field2, 15)
-                .AppendField(x => x.Field3, 15);
+                .AppendField(x => x.Field3, 15)
+                .WithSkipDefinition(new SkipFirstRow());
             var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("SkipHeaderRow.dat"));
 
             // Act
-            var model = parser.ParseFile(new SkipFirstRow()); // Ignore first row
+            var model = parser.ParseFile(); 
 
             // Assert
             CollectionAssert.AreEqual(GetExpectedRows().ToList(), model.ToList());
@@ -74,6 +76,7 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
         {
             // Arrange
             var layout = new LayoutDescriptor<DummyStringModel>()
+                .WithSkipDefinition(new DummyRowSkipper())
                 .AppendField(x => x.Id, 5)
                 .AppendField(x => x.Field1, 15)
                 .AppendField(x => x.Field2, 15)
@@ -81,7 +84,7 @@ namespace FlatFileParserUnitTests.Tests.FixedFieldSetting
             var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("TestForSkip.dat"));
 
             // Act
-            var model = parser.ParseFile(new DummyRowSkipper());
+            var model = parser.ParseFile();
 
             // Assert
             CollectionAssert.AreEqual(GetExpectedRows().ToList(), model.ToList());

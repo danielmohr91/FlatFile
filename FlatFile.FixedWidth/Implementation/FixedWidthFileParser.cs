@@ -28,11 +28,6 @@ namespace FlatFile.FixedWidth.Implementation
 
         public ICollection<T> ParseFile()
         {
-            return ParseFileHelper(null);
-        }
-
-        private ICollection<T> ParseFileHelper(ITestForSkip testForSkip)
-        {
             var rows = new List<T>();
             using (var reader = new StreamReader(filePath))
             {
@@ -41,7 +36,7 @@ namespace FlatFile.FixedWidth.Implementation
                 while ((row = reader.ReadLine()) != null)
                 {
                     rowNumber++;
-                    if (testForSkip != null && testForSkip.ShouldSkip(row, rowNumber))
+                    if (layout.GetSkipDefinitions().Any() && ShouldSkip(row, rowNumber, layout.GetSkipDefinitions()))
                     {
                         continue;
                     }
@@ -53,10 +48,11 @@ namespace FlatFile.FixedWidth.Implementation
             return rows;
         }
 
-        public ICollection<T> ParseFile(ITestForSkip testForSkip)
+        private bool ShouldSkip(string row, int rowNumber, IEnumerable<ITestForSkip> skipDefinitions)
         {
-            return ParseFileHelper(testForSkip);
+            return skipDefinitions.Any(x => x.ShouldSkip(row, rowNumber));
         }
+
 
         /// <summary>
         ///     For each field in layout, the field is extracted from row and added to model (TEntity)

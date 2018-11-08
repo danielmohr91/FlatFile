@@ -5,12 +5,12 @@ using DataMunging.Reporting.ViewModels;
 
 namespace DataMunging.Reporting.Reports
 {
-    // Given a collection of Id, Min, and Max values, report min and max spreads
+    // Given a collection of DayDayId, Min, and Max values, report min and max spreads
     public class ReportMinMax
     {
-        private readonly IEnumerable<IPoint> points;
+        private readonly IEnumerable<IDailyTemperatures> points;
 
-        public ReportMinMax(IEnumerable<IPoint> points)
+        public ReportMinMax(IEnumerable<IDailyTemperatures> points)
         {
             this.points = points;
         }
@@ -50,7 +50,7 @@ namespace DataMunging.Reporting.Reports
         private IList<int> GetDifferences()
         {
             return points
-                .Select(x => Math.Abs(x.X - x.Y))
+                .Select(x => Math.Abs(x.LowTemperature - x.HighTemperature))
                 .OrderBy(x => x)
                 .ToList();
         }

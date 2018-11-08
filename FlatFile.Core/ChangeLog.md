@@ -642,4 +642,15 @@ private IList<int> differences
 
 ## 11/8/18
 - Moved `WeatherReportSkipDefinitions` into `WeatherImporter`, and added method `GetWeatherSpreads` that wraps `GetRows` with the custom `ITestForSkip` object (`WeatherReportSkipDefinitions`)
-- Resume on code review comments... ^
+- Changed from `IsDigit` filter with subsequent `Trim`, to simply `Trim('*', ' ')`, since only asterisks and spaces need to be stripped at the moment. 
+- Refactored `IPoint` and `Point` to `IDailyTemperature`, and `DailyTemperature`. 
+	- Refactored fields from `Id`, `X`, and `Y` to meaningful names for day id, high / low temp. 
+- Thought through moving `ITestForSkip` object into `ILayoutDescriptor` vs. param to `GetRows`. Resume here. Example currently in `GetWeatherSpreads`
+	- Moved `ITestForSkip` object into `ILayoutDescriptor` vs. param to `GetRows`
+	- Cleaned up now unecessary `ITestForSkip` parameters, and helper methods to support skipping or not skipping
+- All unit tests pass. Resume here. Add new test to ensure collection of skip definitions can be used successfully. 
+
+
+
+RESUME HERE: - Add new test to ensure collection of skip definitions can be used successfully. 
+Then, pt of data munging
