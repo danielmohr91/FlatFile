@@ -662,8 +662,23 @@ var layout = new LayoutDescriptor<DummyStringModel>()
 .WithSkipDefinition(new SkipBlankRows())
 .WithSkipDefinition(new SkipFirstRow());
 ```
+- Added `LeagueScore`
+- Added `LeagueStandingsImporter`
+- Added `LeagueStandingsSkipDefinitions`
+	- Skipped where `rowNumber == 0 || row.StartsWith("   --") || string.IsNullOrWhiteSpace(row);`
+- Started layout descriptor
+```
+var layout = new LayoutDescriptor<LeagueScore>()
+                .AppendIgnoredField(7) // Id
+                .AppendField(x => x.TeamName, 16)
+                .AppendIgnoredField(20)
+                .AppendField(x => x.GoalsFor, 4)
+                .AppendIgnoredField(3)
+                .AppendField(x => x.GoalsAgainst, 6)
+                .WithSkipDefinition(new LeagueStandingsSkipDefinitions());
+```
 
 ## 11/12/18
-- 
+- resume above layout desciptor and test import. Then run report. 
 
 Then, pt 2 of data munging
