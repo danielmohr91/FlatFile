@@ -650,7 +650,20 @@ private IList<int> differences
 	- Cleaned up now unecessary `ITestForSkip` parameters, and helper methods to support skipping or not skipping
 - All unit tests pass. Resume here. Add new test to ensure collection of skip definitions can be used successfully. 
 
+## 11/9/18
+- Tested skipping with multiple `ITestForSkip` objects defined with `WithSkipDefinition`. 
+- Example: 
+```
+var layout = new LayoutDescriptor<DummyStringModel>()
+.AppendField(x => x.Id, 5)
+.AppendField(x => x.Field1, 15)
+.AppendField(x => x.Field2, 15)
+.AppendField(x => x.Field3, 15)
+.WithSkipDefinition(new SkipBlankRows())
+.WithSkipDefinition(new SkipFirstRow());
+```
 
+## 11/12/18
+- 
 
-RESUME HERE: - Add new test to ensure collection of skip definitions can be used successfully. 
-Then, pt of data munging
+Then, pt 2 of data munging
