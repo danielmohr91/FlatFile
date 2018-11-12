@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DataMunging.Reporting.ViewModels;
@@ -6,45 +7,31 @@ using DataMunging.Reporting.ViewModels;
 namespace DataMunging.Reporting.Reports
 {
     // Given a collection of DayDayId, Min, and Max values, report min and max spreads
-    public class ReportMinMax
+    public class ReportMinMaxTemperature<T> where T : IEnumerable
     {
-        private readonly IEnumerable<IDailyTemperatures> points;
+        private readonly T points;
 
-        public ReportMinMax(IEnumerable<IDailyTemperatures> points)
+        public ReportMinMaxTemperature(T points)
         {
             this.points = points;
         }
 
-        // Infinite Recursive Loop... fix this
-        // private IList<int> differences
-        //{
-        //    get => differences ?? (differences = GetDifferences());
-        //    set { }
-        //}
+        private IList<int> differences;
 
-        // Infinite Recursive Loop... fix this
-        //private IList<int> differences
-        //{
-        //    get { return differences ?? (differences = GetDifferences()); }
-        //    set { differences = value; }
-        //}
-
-        private IList<int> _differences;
-
-        public IList<int> differences
+        public IList<int> Differences
         {
-            get { return _differences ?? (_differences = GetDifferences()); }
-            set { _differences = value; }
+            get => differences ?? (differences = GetDifferences());
+            set => differences = value;
         }
 
         public int GetMaxSpread()
         {
-            return differences.LastOrDefault();
+            return Differences.LastOrDefault();
         }
 
         public int GetMinSpread()
         {
-            return differences.FirstOrDefault();
+            return Differences.FirstOrDefault();
         }
 
         private IList<int> GetDifferences()

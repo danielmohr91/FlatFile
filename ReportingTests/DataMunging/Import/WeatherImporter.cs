@@ -16,12 +16,8 @@ namespace DataMunging.Reporting.Import
         {
         }
 
-        public List<DailyTemperatures> GetWeatherSpreads()
+        public List<DailyTemperatures> GetWeatherReport()
         {
-            //// Could skip definitions be added to LayoutDescriptor instead? 
-            //var testForSkip = new WeatherReportSkipDefinitions();
-            //return GetRows(testForSkip).ToList();
-
             return GetRows().ToList();
         }
 

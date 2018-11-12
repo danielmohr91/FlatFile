@@ -16,7 +16,7 @@ namespace DataMunging.Reporting.Import
         {
         }
 
-        public List<LeagueScore> GetScoreSpreads()
+        public List<LeagueScore> GetScores()
         {
             return GetRows().ToList();
         }

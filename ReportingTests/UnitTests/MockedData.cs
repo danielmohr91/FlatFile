@@ -1,15 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using DataMunging.Reporting.ViewModels;
 
 namespace DataMunging.UnitTests
 {
     public static class MockedData
     {
+        public static Collection<LeagueScore> GetExpectedScores()
+        {
+            // Mocked expected result based on ~\DataMunging\UnitTests\InputFiles\football.dat
+            return new Collection<LeagueScore>
+            {
+                new LeagueScore("Arsenal", 79, 36),
+                new LeagueScore("Liverpool", 67, 30),
+                new LeagueScore("Manchester_U", 87, 45),
+                new LeagueScore("Newcastle", 74, 52),
+                new LeagueScore("Leeds", 53, 37),
+                new LeagueScore("Chelsea", 66, 38),
+                new LeagueScore("West_Ham", 48, 57),
+                new LeagueScore("Aston_Villa", 46, 47),
+                new LeagueScore("Tottenham", 49, 53),
+                new LeagueScore("Blackburn", 55, 51),
+                new LeagueScore("Southampton", 46, 54),
+                new LeagueScore("Middlesbrough", 35, 47),
+                new LeagueScore("Fulham", 36, 44),
+                new LeagueScore("Charlton", 38, 49),
+                new LeagueScore("Everton", 45, 57),
+                new LeagueScore("Bolton", 44, 62),
+                new LeagueScore("Sunderland", 29, 51),
+                new LeagueScore("Ipswich", 41, 64),
+                new LeagueScore("Derby", 33, 63),
+                new LeagueScore("Leicester", 30, 64)
+            };
+        }
 
-        public static Collection<DailyTemperatures> GetExpectedPoints()
+        public static Collection<DailyTemperatures> GetExpectedTemperatures()
         {
             // Mocked expected result based on ~\DataMunging\UnitTests\InputFiles\weather.dat
             return new Collection<DailyTemperatures>

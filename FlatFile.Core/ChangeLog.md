@@ -655,12 +655,12 @@ private IList<int> differences
 - Example: 
 ```
 var layout = new LayoutDescriptor<DummyStringModel>()
-.AppendField(x => x.Id, 5)
-.AppendField(x => x.Field1, 15)
-.AppendField(x => x.Field2, 15)
-.AppendField(x => x.Field3, 15)
-.WithSkipDefinition(new SkipBlankRows())
-.WithSkipDefinition(new SkipFirstRow());
+				.AppendField(x => x.Id, 5)
+				.AppendField(x => x.Field1, 15)
+				.AppendField(x => x.Field2, 15)
+				.AppendField(x => x.Field3, 15)
+				.WithSkipDefinition(new SkipBlankRows())
+				.WithSkipDefinition(new SkipFirstRow());
 ```
 - Added `LeagueScore`
 - Added `LeagueStandingsImporter`
@@ -679,6 +679,9 @@ var layout = new LayoutDescriptor<LeagueScore>()
 ```
 
 ## 11/12/18
+- Mocked expected result for league standings, and tested `LeagueStandingsImporter` against `football.dat`
+- Updated `ReportMinMax` to work with `Type T` vs. just `IEnumerable<IDailyTemperatures>`
+
 - resume above layout desciptor and test import. Then run report. 
 
 Then, pt 2 of data munging
