@@ -2,7 +2,7 @@
 
 namespace DataMunging.Reporting.ViewModels
 {
-    public class LeagueScore
+    public class LeagueScore : ILeagueScore
     {
         public LeagueScore(string teamName, int goalsFor, int goalsAgainst)
         {

@@ -21,7 +21,7 @@ namespace DataMunging.UnitTests
         public void Should_GetMinTemperatureMatchingExpected_When_MinMaxReportIsRun()
         {
             // Arrange
-            var report = new ReportMinMaxTemperature<>(MockedData.GetExpectedTemperatures());
+            var report = new ReportMinMaxTemperature<IDailyTemperatures>(MockedData.GetExpectedTemperatures());
 
             // Act
             var min = report.GetMinSpread();
@@ -34,7 +34,7 @@ namespace DataMunging.UnitTests
         public void Should_GetMaxTemperatureMatchingExpected_When_MinMaxReportIsRun()
         {
             // Arrange
-            var report = new ReportMinMaxTemperature<IEnumerable<IDailyTemperatures>>(MockedData.GetExpectedTemperatures());
+            var report = new ReportMinMaxTemperature<IDailyTemperatures>(MockedData.GetExpectedTemperatures());
 
             // Act
             var max = report.GetMaxSpread();
@@ -47,26 +47,26 @@ namespace DataMunging.UnitTests
         public void Should_GetMinScoreMatchingExpected_When_MinMaxReportIsRun()
         {
             // Arrange
-            var report = new ReportMinMaxTemperature<IEnumerable<IDailyTemperatures>>(MockedData.GetExpectedScores());
+            var report = new ReportMinMaxScore<ILeagueScore>(MockedData.GetExpectedScores());
 
             // Act
             var min = report.GetMinSpread();
 
             // Assert
-            Assert.AreEqual(min, 2);
+            Assert.AreEqual(min, 1);
         }
 
         [TestMethod]
         public void Should_GetMaxScoreMatchingExpected_When_MinMaxReportIsRun()
         {
             // Arrange
-            var report = new ReportMinMaxTemperature<IEnumerable<IDailyTemperatures>>(MockedData.GetExpectedScores());
+            var report = new ReportMinMaxScore<ILeagueScore>(MockedData.GetExpectedScores());
 
             // Act
             var max = report.GetMaxSpread();
 
             // Assert
-            Assert.AreEqual(max, 54); // 86 vs. 32 degrees in weather.dat
+            Assert.AreEqual(max, 43);
         }
     }
 }
