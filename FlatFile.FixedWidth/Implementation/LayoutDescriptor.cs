@@ -23,7 +23,7 @@ namespace FlatFile.FixedWidth.Implementation
 
         private int currentPosition;
         private ICollection<IFixedFieldSetting> orderedFields;
-        private List<ITestForSkip> skipDefinitions;
+        private readonly List<ITestForSkip> skipDefinitions;
 
         public LayoutDescriptor()
         {

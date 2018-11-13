@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DataMunging.Reporting.TestForSkip;
 using DataMunging.Reporting.TypeConverters;
@@ -16,11 +14,6 @@ namespace DataMunging.Reporting.Import
         {
         }
 
-        public List<DailyTemperature> GetWeatherReport()
-        {
-            return GetRows().ToList();
-        }
-
         public override IFlatFileLayoutDescriptor<DailyTemperature> GetLayout(string fileName)
         {
             var dirtyIntTypeConverter = new DirtyIntTypeConverter();
@@ -30,6 +23,11 @@ namespace DataMunging.Reporting.Import
                 .AppendField(x => x.HighTemperature, 6, dirtyIntTypeConverter) // Min Temp
                 .WithSkipDefinition(new WeatherReportSkipDefinitions());
             return layout;
+        }
+
+        public List<DailyTemperature> GetWeatherReport()
+        {
+            return GetRows().ToList();
         }
     }
 }

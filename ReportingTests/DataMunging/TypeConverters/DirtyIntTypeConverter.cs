@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using FlatFile.FixedWidth.Implementation.TypeConverters;
+﻿using FlatFile.FixedWidth.Implementation.TypeConverters;
 
 namespace DataMunging.Reporting.TypeConverters
 {

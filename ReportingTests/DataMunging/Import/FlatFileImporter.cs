@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using FlatFile.FixedWidth.Implementation;
-using FlatFile.FixedWidth.Implementation.TestForSkip;
 using FlatFile.FixedWidth.Interfaces;
 
 namespace DataMunging.Reporting.Import

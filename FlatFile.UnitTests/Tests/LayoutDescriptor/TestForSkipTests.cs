@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using FlatFile.FixedWidth.Implementation;
 using FlatFile.FixedWidth.Implementation.TestForSkip;
 using FlatFileParserUnitTests.Models;
@@ -17,6 +14,26 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
     [TestClass]
     public class TestForSkipTests
     {
+        [TestMethod]
+        public void Should_SkipAllDefinedRows_When_CollectionOfSkipDefinitionsIsUsed()
+        {
+            // Arrange
+            var layout = new LayoutDescriptor<DummyStringModel>()
+                .AppendField(x => x.Id, 5)
+                .AppendField(x => x.Field1, 15)
+                .AppendField(x => x.Field2, 15)
+                .AppendField(x => x.Field3, 15)
+                .WithSkipDefinition(new SkipBlankRows())
+                .WithSkipDefinition(new SkipFirstRow());
+            var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("SkipMultiple.dat"));
+
+            // Act
+            var model = parser.ParseFile();
+
+            // Assert
+            CollectionAssert.AreEqual(GetExpectedRows().ToList(), model.ToList());
+        }
+
         [TestMethod]
         public void Should_SkipBlankRows_When_BlankRowSettingIsEnabled()
         {
@@ -66,26 +83,6 @@ namespace FlatFileParserUnitTests.Tests.LayoutDescriptor
                 .AppendIgnoredField(30)
                 .AppendField(x => x.Field3, 15);
             var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("SkipColumns.dat"));
-
-            // Act
-            var model = parser.ParseFile();
-
-            // Assert
-            CollectionAssert.AreEqual(GetExpectedRows().ToList(), model.ToList());
-        }
-
-        [TestMethod]
-        public void Should_SkipAllDefinedRows_When_CollectionOfSkipDefinitionsIsUsed()
-        {
-            // Arrange
-            var layout = new LayoutDescriptor<DummyStringModel>()
-                .AppendField(x => x.Id, 5)
-                .AppendField(x => x.Field1, 15)
-                .AppendField(x => x.Field2, 15)
-                .AppendField(x => x.Field3, 15)
-                .WithSkipDefinition(new SkipBlankRows())
-                .WithSkipDefinition(new SkipFirstRow()); 
-            var parser = new FixedWidthFileParser<DummyStringModel>(layout, GetFilePath("SkipMultiple.dat"));
 
             // Act
             var model = parser.ParseFile();

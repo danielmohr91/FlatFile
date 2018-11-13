@@ -37,8 +37,8 @@ namespace FlatFile.FixedWidth.Interfaces
         IFlatFileLayoutDescriptor<TTarget> AppendField<TProperty>(Expression<Func<TTarget, TProperty>> expression, int fieldLength, ITypeConverter<TProperty> typeConverter);
 
         /// <summary>
-        /// Adds ignored field. Field is skipped when parsing.
-        /// This is useful when unecessary columns precede necessary columns.
+        ///     Adds ignored field. Field is skipped when parsing.
+        ///     This is useful when unecessary columns precede necessary columns.
         /// </summary>
         /// <param name="fieldLength">Length of field(s) that will be skipped.</param>
         /// <returns></returns>

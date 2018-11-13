@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DataMunging.Reporting.TestForSkip;
-using DataMunging.Reporting.TypeConverters;
 using DataMunging.Reporting.ViewModels;
 using FlatFile.FixedWidth.Implementation;
 using FlatFile.FixedWidth.Interfaces;
@@ -14,11 +11,6 @@ namespace DataMunging.Reporting.Import
     {
         public LeagueStandingsImporter(string fileName) : base(fileName)
         {
-        }
-
-        public List<LeagueScore> GetScores()
-        {
-            return GetRows().ToList();
         }
 
         public override IFlatFileLayoutDescriptor<LeagueScore> GetLayout(string fileName)
@@ -32,6 +24,11 @@ namespace DataMunging.Reporting.Import
                 .AppendField(x => x.GoalsAgainst, 6)
                 .WithSkipDefinition(new LeagueStandingsSkipDefinitions());
             return layout;
+        }
+
+        public List<LeagueScore> GetScores()
+        {
+            return GetRows().ToList();
         }
     }
 }

@@ -48,11 +48,6 @@ namespace FlatFile.FixedWidth.Implementation
             return rows;
         }
 
-        private bool ShouldSkip(string row, int rowNumber, IEnumerable<ITestForSkip> skipDefinitions)
-        {
-            return skipDefinitions.Any(x => x.ShouldSkip(row, rowNumber));
-        }
-
 
         /// <summary>
         ///     For each field in layout, the field is extracted from row and added to model (TEntity)
@@ -96,6 +91,11 @@ namespace FlatFile.FixedWidth.Implementation
             }
 
             return model;
+        }
+
+        private bool ShouldSkip(string row, int rowNumber, IEnumerable<ITestForSkip> skipDefinitions)
+        {
+            return skipDefinitions.Any(x => x.ShouldSkip(row, rowNumber));
         }
     }
 }

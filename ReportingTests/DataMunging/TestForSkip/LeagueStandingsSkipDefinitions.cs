@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FlatFile.FixedWidth.Interfaces;
+﻿using FlatFile.FixedWidth.Interfaces;
 
 namespace DataMunging.Reporting.TestForSkip
 {
