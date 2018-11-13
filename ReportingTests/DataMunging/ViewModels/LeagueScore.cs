@@ -22,8 +22,7 @@ namespace DataMunging.Reporting.ViewModels
 
         public override bool Equals(object obj)
         {
-            var score = obj as LeagueScore;
-            return score != null &&
+            return obj is LeagueScore score &&
                    TeamName == score.TeamName &&
                    GoalsFor == score.GoalsFor &&
                    GoalsAgainst == score.GoalsAgainst;

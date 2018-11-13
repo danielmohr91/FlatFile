@@ -1,8 +1,8 @@
 ﻿namespace DataMunging.Reporting.ViewModels
 {
-    public class DailyTemperatures : IDailyTemperatures
+    public class DailyTemperature : IDailyTemperature
     {
-        public DailyTemperatures(int dayId, int lowTemperature, int highTemperature)
+        public DailyTemperature(int dayId, int lowTemperature, int highTemperature)
         {
             DayId = dayId;
             LowTemperature = lowTemperature;
@@ -10,7 +10,7 @@
         }
 
         // Parameterless constructor is required so model can be newed up when used as a generic type (e.g. in FlatFileImporter<T>)
-        public DailyTemperatures()
+        public DailyTemperature()
         {
         }
 
@@ -20,8 +20,7 @@
 
         public override bool Equals(object obj)
         {
-            var point = obj as DailyTemperatures;
-            return point != null &&
+            return obj is DailyTemperature point &&
                    DayId == point.DayId &&
                    LowTemperature == point.LowTemperature &&
                    HighTemperature == point.HighTemperature;

@@ -683,5 +683,29 @@ var layout = new LayoutDescriptor<LeagueScore>()
 - Updated `ReportMinMax` to work with `Type T` vs. just `IEnumerable<IDailyTemperatures>`
 - Added report for scoring spreads with `ReportMinMaxScore`
 
+## 11/13/18
+- Refactored `ReportMinMaxScore` and `ReportMinMaxTemperature`
+	- _Is A_ vs. _Has A_ relationship? 
+		- Each is a report, should probably inherit. 
+		- However, not each is a report of `Tuple<int, int>`, they are strongly typed. 
+		  To make inheritance clean would have to sacrifice readability of property names in `LeagueScore` and `DailyTemperatures` models, and method names in `ReportMinMaxScore` and `ReportMinMaxTemperature`. 
+		- To maintain descriptive property and method names, used composition for now. Each of the two reports has a readonly field for `MinMaxReport`
+		- Readability and Maintanability would be hurt by further refactoring (e.g. using tuples instead of models with friendly property names, and `GetMin` vs. something like `GetSmallestTemperatureSpread`)
+- Refactored report names
+- Used pattern matching in Equals method on new models. No build warnings or info level messages left. 
+
+
+
+
 Resume combining `ReportMinMaxScore` and `ReportMinMaxTemperature`
+Then start part 3: 
+
+#### Part Three: DRY Fusion
+- Take the two programs written previously and factor out as much common code as possible, leaving you with two smaller programs and some kind of shared functionality.
+	- Already somewhat done. Formally think this through. 
+
+#### Kata Questions
+- To what extent did the design decisions you made when writing the original programs make it easier or harder to factor out common code?
+- Was the way you wrote the second program influenced by writing the first?
+- Is factoring out as much common code as possible always a good thing? Did the readability of the programs suffer because of this requirement? How about the maintainability?
 

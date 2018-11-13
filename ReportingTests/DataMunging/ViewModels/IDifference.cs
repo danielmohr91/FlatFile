@@ -1,6 +1,6 @@
 ﻿namespace DataMunging.Reporting.ViewModels
 {
-    public interface IDailyTemperatures
+    public interface IDailyTemperature
     {
         int DayId { get; set; }
         int LowTemperature { get; set; }
