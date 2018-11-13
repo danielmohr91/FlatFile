@@ -7,10 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="InputFiles\football.dat" />
     <None Remove="InputFiles\weather.dat" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="InputFiles\football.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="InputFiles\weather.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

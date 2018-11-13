@@ -1,4 +1,4 @@
-﻿hange Log
+﻿# Change Log
 
 ## 6-8-18 Code Review Comments
 
@@ -589,3 +589,123 @@ _Tomorrow - resume on reports. Also the two new settings overviewed above._
 	- Removed all skip related options. Generalized using TestForSkip interface instead. 
 		- e.g. In `IFixedWidthFileParser` > `ParseFile`, removed optional parameters `bool ignoreFirstRow = false` and `bool ignoreBlankRows = false`.
 		- method signature is cleaner. Was `ParseFile(testForSkip, true, true)` now `ParseFile(testForSkip)`
+
+## Code Review Comments - 10/31/18
+- Don't use a helper for both skip first row and blank rows
+	- do one per class
+- consider removing both the implementations for testforskip
+	- Trivial to implement, the user can do it themselves. 
+- increment row number outside the if statement
+
+
+## 11/7/18
+- Removed helpers, except for SkipBlankRows and SkipFirstRow
+	- Only one skip rule per class
+- In `FixedWidthFileParser.ParseFileHelper` moved `rowNumber++` outside if statement
+- Resumed on weather report
+- Implemented MinMax report
+	- ordered all points be absolute difference
+- Tested successfully in `Should_GetMaxMatchingExpected_When_MinMaxReportIsRun` and `Should_GetMinMatchingExpected_When_MinMaxReportIsRun`
+- Not sure why stack overflow in ReportMinMax if this is used: 
+```
+// Infinite Recursive Loop... fix this
+private IList<int> differences
+{
+    get => differences ?? (differences = GetDifferences());
+    set { }
+}
+```
+- Current workflow
+	- Import file with `WeatherImporter`
+		- Input: weather.dat
+		- Output: collection of `Point`s
+		- Overview: 
+			- Reads in list of points using `WeatherImporter`
+				- Only `Id`, `Max`, and `Min` are parsed out. 
+			- Defines `WeatherReportSkipDefinitions` for skipping header, blank rows, and summary row
+			- Defines `DirtyIntTypeConverter` for getting only digits in the integer columns (e.g. we don't want the asterisk denoting min / max value in a column)
+	- Report Min / Max with `ReportMinMax`
+		- Input: collection of `Point`s
+		- Output: report object. Can get min or max using the following: 
+			- `GetMinSpread`
+				- Just returns `FirstOrDefault` from `points` (sorted list, cached)
+			- `GetMaxSpread`
+				- Just returns `LastOrDefault` from `points` (sorted list, cached)
+
+### Code Review Comments - 11/7/18
+- Can trim asterisks instead of choosing IsDigit
+	- see `Trim` overload 
+- Consider renaming x and y in `Point` to `high` and `low`. Maybe `Id` to `DayNumber`. Meaningful variable names vs. abstraction and re-usability. Hmmm... 
+- Move the import stuff in `Should_ImportFlatFileToModel_When_LayoutDescriptorIsDefined` to the `WeatherImporter` class
+	- Think through if `ITestForSkip` objects would be better in the `ILayoutDescriptor` vs. a parameter in `GetRows` method. 
+- Asked about stack overflow (detailed above). The property with the getter and setter is syntactic sugar, it's really a method - therefore when I return `differences`, that calls the method, and so forth, ad infinitum.  
+
+## 11/8/18
+- Moved `WeatherReportSkipDefinitions` into `WeatherImporter`, and added method `GetWeatherSpreads` that wraps `GetRows` with the custom `ITestForSkip` object (`WeatherReportSkipDefinitions`)
+- Changed from `IsDigit` filter with subsequent `Trim`, to simply `Trim('*', ' ')`, since only asterisks and spaces need to be stripped at the moment. 
+- Refactored `IPoint` and `Point` to `IDailyTemperature`, and `DailyTemperature`. 
+	- Refactored fields from `Id`, `X`, and `Y` to meaningful names for day id, high / low temp. 
+- Thought through moving `ITestForSkip` object into `ILayoutDescriptor` vs. param to `GetRows`. Resume here. Example currently in `GetWeatherSpreads`
+	- Moved `ITestForSkip` object into `ILayoutDescriptor` vs. param to `GetRows`
+	- Cleaned up now unecessary `ITestForSkip` parameters, and helper methods to support skipping or not skipping
+- All unit tests pass. Resume here. Add new test to ensure collection of skip definitions can be used successfully. 
+
+## 11/9/18
+- Tested skipping with multiple `ITestForSkip` objects defined with `WithSkipDefinition`. 
+- Example: 
+```
+var layout = new LayoutDescriptor<DummyStringModel>()
+				.AppendField(x => x.Id, 5)
+				.AppendField(x => x.Field1, 15)
+				.AppendField(x => x.Field2, 15)
+				.AppendField(x => x.Field3, 15)
+				.WithSkipDefinition(new SkipBlankRows())
+				.WithSkipDefinition(new SkipFirstRow());
+```
+- Added `LeagueScore`
+- Added `LeagueStandingsImporter`
+- Added `LeagueStandingsSkipDefinitions`
+	- Skipped where `rowNumber == 0 || row.StartsWith("   --") || string.IsNullOrWhiteSpace(row);`
+- Started layout descriptor
+```
+var layout = new LayoutDescriptor<LeagueScore>()
+                .AppendIgnoredField(7) // Id
+                .AppendField(x => x.TeamName, 16)
+                .AppendIgnoredField(20)
+                .AppendField(x => x.GoalsFor, 4)
+                .AppendIgnoredField(3)
+                .AppendField(x => x.GoalsAgainst, 6)
+                .WithSkipDefinition(new LeagueStandingsSkipDefinitions());
+```
+
+## 11/12/18
+- Mocked expected result for league standings, and tested `LeagueStandingsImporter` against `football.dat`
+- Updated `ReportMinMax` to work with `Type T` vs. just `IEnumerable<IDailyTemperatures>`
+- Added report for scoring spreads with `ReportMinMaxScore`
+
+## 11/13/18
+- Refactored `ReportMinMaxScore` and `ReportMinMaxTemperature`
+	- _Is A_ vs. _Has A_ relationship? 
+		- Each is a report, should probably inherit. 
+		- However, not each is a report of `Tuple<int, int>`, they are strongly typed. 
+		  To make inheritance clean would have to sacrifice readability of property names in `LeagueScore` and `DailyTemperatures` models, and method names in `ReportMinMaxScore` and `ReportMinMaxTemperature`. 
+		- To maintain descriptive property and method names, used composition for now. Each of the two reports has a readonly field for `MinMaxReport`
+		- Readability and Maintanability would be hurt by further refactoring (e.g. using tuples instead of models with friendly property names, and `GetMin` vs. something like `GetSmallestTemperatureSpread`)
+- Refactored report names
+- Used pattern matching in Equals method on new models. No build warnings or info level messages left. 
+
+
+
+
+Resume combining `ReportMinMaxScore` and `ReportMinMaxTemperature`
+Then start part 3: 
+
+#### Part Three: DRY Fusion
+- Take the two programs written previously and factor out as much common code as possible, leaving you with two smaller programs and some kind of shared functionality.
+	- Already somewhat done. Formally think this through. 
+
+#### Kata Questions
+- To what extent did the design decisions you made when writing the original programs make it easier or harder to factor out common code?
+- Was the way you wrote the second program influenced by writing the first?
+- Is factoring out as much common code as possible always a good thing? Did the readability of the programs suffer because of this requirement? How about the maintainability?
+

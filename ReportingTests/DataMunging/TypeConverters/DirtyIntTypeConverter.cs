@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using FlatFile.FixedWidth.Implementation.TypeConverters;
+﻿using FlatFile.FixedWidth.Implementation.TypeConverters;
 
 namespace DataMunging.Reporting.TypeConverters
 {
@@ -7,8 +6,7 @@ namespace DataMunging.Reporting.TypeConverters
     {
         public override int ConvertFromString(string stringValue)
         {
-            var digitsOnly = new string(stringValue.Where(char.IsDigit).ToArray());
-            return int.Parse(digitsOnly.Trim());
+            return int.Parse(stringValue.Trim('*', ' '));
         }
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace DataMunging.Reporting.Transformations
 {
-   public  class SanitizeFile
+    public class SanitizeFile
     {
         public void SaveCopyWithFilteredRows(string inputFile, string outputFile, string excludeRowsStartingWith)
         {

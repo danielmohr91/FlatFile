@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DataMunging.UnitTests
 {
     [TestClass]
-    public class WeatherImporterTests
+    public class LeagueStandingsImporterTests
     {
         [TestMethod]
         public void Should_ImportFlatFileToModel_When_LayoutDescriptorIsDefined()
@@ -18,11 +18,11 @@ namespace DataMunging.UnitTests
                 throw new Exception("Import file does not exist!");
             }
 
-            var expected = MockedData.GetExpectedTemperatures();
+            var expected = MockedData.GetExpectedScores();
 
             // Act
-            var importer = new WeatherImporter(GetOriginalImportFilePath());
-            var model = importer.GetWeatherReport();
+            var importer = new LeagueStandingsImporter(GetOriginalImportFilePath());
+            var model = importer.GetScores();
 
             // Assert
             CollectionAssert.AreEqual(model, expected);
@@ -32,7 +32,7 @@ namespace DataMunging.UnitTests
         private string GetOriginalImportFilePath()
         {
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            return $"{directory}\\InputFiles\\weather.dat";
+            return $"{directory}\\InputFiles\\football.dat";
         }
     }
 }

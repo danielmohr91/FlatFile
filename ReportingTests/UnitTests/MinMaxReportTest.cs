@@ -1,14 +1,5 @@
-using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using DataMunging.Reporting.Import;
 using DataMunging.Reporting.Reports;
-using DataMunging.Reporting.TestForSkip;
-using DataMunging.Reporting.Transformations;
 using DataMunging.Reporting.ViewModels;
-using FlatFile.FixedWidth.Implementation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DataMunging.UnitTests
@@ -17,29 +8,55 @@ namespace DataMunging.UnitTests
     public class MinMaxReportTest
     {
         [TestMethod]
-        public void Should_GetMinMatchingExpected_When_MinMaxReportIsRun()
+        public void Should_GetMaxSoccerSpreadOf43_When_GetLargestPointSpreadIsRun()
         {
             // Arrange
-            var report = new ReportMinMax(MockedData.GetExpectedPoints());
+            var report = new SoccerScoreReport<ILeagueScore>(MockedData.GetExpectedScores());
 
             // Act
-            var min = report.GetMinSpread();
+            var max = report.GetLargestPointSpread();
 
             // Assert
-            Assert.AreEqual(min, 2);
+            Assert.AreEqual(max, 43);
         }
 
         [TestMethod]
-        public void Should_GetMaxMatchingExpected_When_MinMaxReportIsRun()
+        public void Should_GetMaxTemperatureOf54_When_GetLargestTemperatureSpreadIsRun()
         {
             // Arrange
-            var report = new ReportMinMax(MockedData.GetExpectedPoints());
+            var report = new WeatherReport<IDailyTemperature>(MockedData.GetExpectedTemperatures());
 
             // Act
-            var max = report.GetMaxSpread();
+            var max = report.GetLargestTemperatureSpread();
 
             // Assert
-            Assert.AreEqual(max, 54);
+            Assert.AreEqual(max, 54); // 86 vs. 32 degrees in weather.dat
+        }
+
+        [TestMethod]
+        public void Should_GetMinScoreOf1_When_GetSmallestPointSpreadIsRun()
+        {
+            // Arrange
+            var report = new SoccerScoreReport<ILeagueScore>(MockedData.GetExpectedScores());
+
+            // Act
+            var min = report.GetSmallestPointSpread();
+
+            // Assert
+            Assert.AreEqual(min, 1);
+        }
+
+        [TestMethod]
+        public void Should_GetMinTemperatureOf2_When_GetSmallestTemperatureSpreadIsRun()
+        {
+            // Arrange
+            var report = new WeatherReport<IDailyTemperature>(MockedData.GetExpectedTemperatures());
+
+            // Act
+            var min = report.GetSmallestTemperatureSpread();
+
+            // Assert
+            Assert.AreEqual(min, 2);
         }
     }
 }

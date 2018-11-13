@@ -28,20 +28,15 @@ namespace FlatFile.FixedWidth.Implementation
 
         public ICollection<T> ParseFile()
         {
-            return ParseFileHelper(null);
-        }
-
-        private ICollection<T> ParseFileHelper(ITestForSkip testForSkip)
-        {
-            var rowNumber = 0;
             var rows = new List<T>();
             using (var reader = new StreamReader(filePath))
             {
                 string row;
+                var rowNumber = -1;
                 while ((row = reader.ReadLine()) != null)
                 {
-                    // Easier to read if this is inverted? Not a fan of "Continue". Maybe break out ++ operator too. 
-                    if (testForSkip != null && testForSkip.ShouldSkip(row, rowNumber++))
+                    rowNumber++;
+                    if (layout.GetSkipDefinitions().Any() && ShouldSkip(row, rowNumber, layout.GetSkipDefinitions()))
                     {
                         continue;
                     }
@@ -53,10 +48,6 @@ namespace FlatFile.FixedWidth.Implementation
             return rows;
         }
 
-        public ICollection<T> ParseFile(ITestForSkip testForSkip)
-        {
-            return ParseFileHelper(testForSkip);
-        }
 
         /// <summary>
         ///     For each field in layout, the field is extracted from row and added to model (TEntity)
@@ -100,6 +91,11 @@ namespace FlatFile.FixedWidth.Implementation
             }
 
             return model;
+        }
+
+        private bool ShouldSkip(string row, int rowNumber, IEnumerable<ITestForSkip> skipDefinitions)
+        {
+            return skipDefinitions.Any(x => x.ShouldSkip(row, rowNumber));
         }
     }
 }

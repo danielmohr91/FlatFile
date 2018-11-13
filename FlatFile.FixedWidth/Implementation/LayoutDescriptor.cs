@@ -23,10 +23,12 @@ namespace FlatFile.FixedWidth.Implementation
 
         private int currentPosition;
         private ICollection<IFixedFieldSetting> orderedFields;
+        private readonly List<ITestForSkip> skipDefinitions;
 
         public LayoutDescriptor()
         {
             fields = new Dictionary<int, IFixedFieldSetting>();
+            skipDefinitions = new List<ITestForSkip>();
         }
 
 
@@ -52,6 +54,17 @@ namespace FlatFile.FixedWidth.Implementation
                        .OrderBy(x => x.Key)
                        .Select(x => x.Value)
                        .ToList());
+        }
+
+        public ICollection<ITestForSkip> GetSkipDefinitions()
+        {
+            return skipDefinitions;
+        }
+
+        public IFlatFileLayoutDescriptor<TTarget> WithSkipDefinition(ITestForSkip skipDefinition)
+        {
+            skipDefinitions.Add(skipDefinition);
+            return this;
         }
 
         /// <summary>
