@@ -12,8 +12,7 @@ namespace DataMunging.Reporting.Reports
 
         public WeatherReport(IEnumerable<T> points)
         {
-            var tuples = points.Select(x => new Tuple<int, int>(x.LowTemperature, x.HighTemperature));
-            minMaxReport = new MinMaxReport(tuples);
+            minMaxReport = new MinMaxReport(points.Select(x => new Tuple<int, int>(x.LowTemperature, x.HighTemperature)));
         }
 
         public int GetLargestTemperatureSpread()

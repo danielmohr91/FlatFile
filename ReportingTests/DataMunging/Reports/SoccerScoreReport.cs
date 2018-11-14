@@ -11,8 +11,7 @@ namespace DataMunging.Reporting.Reports
 
         public SoccerScoreReport(IEnumerable<T> points)
         {
-            var tuples = points.Select(x => new Tuple<int, int>(x.GoalsFor, x.GoalsAgainst));
-            minMaxReport = new MinMaxReport(tuples);
+            minMaxReport = new MinMaxReport(points.Select(x => new Tuple<int, int>(x.GoalsFor, x.GoalsAgainst)));
         }
 
         public int GetLargestPointSpread()

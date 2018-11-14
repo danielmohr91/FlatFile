@@ -7,9 +7,9 @@ using FlatFile.FixedWidth.Interfaces;
 
 namespace DataMunging.Reporting.Import
 {
-    public class LeagueStandingsImporter : FlatFileImporter<LeagueScore>
+    public class SoccerScoreImporter : FlatFileImporter<LeagueScore>
     {
-        public LeagueStandingsImporter(string fileName) : base(fileName)
+        public SoccerScoreImporter(string fileName) : base(fileName)
         {
         }
 
