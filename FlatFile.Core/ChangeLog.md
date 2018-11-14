@@ -645,7 +645,7 @@ private IList<int> differences
 - Changed from `IsDigit` filter with subsequent `Trim`, to simply `Trim('*', ' ')`, since only asterisks and spaces need to be stripped at the moment. 
 - Refactored `IPoint` and `Point` to `IDailyTemperature`, and `DailyTemperature`. 
 	- Refactored fields from `Id`, `X`, and `Y` to meaningful names for day id, high / low temp. 
-- Thought through moving `ITestForSkip` object into `ILayoutDescriptor` vs. param to `GetRows`. Resume here. Example currently in `GetWeatherSpreads`
+- Thought through moving `ITestForSkip` object into `ILayoutDescriptor` vs. param to `GetRows`. Example currently in `GetWeatherSpreads`
 	- Moved `ITestForSkip` object into `ILayoutDescriptor` vs. param to `GetRows`
 	- Cleaned up now unecessary `ITestForSkip` parameters, and helper methods to support skipping or not skipping
 - All unit tests pass. Resume here. Add new test to ensure collection of skip definitions can be used successfully. 
@@ -730,9 +730,21 @@ var layout = new LayoutDescriptor<LeagueScore>()
 
 
 ## Code Review Comments - 11/14/18
-- Added SoccerReport 
-	- new model
-	- new layout descriptor
-	- added unit tests
-- Summary of changes can be seen in [PR #11](https://github.com/danielmohr91/FlatFile/commit/d5e221e6b93b31eb19d72e9bca4629457f0abe87 )
-- Summarized Kata Questions above. Walk through design decisions. 
+- Background
+	- Added SoccerReport 
+		- new model
+		- new layout descriptor
+		- added unit tests
+	- Summary of changes can be seen in [PR #11](https://github.com/danielmohr91/FlatFile/commit/d5e221e6b93b31eb19d72e9bca4629457f0abe87 )
+	- Summarized Kata Questions above. Walk through design decisions. 
+- Ask opinion on wrapping `MinMaxReport` with composition
+	- Feels dirty to select out tuples. 
+	- Also, very little complexity. Just sorting a list based on the absolute difference between two things. That four line query is somewhat abstracted already (using `Math.Abs`). 
+		- Same applies to getting min and max, the abtraction is simply returning `FirstOrDefault` and `LastOrDefault` on a cached copy of `differences`, which is the sorted list from above. 
+	- Response below:
+
+> Agreed ^
+> Remove `MinMaxReport` and put the query back in `WeatherReport` and `SoccerReport`
+> Just that last change, then good for Code Kata 4. No further changes recommended. 
+
+- Next up, [Code Kata 5](http://codekata.com/kata/kata05-bloom-filters/), [bloom filter](https://ipowerinfinity.wordpress.com/2008/03/02/bloom-filters-designing-a-spellchecker/) for spell checking!
