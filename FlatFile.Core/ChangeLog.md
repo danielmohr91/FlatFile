@@ -645,7 +645,7 @@ private IList<int> differences
 - Changed from `IsDigit` filter with subsequent `Trim`, to simply `Trim('*', ' ')`, since only asterisks and spaces need to be stripped at the moment. 
 - Refactored `IPoint` and `Point` to `IDailyTemperature`, and `DailyTemperature`. 
 	- Refactored fields from `Id`, `X`, and `Y` to meaningful names for day id, high / low temp. 
-- Thought through moving `ITestForSkip` object into `ILayoutDescriptor` vs. param to `GetRows`. Resume here. Example currently in `GetWeatherSpreads`
+- Thought through moving `ITestForSkip` object into `ILayoutDescriptor` vs. param to `GetRows`. Example currently in `GetWeatherSpreads`
 	- Moved `ITestForSkip` object into `ILayoutDescriptor` vs. param to `GetRows`
 	- Cleaned up now unecessary `ITestForSkip` parameters, and helper methods to support skipping or not skipping
 - All unit tests pass. Resume here. Add new test to ensure collection of skip definitions can be used successfully. 
@@ -694,18 +694,63 @@ var layout = new LayoutDescriptor<LeagueScore>()
 - Refactored report names
 - Used pattern matching in Equals method on new models. No build warnings or info level messages left. 
 
-
-
-
-Resume combining `ReportMinMaxScore` and `ReportMinMaxTemperature`
-Then start part 3: 
+## 11/14/18
 
 #### Part Three: DRY Fusion
 - Take the two programs written previously and factor out as much common code as possible, leaving you with two smaller programs and some kind of shared functionality.
 	- Already somewhat done. Formally think this through. 
+	- _See 'Is A' vs. 'Has A' thoughts from 11/13/18._
+		- Could factor out more common code (e.g. don't wrap the Min and Max reporting methods), but this would sacrifice readability. 
+		- Same goes towards eliminating models and using tuples in the Soccer Report and Weather Report
 
 #### Kata Questions
 - To what extent did the design decisions you made when writing the original programs make it easier or harder to factor out common code?
+	- Importer
+		- Importing the flat file is all in a separate library (`FlatFileParser`). 
+		- Using this is as simple as defining a layout descriptor with the column widths and field names. 
+			- Optionally, one or more skip definitions may be used as well to pass over rows that are irrelevant or otherwise invalid 
+			- Also, a custom type converter may override the defaults. This is the case for the `WeatherImporter`, `DirtyIntTypeConverter` is used for trimming and converting the strings (with asterisks) to integers. 
+		- The above provided a clean separation of concerns.
+			- The only "Importing" related code for the weather report, was the column definitions, rules for skipping weather specific rows, and the rule for converting dirty integers
+			- This made the design decisions for the second report unambiguous and straightforward. 
+	- Report
+		- The `WeatherReport` sorted the weather model by the max and min temperature spreads. 
+			- To get the max or min spread, just returned the first or last element of sorted collection. 
+		- This is the same exact pattern needed for the Soccer Report, just different names. 
+			- Refactored the min / max reporting aspect into `MinMaxReport`. Wrapped the min / max methods with friendly method names, and passed in list of tuples vs. the user friendly models.
+			- Selecting out the tuples isn't terribly user-friendly. The rest maintains high readability, at the cost composing and wrapping methods vs. inheriting a base class with no extra methods for the equivilent of Min and Max methods. 
 - Was the way you wrote the second program influenced by writing the first?
+	- Yes, as stated above, this is broken into small, re-usable components with well designed interfaces. There was a single, unambiguous way to implement the file parsing for the second. 
+	- Could have used composition or inheritence for the report portion. Raised an interesting design decision between less code and greater readability (using models with friendly property names, and descriptive method names in `WeatherReport` and `SoccerReport`)
 - Is factoring out as much common code as possible always a good thing? Did the readability of the programs suffer because of this requirement? How about the maintainability?
+	- No. I could have refactored out more common code (skipped models in the reports, and eliminated both reporting methods in the two report classes), but readability and maintainability would have suffered. 
+	- Readability is still high, with descriptive model properties and descriptive method names in both reports. 
+		- Readability would suffer if any more common code was abstracted out from `WeatherReport` and `SoccerReport`
 
+
+
+## Code Review Comments - 11/14/18
+- Background
+	- Added SoccerReport 
+		- new model
+		- new layout descriptor
+		- added unit tests
+	- Summary of changes can be seen in [PR #11](https://github.com/danielmohr91/FlatFile/commit/d5e221e6b93b31eb19d72e9bca4629457f0abe87 )
+	- Summarized Kata Questions above. Walk through design decisions. 
+- Ask opinion on wrapping `MinMaxReport` with composition
+	- Feels dirty to select out tuples. 
+	- Also, very little complexity. Just sorting a list based on the absolute difference between two things. That four line query is somewhat abstracted already (using `Math.Abs`). 
+		- Same applies to getting min and max, the abtraction is simply returning `FirstOrDefault` and `LastOrDefault` on a cached copy of `differences`, which is the sorted list from above. 
+	- Response below:
+
+> Agreed ^
+> Remove `MinMaxReport` and put the query back in `WeatherReport` and `SoccerReport`
+> Just that last change, then good for Code Kata 4. No further changes recommended. 
+
+- Next up, [Code Kata 5](http://codekata.com/kata/kata05-bloom-filters/), [bloom filter](https://ipowerinfinity.wordpress.com/2008/03/02/bloom-filters-designing-a-spellchecker/) for spell checking!
+
+## 11/28/18
+- Refactored `MinMaxReport` out. No longer composing `SoccerScoreReport` and `WeatherReport` with the shared sorting and reporting on min max. 
+- Soccer and Weather report are more readable, but at the cost of a duplicate query, and similar logic in both for min and max (just a one liner). 
+- No further changes recommented. Unit tests pass. 
+- Moving on to [Code Kata 5](http://codekata.com/kata/kata05-bloom-filters/)

@@ -5,25 +5,39 @@ using DataMunging.Reporting.ViewModels;
 
 namespace DataMunging.Reporting.Reports
 {
-    // Given a collection of DayDayId, Min, and Max values, report min and max spreads
     public class WeatherReport<T> where T : IDailyTemperature
     {
-        private readonly MinMaxReport minMaxReport;
+        private readonly IEnumerable<T> dailyTemperatures;
+        private IList<int> differences;
 
-        public WeatherReport(IEnumerable<T> points)
+
+        public WeatherReport(IEnumerable<T> dailyTemperatures)
         {
-            var tuples = points.Select(x => new Tuple<int, int>(x.LowTemperature, x.HighTemperature));
-            minMaxReport = new MinMaxReport(tuples);
+            this.dailyTemperatures = dailyTemperatures;
+        }
+
+        public IList<int> Differences
+        {
+            get => differences ?? (differences = GetDifferences());
+            set => differences = value;
         }
 
         public int GetLargestTemperatureSpread()
         {
-            return minMaxReport.GetMaxSpread();
+            return Differences.LastOrDefault();
         }
 
         public int GetSmallestTemperatureSpread()
         {
-            return minMaxReport.GetMinSpread();
+            return Differences.FirstOrDefault();
+        }
+
+        private IList<int> GetDifferences()
+        {
+            return dailyTemperatures
+                .Select(x => Math.Abs(x.HighTemperature - x.LowTemperature))
+                .OrderBy(x => x)
+                .ToList();
         }
     }
 }

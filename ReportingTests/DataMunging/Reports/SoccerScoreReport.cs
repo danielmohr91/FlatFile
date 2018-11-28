@@ -7,22 +7,36 @@ namespace DataMunging.Reporting.Reports
 {
     public class SoccerScoreReport<T> where T : ILeagueScore
     {
-        private readonly MinMaxReport minMaxReport;
+        private readonly IEnumerable<T> scores;
+        private IList<int> differences;
 
-        public SoccerScoreReport(IEnumerable<T> points)
+        public SoccerScoreReport(IEnumerable<T> scores)
         {
-            var tuples = points.Select(x => new Tuple<int, int>(x.GoalsFor, x.GoalsAgainst));
-            minMaxReport = new MinMaxReport(tuples);
+            this.scores = scores;
+        }
+
+        public IList<int> Differences
+        {
+            get => differences ?? (differences = GetDifferences());
+            set => differences = value;
         }
 
         public int GetLargestPointSpread()
         {
-            return minMaxReport.GetMaxSpread();
+            return Differences.LastOrDefault();
         }
 
         public int GetSmallestPointSpread()
         {
-            return minMaxReport.GetMinSpread();
+            return Differences.FirstOrDefault();
+        }
+
+        private IList<int> GetDifferences()
+        {
+            return scores
+                .Select(x => Math.Abs(x.GoalsFor - x.GoalsAgainst))
+                .OrderBy(x => x)
+                .ToList();
         }
     }
 }

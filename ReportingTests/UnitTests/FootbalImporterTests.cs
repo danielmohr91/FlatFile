@@ -21,7 +21,7 @@ namespace DataMunging.UnitTests
             var expected = MockedData.GetExpectedScores();
 
             // Act
-            var importer = new LeagueStandingsImporter(GetOriginalImportFilePath());
+            var importer = new SoccerScoreImporter(GetOriginalImportFilePath());
             var model = importer.GetScores();
 
             // Assert
