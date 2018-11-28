@@ -5,21 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DataMunging.UnitTests
 {
     [TestClass]
-    public class MinMaxReportTest
+    public class WeatherReportTests
     {
-        [TestMethod]
-        public void Should_GetMaxSoccerSpreadOf43_When_GetLargestPointSpreadIsRun()
-        {
-            // Arrange
-            var report = new SoccerScoreReport<ILeagueScore>(MockedData.GetExpectedScores());
-
-            // Act
-            var max = report.GetLargestPointSpread();
-
-            // Assert
-            Assert.AreEqual(max, 43);
-        }
-
         [TestMethod]
         public void Should_GetMaxTemperatureOf54_When_GetLargestTemperatureSpreadIsRun()
         {
@@ -30,20 +17,7 @@ namespace DataMunging.UnitTests
             var max = report.GetLargestTemperatureSpread();
 
             // Assert
-            Assert.AreEqual(max, 54); // 86 vs. 32 degrees in weather.dat
-        }
-
-        [TestMethod]
-        public void Should_GetMinScoreOf1_When_GetSmallestPointSpreadIsRun()
-        {
-            // Arrange
-            var report = new SoccerScoreReport<ILeagueScore>(MockedData.GetExpectedScores());
-
-            // Act
-            var min = report.GetSmallestPointSpread();
-
-            // Assert
-            Assert.AreEqual(min, 1);
+            Assert.AreEqual(54, max); // 86 vs. 32 degrees in weather.dat
         }
 
         [TestMethod]
@@ -56,7 +30,7 @@ namespace DataMunging.UnitTests
             var min = report.GetSmallestTemperatureSpread();
 
             // Assert
-            Assert.AreEqual(min, 2);
+            Assert.AreEqual(2, min);
         }
     }
 }

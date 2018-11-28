@@ -15,7 +15,7 @@ namespace DataMunging.Reporting.Reports
         {
             this.dailyTemperatures = dailyTemperatures;
         }
-        
+
         public IList<int> Differences
         {
             get => differences ?? (differences = GetDifferences());
@@ -35,7 +35,7 @@ namespace DataMunging.Reporting.Reports
         private IList<int> GetDifferences()
         {
             return dailyTemperatures
-                .Select(x => Math.Abs(x.HighTemperature = x.LowTemperature))
+                .Select(x => Math.Abs(x.HighTemperature - x.LowTemperature))
                 .OrderBy(x => x)
                 .ToList();
         }

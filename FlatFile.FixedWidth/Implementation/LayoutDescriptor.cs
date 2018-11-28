@@ -20,10 +20,10 @@ namespace FlatFile.FixedWidth.Implementation
     public class LayoutDescriptor<TTarget> : IFlatFileLayoutDescriptor<TTarget>
     {
         private readonly IDictionary<int, IFixedFieldSetting> fields; // Generic type for fixed field setting represents the property, not the whole model (TTarget). Since the properties may be assorted, using object for now.
+        private readonly List<ITestForSkip> skipDefinitions;
 
         private int currentPosition;
         private ICollection<IFixedFieldSetting> orderedFields;
-        private readonly List<ITestForSkip> skipDefinitions;
 
         public LayoutDescriptor()
         {
