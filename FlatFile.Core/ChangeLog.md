@@ -748,3 +748,9 @@ var layout = new LayoutDescriptor<LeagueScore>()
 > Just that last change, then good for Code Kata 4. No further changes recommended. 
 
 - Next up, [Code Kata 5](http://codekata.com/kata/kata05-bloom-filters/), [bloom filter](https://ipowerinfinity.wordpress.com/2008/03/02/bloom-filters-designing-a-spellchecker/) for spell checking!
+
+## 11/28/18
+- Refactored `MinMaxReport` out. No longer composing `SoccerScoreReport` and `WeatherReport` with the shared sorting and reporting on min max. 
+- Soccer and Weather report are more readable, but at the cost of a duplicate query, and similar logic in both for min and max (just a one liner). 
+- No further changes recommented. Unit tests pass. 
+- Moving on to [Code Kata 5](http://codekata.com/kata/kata05-bloom-filters/)
