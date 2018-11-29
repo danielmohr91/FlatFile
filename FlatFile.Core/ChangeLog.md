@@ -754,3 +754,13 @@ var layout = new LayoutDescriptor<LeagueScore>()
 - Soccer and Weather report are more readable, but at the cost of a duplicate query, and similar logic in both for min and max (just a one liner). 
 - No further changes recommented. Unit tests pass. 
 - Moving on to [Code Kata 5](http://codekata.com/kata/kata05-bloom-filters/)
+
+## 11/29/18
+- Updated weather report to use `Tuple` with `IDailyTemperature` and `int` _(for the temperature difference)_, since we need the day number for the new console app
+- Added new project for console app
+	- Started implementation for console app. 
+	- Resume here, getting the file path for weather.dat
+
+
+
+- Make a console app to run this, then Code Kata 5

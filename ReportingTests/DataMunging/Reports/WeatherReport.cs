@@ -8,7 +8,7 @@ namespace DataMunging.Reporting.Reports
     public class WeatherReport<T> where T : IDailyTemperature
     {
         private readonly IEnumerable<T> dailyTemperatures;
-        private IList<int> differences;
+        private IList<Tuple<IDailyTemperature, int>> differences;
 
 
         public WeatherReport(IEnumerable<T> dailyTemperatures)
@@ -16,26 +16,36 @@ namespace DataMunging.Reporting.Reports
             this.dailyTemperatures = dailyTemperatures;
         }
 
-        public IList<int> Differences
+        public IList<Tuple<IDailyTemperature, int>> Differences
         {
             get => differences ?? (differences = GetDifferences());
             set => differences = value;
         }
 
+        public IDailyTemperature GetDayWithLargestSpread()
+        {
+            return Differences.LastOrDefault()?.Item1;
+        }
+
+        public IDailyTemperature GetDayWithSmallestSpread()
+        {
+            return Differences.FirstOrDefault()?.Item1;
+        }
+
         public int GetLargestTemperatureSpread()
         {
-            return Differences.LastOrDefault();
+            return Differences.LastOrDefault()?.Item2 ?? 0;
         }
 
         public int GetSmallestTemperatureSpread()
         {
-            return Differences.FirstOrDefault();
+            return Differences.FirstOrDefault()?.Item2 ?? 0;
         }
 
-        private IList<int> GetDifferences()
+        private IList<Tuple<IDailyTemperature, int>> GetDifferences()
         {
             return dailyTemperatures
-                .Select(x => Math.Abs(x.HighTemperature - x.LowTemperature))
+                .Select(x => new Tuple<IDailyTemperature, int>(x, Math.Abs(x.HighTemperature - x.LowTemperature)))
                 .OrderBy(x => x)
                 .ToList();
         }
