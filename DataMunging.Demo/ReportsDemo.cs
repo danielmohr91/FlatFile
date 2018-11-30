@@ -34,7 +34,8 @@ namespace DataMunging.Demo
         {
             // Resume here... get correct directory
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            return $"{directory}\\InputFiles\\weather.dat";
+            var path = Path.GetFullPath(Path.Combine(directory, @"..\..\..\..\ReportingTests\UnitTests\InputFiles\weather.dat"));
+            return path;
         }
     }
 }

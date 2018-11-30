@@ -761,6 +761,10 @@ var layout = new LayoutDescriptor<LeagueScore>()
 	- Started implementation for console app. 
 	- Resume here, getting the file path for weather.dat
 
+## 11/30/18
+- Added path to weather.dat
+- Next, implement IComparable in temperatures
+
 
 
 - Make a console app to run this, then Code Kata 5
